@@ -17,15 +17,7 @@ for you messages but keep in mind that you can extend or alter them at will .
 * Build hand crafted versions for each supported programming language that suit it very well.
 * Create interface classes that uses the terminology of specific verticals/industries to make adoption easier for those that prefer it over the generic 
 terminology used in the AS Message model.
-
-### Examples Design Principles
-* Examples are provided in the form of runnable/passable tests
-* Provide sample input and output and make sure its anonymous
-* Create highly reusable code (that encourages copy/paste use)
-* Encourage forking on github and be accommodating in regards to pull-requests
-* Provide brief documentation for every example
-* Organize examples around the data source and think of them as a code that might be used by them to integrate to AS directly
-* Add examples to the message library when adding a message of a new event type
+* Provide a wide range of [examples](/activitystream/as-sdk-examples) tailored for specific verticals  
 
 ### The Activity Stream Schema
 The [AS Schema](/schema) directory will contain the AS schema in different formats.
