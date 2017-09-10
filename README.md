@@ -3,7 +3,7 @@
 The Activity Stream SDK is split up in to two components
 
 * **as-sdk** that contains core SDK files (this)
-* **[as-sdk-examples](../as-sdk-examples)** which contains code and message examples
+* **[as-sdk-examples](/activitystream/as-sdk-examples)** which contains code and message examples
 
 Both of these can be cloned and extended and pull-requests are welcome.
 
