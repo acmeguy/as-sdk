@@ -1,0 +1,271 @@
+{
+  "namespace": "com.activitystream.historical.model.transport",
+  "type": "record",
+  "name": "ASEvent",
+  "doc":"AS Event messages (aka BAMMs) are used to report business activity information to Activity Stream",
+  "fields": [
+    {"name": "occurred_at", "type": "long", "logicalType":"timestamp-millis", "doc": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},
+    {"name": "timezone", "type": ["null","string"], "doc":"The timezone for occurred_at"},
+    {"name": "type", "type": "string", "doc": "Event Type Identifier (lower cased and dot separated)"},
+    {"name": "origin", "type": "string", "doc": "Origin Identifier (lower cased and dot separated)"},
+    {"name": "importance", "type": "int", "doc": "The importance level of the event (See imp. levels)."},
+    {"name": "description", "type": "string", "doc":"A short, human readable, description of what happened."},
+    {"name": "partition", "type": "string", "default":"_common", "doc": "A isolated data partition to store the data in. '_common' is the global partition."},
+
+    {"name": "involves", "type":["null",
+      {
+        "doc": "A list of entities involved in the event and information regarding their involvement",
+        "type":"array",
+        "items": {
+          "type":"record",
+          "name":"EventRelation",
+          "fields": [
+            {"name": "role", "type": "string"},
+            {"name": "entity_ref", "type": "string"},
+            {"name": "properties", "type": ["null", {"type":"map", "values": "string"}], "doc":"Any custom properties stored for this relationship"}
+          ]
+        }
+      }]
+    },
+    {
+      "name": "aspects",
+      "type": "record",
+      "fields": [
+        {
+          "name": "dimensions",
+          "type": ["null",{"type": "map", "values": "string"}]
+        },
+
+        {
+          "name": "metrics",
+          "type": ["null",{"type": "map", "values": "double"}]
+        },
+
+        {
+          "name": "tags",
+          "type": ["null",{"type":"array", "items": "string"}]
+        },
+
+        {"name": "content", "type": ["null",
+          {
+            "type":"record",
+            "name":"ContentAspect",
+            "fields": [
+              {"name": "title", "type": ["null","string"]},
+              {"name": "subtitle", "type": ["null","string"]},
+              {"name": "byline", "type": ["null","string"]},
+              {"name": "content", "type": ["null","string"]},
+              {"name": "involves", "type": ["null",{"type":"array", "items":"BammInvolvesEntry"}]},
+              {"name": "properties", "type": ["null",{"type":"map", "values": "string"}]}
+            ]
+          }]
+        },
+
+        {"name": "presentation", "type": ["null",
+          {
+            "type":"record",
+            "name":"Presentation",
+            "fields": [
+              {"name": "label", "type": "string", "doc": "A human readable string used to represent the entity (name etc.)"},
+              {"name": "thumbnail", "type": ["null","string"], "doc": "A URI containing detailed information about the entity"},
+              {"name": "icon", "type": ["null","string"], "doc": "A URI pointing to an image of the entity (profile picture)"},
+              {"name": "description", "type": ["null","string"], "doc": "A short, general, description of the entity"},
+              {"name": "details_url", "type": ["null","string"], "icon": "A image or icon used to represent the entity in lists etc."}
+            ]
+          }]
+        },
+
+        {"name": "attachments", "type":["null",
+          {
+            "type":"array",
+            "items": {
+              "type":"record",
+              "name":"Attachment",
+              "fields": [
+                {"name": "url", "type": ["null","string"], "doc": "a fully qualified URL pointing to the attached file"},
+                {"name": "use", "type": ["null","string"], "doc":"Intended use category"},
+                {"name": "filename", "type": ["null","string"], "doc":"The filename to use for the attachment regardless of URL"},
+                {"name": "fingerprint", "type": ["null","string"], "doc": "HASH for the file to find duplicates and verify content"},
+                {"name": "description", "type": ["null","string"], "doc": "A general description of what is in the file"},
+                {"name": "size", "type": ["null","long"], "doc": "Size of the file in Bytes"},
+                {"name": "created", "type": ["null", "long"], "logicalType":"timestamp-millis", "doc": "Timestamp with the creation date-time of the file"},
+                {"name": "updated", "type": ["null", "long"], "logicalType":"timestamp-millis", "doc": "Timestamp with the last updated date-time of the file"},
+                {"name": "metadata", "type": ["null", {"type":"map", "values": "string"}], "doc":"Metadata properties used to describe the file content"},
+                {"name": "properties", "type": ["null", {"type":"map", "values": "string"}], "doc": "Free format properties to add to the attachment"}
+              ]
+            }
+          }]
+        },
+
+        {
+          "name": "times",
+          "type": ["null", {"type":"map", "values":
+          {
+            "type":"record",
+            "name":"Period",
+            "fields": [
+              {"name": "begins", "type": ["null","long"], "doc":"Explicit start time"},
+              {"name": "ends", "type": ["null","long"], "doc":"Explicit end time"},
+              {"name": "duration", "type": ["null","long"], "doc":"Duration (calculated if start/end provided but uses occurred_at as start time and occurrd_at+duration  as end time if only duration is reported"},
+              {"name": "timezone", "type": ["null","string"], "doc":"The timezone that applies to the timestamp entries (both)"}
+            ]
+          }}]
+        },
+
+        {"name": "product_view", "type": ["null",
+          {
+            "type":"record",
+            "name":"ProductView",
+            "fields": [
+              {"name": "product", "type": ["null","string"], "doc":"What product was viewed"},
+              {"name": "variant", "type": ["null","string"], "doc":"What product variant was viewed."},
+              {"name": "context", "type": ["null","string"], "doc":"In what context was the product viewed/seen"},
+              {"name": "referrer", "type": ["null","string"], "doc":"From where did the customer come when viewing the product."}
+            ]
+          }]
+        },
+
+        {"name": "geo_location", "type": ["null",
+          {
+            "type":"record",
+            "name":"GeoLocation",
+            "fields": [
+              {"name": "latitude", "type": ["null", "double"], "doc":"Latitude as s Double number"},
+              {"name": "longitude", "type": ["null", "double"], "doc":"Longitude as a Double number"}
+            ]
+          }]
+        },
+
+        {"name": "classification", "type": ["null", {
+          "type":"record",
+          "name":"Classification",
+          "fields": [
+            {"name": "type", "type": ["null","string"], "doc": "Main classification type"},
+            {"name": "variant", "type": ["null","string"], "doc": "Main classification sub-type"},
+            {"name": "categories", "type": ["null", {"type":"array", "items": "string"}], "doc": "Addition classification categories"}
+          ]
+        }]
+        },
+
+        {"name": "items", "type":["null",
+          {
+            "type":"array",
+            "items": {
+              "type":"record",
+              "name":"LineItem",
+              "fields": [
+                {"name": "involves", "type": ["null",{"type":"map", "values": "string"}]},
+                {"name": "price_type", "type": ["null","string"], "doc":"What price type applied for these items (from Inventory)"},
+                {"name": "price_category", "type": ["null","string"], "doc":"What price category applied for these items (from Inventory)"},
+                {"name": "item_count", "type": "double", "doc":"How many items of this product+type+variant were bought."},
+                {"name": "item_price", "type": "double", "doc":"What was the price for individual item (before tax and discount)"},
+                {"name": "commission_fixed", "type": ["null","double"]},
+                {"name": "commission_percentage", "type": ["null","double"], "doc":"How many percentages of the sale should be considered commission"},
+                {"name": "discount_percentage", "type": ["null","double"], "doc":"How much discount should be deducted from the item price."},
+                {"name": "tax_percentage", "type": ["null","double"], "doc":"How much tax should be added on top of the item price."},
+                {"name": "complementary", "type": "boolean", "doc":"Is this a complimentary item (not sold)"},
+                {"name": "currency", "type": ["null","string"], "doc":"What currency was used to pay for the item"},
+                {"name": "variant", "type": ["null","string"], "doc":"What product sub-type/variant was sold (from Invoentory)"},
+                {"name": "accounting_key", "type": ["null","string"], "doc":"Should this revenue be assigned to a specific accounting key"},
+                {"name": "classification", "type": "BammClassificationEntry"},
+                {"name": "dimensions", "type": ["null",{"type": "map", "values": "string"}]},
+                {"name": "metrics", "type": ["null",{"type": "map", "values": "double"}]}
+              ]
+            }
+          }]
+        },
+
+        {"name": "ab_test", "type": ["null", {
+          "type":"record",
+          "name":"ABTest",
+          "fields": [
+            {"name": "id", "type": ["null","string"]},
+            {"name": "variant", "type": ["null","string"]},
+            {"name": "outcome", "type": ["null","string"]},
+            {"name": "metrics", "type": ["null", {"type":"map", "values": "double"}]},
+            {"name": "dimensions", "type": ["null", {"type":"map", "values": "string"}]}
+          ]
+        }]
+        },
+
+        {"name": "traffic_source", "type":["null",
+          {
+            "type":"record",
+            "name":"TrafficSource",
+            "fields": [
+              {"name": "type", "type": ["null","string"], "doc":"What type of traffic source was this ('campaign' for example)"},
+              {"name": "referrer", "type": ["null","string"], "doc":"Where did the traffic come from (usually a URL/Web Domain)"},
+              {"name": "campaign", "type": ["null","string"], "doc":"What was the ID of the campaign"},
+              {"name": "source", "type": ["null","string"], "doc":"What was the source for the traffic"},
+              {"name": "medium", "type": ["null","string"], "doc":"What was the medium for the traffic"},
+              {"name": "term", "type": ["null","string"], "doc":"Primary term(s) used (should be a list)"},
+              {"name": "content", "type": ["null","string"], "doc":"Any additional content used to report the traffic_source for the event"}
+            ]
+          }]
+        },
+
+        {"name": "cei", "type":["null",
+          {
+            "type":"record",
+            "name":"CustomerExperienceIndex",
+            "fields": [
+              {"name": "engagement", "type": ["null","double"], "doc": "-5 to +5 value indicating how strongly the event should affect the engagement score for the entities involved."},
+              {"name": "happiness", "type": ["null","double"], "doc": "-5 to +5 value indicating how strongly the event should affect the happiness score for the entities involved."},
+              {"name": "care", "type": ["null","double"], "doc": "-5 to +5 value indicating how strongly the event should affect the ecare score for the entities involved."},
+              {"name": "intent", "type": ["null","double"], "doc": "-5 to +5 value indicating how strongly the event should affect the intent score for the entities involved."},
+              {"name": "duration", "type": ["null","long"], "doc": "The duration in minutes that this rating should affect the customer score."}
+            ]
+          }]
+        },
+
+        {"name": "client_ip", "type": ["null",
+          {
+            "type":"record",
+
+            "name":"ClientIp",
+            "fields": [
+              {"name": "ip", "type": "string", "doc": "The source IP address of the computer used to generate the event"},
+              {"name": "isp", "type": ["null","string"]},
+              {"name": "location", "type": ["null","GeoLocation"]}
+            ]
+          }]
+        },
+
+        {"name": "resolvable", "type": ["null",
+          {
+            "type":"record",
+            "name":"Resolvable",
+            "fields": [
+              {"name": "external_id", "type": "string"},
+              {"name": "batch_id", "type": ["null","string"]}
+            ]
+          }]
+        },
+
+        {"name": "client_device", "type": ["null",
+          {
+            "type":"record",
+            "name":"ClientDevice",
+            "fields": [
+              {"name": "user_agent", "type": ["null","string"], "doc": "The browsers 'User Agent' string"},
+              {"name": "browser", "type": ["null","string"]},
+              {"name": "browser_vendor", "type": ["null","string"]},
+              {"name": "browser_version", "type": ["null","string"]},
+              {"name": "device", "type": ["null","string"]},
+              {"name": "device_vendor", "type": ["null","string"]},
+              {"name": "os", "type": ["null","string"]},
+              {"name": "os_version", "type": ["null","string"]}
+            ]
+          }]
+        }
+
+      ]
+    },
+
+    {"name": "properties", "type": ["null",{"type":"map", "values": "string"}], "doc": "Free format JSON structure with additional information regarding the Event."},
+    {"name": "stream_id", "type": "string"},
+    {"name": "received_at", "type": "long", "logicalType":"timestamp-millis"},
+    {"name": "token", "type": "string", "doc": "A token used for templated/fill-inn when reporting the event."}
+
+ ]
+}
