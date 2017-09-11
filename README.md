@@ -24,7 +24,7 @@ terminology used in the AS Message model.
 The [AS Schema](/schema) directory will contain the AS schema in different formats.
 
 ### Contact and support
-* Feel free to create issues here or contact our [Integration Support team directly](mailto:support+integration@activivtystream.com).
+* Feel free to create issues here or contact our [Integration Support team directly](mailto:integration-support@activitystream.com).
 
 ### Todo
  - [X] Update the SDK so that it's based on the same Transportation classes as Core
