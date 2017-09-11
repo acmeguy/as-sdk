@@ -80,7 +80,7 @@ asEntity.toJson() ->
 ``` 
 Pleas read the [Introduction to AS Entity messages](as-entity-messages) for more information.
 
-### Entity Relations
+### Basic Entity Relation Types (Links) 
 Entity relations are used to link together entities in a symbolic way. An entity can be linked to any other business entity in Activity Stream. Relationship 
 types can be extended, times, wighted, distrusted or promoted.
 
@@ -143,7 +143,7 @@ Aspects offer feature rich and simple way to add commonly used information to bo
 that, when used, trigger extended enrichment and handling on the server side and have their own custom features for processing, presentation and storage.
   
 ### Event Aspects
-Primary AS Event aspects 
+A list of aspects that can be attached to any AS Event message 
 
   - [AB Testing](as-aspects#ab-testing)  
   - [Attachments](as-aspects#attachemnts)  
@@ -161,9 +161,8 @@ Primary AS Event aspects
 Please refer type the [AS Entity relationship types]() for further information
 
 ### Entity Aspects
-Primary AS Entity Aspects
+A list of aspects that can be attached to any AS Entity
 
-  - [AB Testing](as-aspects#ab-testing)  
   - [Attachments](as-aspects#attachemnts)  
   - [Address](as-aspects#address)  
   - [Classification](as-aspects#classification)    
