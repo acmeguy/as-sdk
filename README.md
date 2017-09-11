@@ -3,12 +3,13 @@
 The Activity Stream SDK is split up in to two components
 
 * **as-sdk** that contains core SDK files (this)
-* **[as-sdk-examples](/activitystream/as-sdk-examples)** which contains code and message examples
+* **[as-sdk-examples](https://github.com/activitystream/as-sdk-examples)** which contains code and message examples
 
 Both of these can be cloned and extended and pull-requests are welcome.
 
 ### Getting started
-It's a good start to read the **[Getting started guide]()** but the examples also contains boilerplate code designed to provide you with a quick start.
+It's a good start to read the **[Getting started guide](/documentation)** but the examples also contains boilerplate code designed to get you off to a
+quick start.
 We want to grow our message examples directory, included in the examples, considerably and with your help. Please respect those messages as a guideline
 for you messages but keep in mind that you can extend or alter them at will .
 
@@ -17,7 +18,7 @@ for you messages but keep in mind that you can extend or alter them at will .
 * Build hand crafted versions for each supported programming language that suit it very well.
 * Create interface classes that uses the terminology of specific verticals/industries to make adoption easier for those that prefer it over the generic 
 terminology used in the AS Message model.
-* Provide a wide range of [examples](/activitystream/as-sdk-examples) tailored for specific verticals  
+* Provide a wide range of [examples](https://github.com/activitystream/as-sdk-examples) tailored for specific verticals  
 
 ### The Activity Stream Schema
 The [AS Schema](/schema) directory will contain the AS schema in different formats.

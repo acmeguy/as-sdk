@@ -135,6 +135,11 @@ public class ASEvent extends CustomerEvent {
         return this;
     }
 
+    public ASEvent addImportance(ImportanceLevel importance) {
+        put(ASConstants.FIELD_IMPORTANCE, importance.ordinal());
+        return this;
+    }
+
     public ASEvent addImportance(Integer importance) {
         put(ASConstants.FIELD_IMPORTANCE, importance);
         return this;

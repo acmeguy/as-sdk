@@ -17,8 +17,19 @@ public class SimpleEventTests {
     @Test
     public void testBasicMessageValidation() throws IOException {
 
+        //Minimum valid Message
+        ASEvent asEvent = new ASEvent()
+                .addType("as.application.authentication.login")
+                .addOrigin("your.web.application")
+                .addOccurredAt("2017-01-01T00:00:00.000")
+                .addImportance(ImportanceLevel.NOT_IMPORTANT)
+                .addRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314");
+
+        Assert.assertEquals(asEvent.isValid(), true);
+        Assert.assertEquals(asEvent.validator().hasErrors(), 0);
+
         //Valid Message
-        ASEvent asEvent = new ASEvent("as.commerce.purchase.complete", "as.sdk.test", null, ImportanceLevel.NOT_IMPORTANT, "Customer/314");
+        asEvent = new ASEvent("as.commerce.purchase.complete", "as.sdk.test", null, ImportanceLevel.NOT_IMPORTANT, "Customer/314");
         Assert.assertEquals(asEvent.isValid(), true);
         Assert.assertEquals(asEvent.validator().hasErrors(), 0);
 
