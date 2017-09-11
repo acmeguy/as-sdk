@@ -7,6 +7,9 @@ The examples in this documentation will be updated to include versions in all su
 
 This short getting started tutorial demonstrates how to construct messages ready to be sent to Activity Stream.  
 
+## Including the SDK in your project
+Maven code N/A
+
 ## Initializing the SDK
 You can set the default country_code, currency and timezone before using the SDK. This can be handy if your data, for example, contains only local time 
 DateTimes and you want to make sure that the correct timezone information is retained in Activity Stream. 
