@@ -13,6 +13,16 @@ quick start.
 We want to grow our message examples directory, included in the examples, considerably and with your help. Please respect those messages as a guideline
 for you messages but keep in mind that you can extend or alter them at will .
 
+### Importing the SDK into your project
+
+Use these maven coordinates:
+
+    <dependency>
+        <groupId>com.activitystream</groupId>
+        <artifactId>as-sdk</artifactId>
+        <version>0.1.1</version>
+    </dependency>
+
 ### SDK Design Principles
 * Keep as-sdk as light as possible by introducing the as few external dependencies as possible.
 * Build hand crafted versions for each supported programming language that suit it very well.
