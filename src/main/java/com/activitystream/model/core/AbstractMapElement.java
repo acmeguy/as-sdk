@@ -218,7 +218,9 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
     }
 
     protected Object addMetric(AbstractMapElement root, Object... metrics) {
-        for (int i = 0; i < metrics.length; i = i + 2) addMetric((String) metrics[i], (Double) metrics[i + 1], root);
+        for (int i = 0; i < metrics.length; i = i + 2) {
+            addMetric((String) metrics[i], ((Number) metrics[i + 1]).doubleValue(), root);
+        }
         return this;
     }
 

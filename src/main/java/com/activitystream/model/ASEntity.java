@@ -9,6 +9,7 @@ import com.activitystream.model.interfaces.BaseStreamElement;
 import com.activitystream.model.interfaces.BaseStreamItem;
 import com.activitystream.model.relations.Relation;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.joda.time.DateTime;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -191,6 +192,24 @@ public class ASEntity extends BusinessEntity {
     }
 
     @Override
+    public ASEntity setNow() {
+        super.setNow();
+        return this;
+    }
+
+    public ASEntity addOccurredAt(DateTime timestamp) {
+        if (timestamp != null) put(ASConstants.FIELD_OCCURRED_AT, timestamp);
+        else remove(ASConstants.FIELD_OCCURRED_AT, timestamp);
+        return this;
+    }
+
+    public ASEntity addOccurredAt(String timestamp) {
+        if (timestamp != null) put(ASConstants.FIELD_OCCURRED_AT, DateTime.parse(timestamp));
+        else remove(ASConstants.FIELD_OCCURRED_AT, timestamp);
+        return this;
+    }
+
+    @Override
     @Deprecated
     public ASEntity addPresentation(String label, String thumbnail, String icon, String description, String detailsUrl) {
         super.addPresentation(label, thumbnail, icon, description, detailsUrl);
@@ -220,6 +239,12 @@ public class ASEntity extends BusinessEntity {
     @Override
     public ASEntity addMetric(String metric, double value) {
         super.addMetric(metric, value);
+        return this;
+    }
+
+    @Override
+    public ASEntity addMetric(Object... metrics) {
+        super.addMetric(this, metrics);
         return this;
     }
 

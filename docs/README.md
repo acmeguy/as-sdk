@@ -69,7 +69,6 @@ asEntity = new ASEntity("Customer","0071")
 ```
 This simple entity message produces the following JSON structure which is a valid Activity Stream entity messages.
 ```
-asEntity.toJson() ->
 {
   "entity_ref":"Customer/0071",
   "aspects":{
@@ -150,9 +149,10 @@ A list of aspects that can be attached to any AS Event message
 
   - [AB Testing](as-aspects#ab-testing)  
   - [Attachments](as-aspects#attachemnts)  
-  - [CEI](as-aspects#cei)  
+  - [Classification](as-aspects#classification)    
   - [Client IP](as-aspects#client-ip)  
   - [Client Device](as-aspects#client-device)  
+  - [Customer Experience Index](as-aspects#cei)  
   - [Dimensions](as-aspects#dimensions)    
   - [Geo Location](as-aspects#geo-location)    
   - [Items](as-aspects#items)
@@ -173,6 +173,7 @@ A list of aspects that can be attached to any AS Entity
   - [Dimensions](as-aspects#dimensions)    
   - [Geo Location](as-aspects#geo-location)    
   - [Metrics](as-aspects#metrics)
+  - [Presentation](as-aspects#presentation)
   - [Times](as-aspects#times)
 
 ## Sending messages to Activity Stream
