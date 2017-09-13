@@ -47,7 +47,8 @@ It provides a 3 level structure beneath the Entity Type (EntityType -> Classific
 ```
 ASEntity venue = new ASEntity("Venue", "983983");
 venue.addAspect(classification()
-        .addType("Concert Hall")
+        .addType("Theater")
+        .addVariant("Concert Hall")
         .addCategories("Classical","Pop","Variety","Shows"));
 ```
 Produces this Entity message in JSON:
@@ -56,7 +57,8 @@ Produces this Entity message in JSON:
   "entity_ref":"Venue/983983",
   "aspects":{
     "classification":{
-      "type":"Concert Hall",
+      "type":"Theater",
+      "variant":"Concert Hall",
       "categories":["Classical","Pop","Variety","Shows"]
     }
   }
