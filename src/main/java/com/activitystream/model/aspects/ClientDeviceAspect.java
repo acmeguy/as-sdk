@@ -15,7 +15,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class ClientDeviceAspect extends AbstractMapAspect implements CompactableElement, LinkedElement, EnrichableElement, AnalyticsElement {
+public class ClientDeviceAspect extends AbstractMapAspect implements CompactableElement, LinkedElement, EnrichableElement {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_CLIENT_DEVICE, ClientDeviceAspect::new) {
     };
@@ -84,28 +84,6 @@ public class ClientDeviceAspect extends AbstractMapAspect implements Compactable
     public void onEachRelationType(StreamItemRelationTypeConsumer action) {
         if (getRoot() instanceof BusinessEntity)
             action.accept(ASConstants.REL_USES_DEVICE, ((BusinessEntity) getRoot()).getElementType(), ASConstants.AS_CLIENT_DEVICE);
-    }
-
-    /************ Enrichment & Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        final String[] fields =
-                new String[]{ASConstants.FIELD_USER_AGENT, "browser", "browser_vendor", "browser_version", "device", "device_vendor", "os", "os_version"};
-
-        if (entry.getTimeSeriesType().equals("pageviews") || entry.getTimeSeriesType().equals(ASConstants.TIME_SERIES_EVENTS)) {
-            Map<String, Object> device = new LinkedHashMap<>();
-            device.put(ASConstants.FIELD_USER_AGENT, this.get(ASConstants.FIELD_USER_AGENT));
-            for (String field : fields) {
-                if (containsKey("_" + field) && get("_" + field) != null) device.put(field, get("_" + field));
-            }
-            entry.put("client_device", device);
-        }
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        throw new NotImplementedException();
     }
 
     /************ Assignment & Validation ************/

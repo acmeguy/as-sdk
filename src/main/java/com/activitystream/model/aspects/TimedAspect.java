@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.InvalidPropertyContentError;
@@ -13,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class TimedAspect extends AbstractMapAspect implements AnalyticsElement {
+public class TimedAspect extends AbstractMapAspect {
 
     public static final AspectType ASPECT_TYPE = new AspectType.Embedded(ASConstants.ASPECTS_TIMED, TimedAspect::new, AspectType.MergeStrategy.MERGE);
 
@@ -86,25 +85,6 @@ public class TimedAspect extends AbstractMapAspect implements AnalyticsElement {
 
     public TimeComponent getComponent(String type) {
         return (TimeComponent) get(type);
-    }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        Map<String, Object> timed = new LinkedHashMap<>();
-        timed.put(ASConstants.FIELD_DURATION, get(ASConstants.FIELD_DURATION));
-        final DateTime begins = getBegins();
-        final DateTime ends = getEnds();
-
-        timed.put(ASConstants.FIELD_BEGINS, begins);
-        timed.put(ASConstants.FIELD_ENDS, ends);
-        entry.put("timed", timed);
     }
 
     /************ Assignment & Validation ************/

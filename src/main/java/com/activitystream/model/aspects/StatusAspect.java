@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.UnsupportedAspectError;
@@ -10,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Map;
 
-public class StatusAspect extends AbstractMapAspect implements AnalyticsElement {
+public class StatusAspect extends AbstractMapAspect {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_STATUS, StatusAspect::new, AspectType.MergeStrategy.MERGE) {
         /*
@@ -85,18 +84,6 @@ public class StatusAspect extends AbstractMapAspect implements AnalyticsElement 
         return getVersion().equals(element.getRecord().getVersion());
     }
     */
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
-    }
 
     /************ Assignment & Validation ************/
 

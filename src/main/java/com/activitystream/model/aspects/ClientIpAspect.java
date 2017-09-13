@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class ClientIpAspect extends AbstractMapAspect implements CompactableElement, LinkedElement, EnrichableElement, AnalyticsElement {
+public class ClientIpAspect extends AbstractMapAspect implements CompactableElement, LinkedElement, EnrichableElement {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_CLIENT_IP, ClientIpAspect::new) {
     };
@@ -159,45 +159,6 @@ public class ClientIpAspect extends AbstractMapAspect implements CompactableElem
 
     public Double getLatitude() {
         return (Double) get("_latitude");
-    }
-
-    /************ Enrichment & Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
-        final String[] fields =
-                new String[]{"country_code", "isp", "continent", "city", "postal_code", "region", "longitude", "latitude", "dma_code", "timezone"};
-        Map<String, Object> ip = new LinkedHashMap<>();
-        ip.put("ip", get("ip"));
-        for (String field : fields) {
-            if (containsKey("_" + field) && get("_" + field) != null) ip.put(field, get("_" + field));
-
-            if (field.equals("timezone") && entry.containsKey(ASConstants.FIELD_OCCURRED_AT)) {
-                DateTime time = entry.getOccurredAt();
-                String timeZoneName = (String) get("_" + field);
-                if (timeZoneName != null && !timeZoneName.isEmpty()) {
-                    TimeZone timeZone = TimeZone.getTimeZone(timeZoneName);
-                    if (timeZone != null && !time.getZone().equals(timeZone)) {
-                        entry.put(ASConstants.FIELD_OCCURRED_AT_LTOD, time.toDate().getTime() + timeZone.getRawOffset());
-                    }
-                }
-            }
-        }
-        entry.put("client_ip", ip);
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-    }
-
-    private CharSequence getCharSequence(String property, String fallbackProperty) {
-        return (getOrDefault(property, getOrDefault(fallbackProperty, "")) != null) ?
-                (CharSequence) getOrDefault(property, getOrDefault(fallbackProperty, "")) : "";
-    }
-
-    private Double getDouble(String property) {
-        return (getOrDefault(property, 0d) != null) ? (Double) getOrDefault(property, 0d) : 0d;
     }
 
     /************ Assignment & Validation ************/

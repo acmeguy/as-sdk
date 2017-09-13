@@ -9,7 +9,7 @@ import com.activitystream.model.validation.InvalidPropertyContentError;
 import java.util.*;
 
 
-public class RelationsManager extends AbstractListElement<Relation> implements EmbeddedStreamElement, AnalyticsElement {
+public class RelationsManager extends AbstractListElement<Relation> implements EmbeddedStreamElement {
 
     List<String> validRelationsTypes = null;
 
@@ -107,36 +107,6 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
         for (Relation relation : this) {
             relation.simplify();
         }
-    }
-
-
-    /**
-     * Put primary relations in the time series map
-     *
-     * @param entry
-     */
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        for (Relation relation : this) {
-            if (relation.getRelatedEntityItem() instanceof BusinessEntity) {
-                entry.putAll(((BusinessEntity) relation.getRelatedEntityItem()).getEntityReference().asAnalyticsMap());
-                ((BusinessEntity) relation.getRelatedEntityItem()).addTimeSeriesDimensions(entry);
-
-            }
-        }
-    }
-
-    /**
-     * Put primary relations in the time series map
-     *
-     * @param entry
-     */
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        final long finalDepth = depth++;
-        this.forEach(relation -> {
-            relation.populateTimeSeriesEntry(entry, context, finalDepth);
-        });
     }
 
     /************  Utilities ************/

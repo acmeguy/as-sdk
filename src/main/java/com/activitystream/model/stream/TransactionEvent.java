@@ -564,32 +564,7 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
         remove(ASConstants.FIELD_SERIAL_NUMBERS);
     }
 
-    /************  Analytic functions ************/
-
-    @Override
-    public String getTimeSeriesType() {
-        return ASConstants.TIME_SERIES_TRANSACTIONS;
-    }
-
-    @Override
-    public List<TimeSeriesEntry> getAllTimeSeriesEntries() {
-        List<TimeSeriesEntry> timeSeriesEntries = new LinkedList<>();
-        TimeSeriesEntry transactionEntry = new TimeSeriesEntry(ASConstants.TIME_SERIES_TRANSACTIONS, null);
-        timeSeriesEntries.add(transactionEntry);
-        transactionEntry.putAll(getTimeSeriesMap());
-        addTimeSeriesDimensions(transactionEntry);
-        return timeSeriesEntries;
-    }
-
-    @Override
-    public Map<String, Object> getTimeSeriesMap() {
-        Map<String, Object> baseValues = super.getTimeSeriesMap();
-        return baseValues;
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-    }
+    /************  Utility functions ************/
 
     @Override
     public Map<String, Object> getEventSummaryMap() {
@@ -599,9 +574,6 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
         result.put(ASConstants.FIELD_PRICE_CATEGORY, getPriceCategory());
         return result;
     }
-
-    /************  Utility functions ************/
-
 
     /************  Access ************/
 

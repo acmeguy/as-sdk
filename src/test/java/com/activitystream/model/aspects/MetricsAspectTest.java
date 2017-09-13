@@ -3,8 +3,7 @@ package com.activitystream.model.aspects;
 import com.activitystream.model.ASEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static com.activitystream.model.aspects.PresentationAspect.presentation;
 
@@ -13,7 +12,7 @@ public class MetricsAspectTest {
 
     private static final Logger logger = LoggerFactory.getLogger(MetricsAspectTest.class);
 
-    @Test(groups = "unit")
+    @Test
     public void testMetricsTest() throws Exception {
 
         ASEntity venue = new ASEntity("Venue", "983983");
@@ -22,7 +21,7 @@ public class MetricsAspectTest {
         logger.warn("" + venue.toJSON());
     }
 
-    @Test(groups = "unit")
+    @Test
     public void testMetricsTrackedTest() throws Exception {
 
         ASEntity venue = new ASEntity("Venue", "983983")

@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.UnsupportedAspectError;
 import org.slf4j.Logger;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class TagsAspect extends AbstractListAspect<String> implements AnalyticsElement {
+public class TagsAspect extends AbstractListAspect<String> {
 
     public static final AspectType ASPECT_TYPE = new AspectType.Embedded(ASConstants.ASPECTS_TAGS, TagsAspect::new, null);
 
@@ -46,18 +45,6 @@ public class TagsAspect extends AbstractListAspect<String> implements AnalyticsE
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
-    }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        entry.put("tags", this);
     }
 
     /************ Assignment & Validation ************/

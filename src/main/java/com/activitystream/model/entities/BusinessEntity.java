@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static com.activitystream.model.ASConstants.*;
 
 public class BusinessEntity extends AbstractMapElement
-        implements BaseEntity, HasAspects, BaseStreamItem, EnrichableElement, ManagedRelationsElement, AnalyticsElement {
+        implements BaseEntity, HasAspects, BaseStreamItem, EnrichableElement, ManagedRelationsElement {
 
     public final static List<String> EXPANDED_RELATIONS = Arrays.asList("OUT:CLOSE", "BOTH:IS", "OUT:HOSTED_AT", "OUT:LOCATED_AT", "IN:POWERED_BY");
 
@@ -334,19 +334,6 @@ public class BusinessEntity extends AbstractMapElement
     @Override
     public String getMessageKey() {
         return this.messageKey;
-    }
-
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry timeSeries) {
-        if (hasAspects()) getAspectManager().addTimeSeriesDimensions(timeSeries);
-        if (hasRelations()) getRelationsManager().addTimeSeriesDimensions(timeSeries);
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        if (hasAspects()) getAspectManager().populateTimeSeriesEntry(entry, context, depth);
-        if (hasRelations()) getRelationsManager().populateTimeSeriesEntry(entry, context, depth);
     }
 
     /************  Processing ************/

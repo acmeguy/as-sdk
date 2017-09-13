@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.entities.EntityChangeMap;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
@@ -11,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class LocaleAspect extends AbstractMapAspect implements AnalyticsElement {
+public class LocaleAspect extends AbstractMapAspect {
 
     public static final AspectType ASPECT_TYPE = new AspectType.Embedded(ASConstants.ASPECTS_LOCALE, LocaleAspect::new, AspectType.MergeStrategy.REPLACE);
 
@@ -59,18 +58,6 @@ public class LocaleAspect extends AbstractMapAspect implements AnalyticsElement 
 
     public TimeZone getTimezone() {
         return (TimeZone) get(ASConstants.FIELD_TIMEZONE);
-    }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
     }
 
     /************ Assignment & Validation ************/

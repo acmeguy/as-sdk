@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.interfaces.DynamicAspect;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
@@ -13,7 +12,7 @@ import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.*;
 
-public class MetricsAspect extends AbstractMapAspect implements AnalyticsElement, DynamicAspect {
+public class MetricsAspect extends AbstractMapAspect implements DynamicAspect {
 
     public static final AspectType ASPECT_TYPE = new AspectType.Embedded(ASConstants.ASPECTS_METRICS, MetricsAspect::new, AspectType.MergeStrategy.REPLACE);
 
@@ -37,32 +36,6 @@ public class MetricsAspect extends AbstractMapAspect implements AnalyticsElement
     public AspectType getAspectType() {
         return ASPECT_TYPE;
     }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry series) {
-
-        Map<String, Double> metricsMap = new LinkedHashMap<>();
-        for (Map.Entry entry : (Set<Map.Entry>) entrySet()) {
-            if (entry.getValue() != null) {
-                try {
-                    metricsMap.put((String) entry.getKey(), new Double(entry.getValue().toString())); //Converting dimension values to strings for ingestion
-                } catch (NumberFormatException e) {
-                    logger.error("Error validating metrics: " + entry.getKey() + " with value: " + entry.getValue() + ", for " + this.root);
-                    throw e;
-                }
-            }
-        }
-        if (!metricsMap.isEmpty()) series.put(ASConstants.ASPECTS_METRICS, metricsMap); //Converting metrics values to double for ingestion
-
-    }
-
 
     /************ Assignment & Validation ************/
 

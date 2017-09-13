@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class Relation extends AbstractMapElement implements EmbeddedStreamElement, AnalyticsElement, EnrichableElement {
+public class Relation extends AbstractMapElement implements EmbeddedStreamElement, EnrichableElement {
 
     protected static final Logger logger = LoggerFactory.getLogger(Relation.class);
     private final static List<String> EXPANDED_ASPECTS =
@@ -339,45 +339,6 @@ public class Relation extends AbstractMapElement implements EmbeddedStreamElemen
         }
 
         return dir;
-    }
-
-    /************ Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-        String type = this.getRelationsType().getRelationsType();
-
-        if (this.isRelatedItemABusinessEntity()) {
-            BusinessEntity businessEntity = this.getRelatedBusinessEntity();
-
-            if (!(this.root instanceof BusinessEntity)) {
-                long weight = -depth;
-                ;
-                String baseType = type.split(":")[0];
-
-                if (ASConstants.ACTOR_RELATIONS.contains(baseType)) {
-                    entry.setRegisteredReferences("ACTOR", weight + 4, businessEntity.getEntityReference());
-                }
-                if (ASConstants.TARGET_RELATIONS.contains(baseType)) {
-                    entry.setRegisteredReferences("TARGET", weight + 3, businessEntity.getEntityReference());
-                }
-                if (ASConstants.PRODUCT_RELATIONS.contains(baseType)) {
-                    entry.setRegisteredReferences("TARGET", weight + 1, businessEntity.getEntityReference());
-                    entry.setRegisteredReferences("PRODUCT", weight + 2, businessEntity.getEntityReference());
-                }
-                if (baseType.equals("INVOLVES")) {
-                    entry.setRegisteredReferences(baseType, weight + 2, businessEntity.getEntityReference());
-                }
-            }
-
-            businessEntity.populateTimeSeriesEntry(entry, type, depth);
-        }
     }
 
     /************ Assignment & Validation ************/

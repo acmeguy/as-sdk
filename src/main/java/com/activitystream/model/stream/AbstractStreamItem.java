@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public abstract class AbstractStreamItem extends AbstractMapElement
-        implements HasAspects, BaseStreamItem, CanContainSubEvents, AnalyticsElement, InterestElement, ManagedRelationsElement {
+        implements HasAspects, BaseStreamItem, CanContainSubEvents, InterestElement, ManagedRelationsElement {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractStreamItem.class);
     private static final Set<String> IGNORED_PROPS =
@@ -95,18 +95,6 @@ public abstract class AbstractStreamItem extends AbstractMapElement
         List<TimeSeriesEntry> timeSeriesEntries = new LinkedList<>();
         if (getTimeSeriesType() != null) timeSeriesEntries.add(new TimeSeriesEntry(getTimeSeriesType(), null));
         return timeSeriesEntries;
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        if (hasAspects()) getAspectManager().addTimeSeriesDimensions(entry);
-        if (hasRelations()) getRelationsManager().addTimeSeriesDimensions(entry);
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        if (hasAspects()) getAspectManager().populateTimeSeriesEntry(entry, context, depth + 1);
-        if (hasRelations()) getRelationsManager().populateTimeSeriesEntry(entry, context, depth + 1);
     }
 
     /************ Access ************/

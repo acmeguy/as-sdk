@@ -1,16 +1,13 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.ASEntity;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.interfaces.BaseStreamElement;
-import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.IgnoredPropertyError;
 
 import java.util.*;
 
-public class ClassificationAspect extends AbstractMapAspect implements AnalyticsElement {
+public class ClassificationAspect extends AbstractMapAspect {
 
     public static final AspectType ASPECT_TYPE =
             new AspectType.Embedded(ASConstants.ASPECTS_CLASSIFICATION, ClassificationAspect::new, AspectType.MergeStrategy.MERGE) {
@@ -226,19 +223,6 @@ public class ClassificationAspect extends AbstractMapAspect implements Analytics
      */
     public ClassificationAspect addTags(String ... tags) {
         return addTags(Arrays.asList(tags));
-    }
-
-
-    /************ Enrichment & Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
     }
 
     /************ Assignment & Validation ************/

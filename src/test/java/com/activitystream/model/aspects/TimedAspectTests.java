@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
@@ -19,7 +19,7 @@ public class TimedAspectTests {
 
     @BeforeMethod(alwaysRun = true)
 
-    @Test(groups = "unit")
+    @Test
     public void testTimedAspectConstruction() throws Exception {
 
         TimedAspect celebrationPeriod = new TimedAspect("took", "2017-10-31", "2017-11-01");
@@ -39,7 +39,7 @@ public class TimedAspectTests {
     }
 
 
-    @Test(groups = "unit")
+    @Test
     public void constructsAspectFromBackwardsCompatibleMap() throws Exception {
 
         DateTimeZone timeZone = DateTimeZone.forOffsetHours(2);
@@ -62,7 +62,7 @@ public class TimedAspectTests {
         assertEquals(component.getDuration(), Long.valueOf(30000L));
     }
 
-    @Test(groups = "unit")
+    @Test
     public void providesBackwardsCompatibilityAccessors() throws Exception {
 
         DateTimeZone timeZone = DateTimeZone.forOffsetHours(2);

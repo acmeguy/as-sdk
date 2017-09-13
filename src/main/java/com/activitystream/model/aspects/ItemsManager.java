@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class ItemsManager extends AbstractListAspect<TransactionEvent> implements CanContainSubEvents, AnalyticsElement, EnrichableElement, LinkedElement {
+public class ItemsManager extends AbstractListAspect<TransactionEvent> implements CanContainSubEvents, EnrichableElement, LinkedElement {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_ITEMS, ItemsManager::new) {
         /*
@@ -58,31 +58,6 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
-    }
-
-    /**
-     * Put primary items in the time series map
-     *
-     * @param entry
-     */
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        for (TransactionEvent item : this) {
-            //if (relations.getRelatedEntityItem() instanceof BusinessEntity) {
-            //    series.putAll(((BusinessEntity) relations.getRelatedEntityItem()).getEntityReference().asAnalyticsMap());
-            // }
-            //items.getAllEntityReferences(); //all references are here
-        }
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        //todo - control this so that it's only called for persisted items or after detaching
-        /*
-        for (TransactionEvent transactionEvent : (List<TransactionEvent>) this) {
-            transactionEvent.populateTimeSeries(series, context, depth+1);
-        }
-        */
     }
 
     public ItemsManager mergeItemLine(TransactionEvent newLine) {

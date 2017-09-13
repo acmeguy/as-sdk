@@ -2,14 +2,13 @@ package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
 import com.activitystream.model.analytics.TimeSeriesEntry;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.interfaces.AspectInterface;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.UnsupportedAspectError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ABTestingAspect extends AbstractMapAspect implements AspectInterface, AnalyticsElement {
+public class ABTestingAspect extends AbstractMapAspect implements AspectInterface {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_AB_TEST, ABTestingAspect::new);
 
@@ -57,17 +56,6 @@ public class ABTestingAspect extends AbstractMapAspect implements AspectInterfac
     }
 
     //todo - create Esper friendly property getters
-
-    /************ Enrichment & Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
 
     /************ Assignment & Validation ************/
 

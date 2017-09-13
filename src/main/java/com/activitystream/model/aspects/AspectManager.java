@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 public class AspectManager extends AbstractMapElement
-        implements EmbeddedStreamElement, CompactableElement, CanContainSubEvents, EnrichableElement, AnalyticsElement {
+        implements EmbeddedStreamElement, CompactableElement, CanContainSubEvents, EnrichableElement {
 
     protected static final Logger logger = LoggerFactory.getLogger(AspectManager.class);
 
@@ -245,25 +245,7 @@ public class AspectManager extends AbstractMapElement
         return new LinkedList<>(keySet());
     }
 
-    /************ Enrichment & Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        for (AspectInterface aspect : (Collection<AspectInterface>) values()) {
-            if (aspect instanceof AnalyticsElement) {
-                ((AnalyticsElement) aspect).addTimeSeriesDimensions(entry);
-            }
-        }
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        for (AspectInterface aspect : (Collection<AspectInterface>) values()) {
-            if (aspect instanceof AnalyticsElement) {
-                ((AnalyticsElement) aspect).populateTimeSeriesEntry(entry, context, depth);
-            }
-        }
-    }
+    /************ Enrichment ************/
 
     @Override
     public void simplify() {

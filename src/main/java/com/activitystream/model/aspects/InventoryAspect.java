@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.IgnoredPropertyError;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InventoryAspect extends AbstractMapAspect implements AnalyticsElement {
+public class InventoryAspect extends AbstractMapAspect {
 
     public static final AspectType ASPECT_TYPE = new AspectType.Embedded(ASConstants.ASPECTS_INVENTORY, InventoryAspect::new, AspectType.MergeStrategy.REPLACE);
 
@@ -108,18 +107,6 @@ public class InventoryAspect extends AbstractMapAspect implements AnalyticsEleme
             variant.put(ASConstants.FIELD_ITEMS_RESERVED, 0d);
             variant.put(ASConstants.FIELD_ITEMS_IN_STOCK, variant.getOrDefault(ASConstants.FIELD_ITEMS_FOR_SALE, 0d));
         }
-    }
-
-    /************ Enrichment & Analytics ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
     }
 
     /************ Assignment & Validation ************/

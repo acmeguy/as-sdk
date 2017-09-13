@@ -4,14 +4,13 @@ import com.activitystream.model.ASConstants;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.interfaces.AspectInterface;
 import com.activitystream.model.validation.InvalidPropertyContentError;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.interfaces.LinkedElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class TrafficSourceAspect extends AbstractListAspect<TrafficSource> implements LinkedElement, AnalyticsElement {
+public class TrafficSourceAspect extends AbstractListAspect<TrafficSource> implements LinkedElement {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_TRAFFIC_SOURCES, TrafficSourceAspect::new,
             AspectType.MergeStrategy.REPLACE) {
@@ -42,18 +41,6 @@ public class TrafficSourceAspect extends AbstractListAspect<TrafficSource> imple
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
-    }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        get(0).populateTimeSeriesEntry(entry, context, depth);
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        get(0).addTimeSeriesDimensionsImpl(entry);
     }
 
     /************ Assignment & Validation ************/

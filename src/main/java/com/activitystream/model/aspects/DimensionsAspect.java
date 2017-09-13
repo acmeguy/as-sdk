@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.entities.EntityChangeMap;
 import com.activitystream.model.entities.EntityReference;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class DimensionsAspect extends AbstractMapAspect implements AnalyticsElement, DynamicAspect {
+public class DimensionsAspect extends AbstractMapAspect implements DynamicAspect {
 
     public static final AspectType ASPECT_TYPE =
             new AspectType.Embedded(ASConstants.ASPECTS_DIMENSIONS, DimensionsAspect::new, AspectType.MergeStrategy.MERGE) {
@@ -45,28 +44,6 @@ public class DimensionsAspect extends AbstractMapAspect implements AnalyticsElem
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
-    }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry series) {
-        Map<String, String> dimensionMap = new LinkedHashMap<>();
-        addToMap(dimensionMap);
-        if (!dimensionMap.isEmpty()) series.put("dimensions", dimensionMap); //Converting dimension values to strings for ingestion
-    }
-
-    public void addToMap(Map<? super String, ? super String> map) {
-        for (Map.Entry entry : (Set<Map.Entry>) entrySet()) {
-            String key = (String) entry.getKey();
-            if (!key.startsWith("_"))
-                map.putIfAbsent(key, (String) entry.getValue());
-        }
     }
 
     /************ Assignment & Validation ************/

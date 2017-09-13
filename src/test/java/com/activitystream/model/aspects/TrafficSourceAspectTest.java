@@ -4,8 +4,7 @@ import com.activitystream.model.ASConstants;
 import com.activitystream.model.ASEntity;
 import com.activitystream.model.entities.EntityReference;
 import com.google.common.collect.ImmutableMap;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -16,7 +15,7 @@ public class TrafficSourceAspectTest {
 
     private EntityReference entityRef = new EntityReference("Customer/1");
 
-    @Test(groups = "unit")
+    @Test
     public void constructsTrafficSourceFromMap() {
 
         Map<String, Object> map = ImmutableMap.<String, Object>builder()
@@ -45,7 +44,7 @@ public class TrafficSourceAspectTest {
         assertEquals(source.getTerm(), "the-term");
     }
 
-    @Test(groups = "unit")
+    @Test
     public void integerTrafficSourceIsInvalid() {
         ASEntity entity = new ASEntity(ImmutableMap.of(
                 ASConstants.FIELD_ENTITY_REF, entityRef,
@@ -54,7 +53,7 @@ public class TrafficSourceAspectTest {
         assertFalse(entity.isValid());
     }
 
-    @Test(groups = "unit")
+    @Test
     public void constructsTrafficSourceFromList() {
 
         List<Map<String, Object>> list = Collections.singletonList(ImmutableMap.<String, Object>builder()

@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class ProductViewAspect extends AbstractMapAspect implements LinkedElement, AnalyticsElement {
+public class ProductViewAspect extends AbstractMapAspect implements LinkedElement {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_PRODUCT_VIEW, ProductViewAspect::new) {
         /*
@@ -74,27 +74,6 @@ public class ProductViewAspect extends AbstractMapAspect implements LinkedElemen
         Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
         if (!map.isEmpty()) return map;
         return null;
-    }
-
-    /************  Analytical functions  ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-        final String[] fields = new String[]{ASConstants.FIELD_PATH, ASConstants.FIELD_SECTION, ASConstants.FIELD_REFERRER, ASConstants.FIELD_SIZE,
-                ASConstants.FIELD_METHOD,ASConstants.FIELD_DURATION, ASConstants.FIELD_STATUS};
-
-        if (entry.getTimeSeriesType().equals("pageviews")) {
-            Map<String, Object> pageView = new LinkedHashMap<>();
-            for (String field : fields) {
-                if (containsKey(field) && get(field) != null) pageView.put(field, get(field));
-            }
-            entry.put("pageview", pageView);
-        }
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
     }
 
     /************ Assignment & Validation ************/

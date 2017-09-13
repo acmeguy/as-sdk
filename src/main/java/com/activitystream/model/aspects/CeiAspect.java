@@ -1,14 +1,13 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.interfaces.AnalyticsElement;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.IgnoredPropertyError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CeiAspect extends AbstractMapAspect implements AnalyticsElement {
+public class CeiAspect extends AbstractMapAspect {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_CEI, CeiAspect::new);
 
@@ -66,18 +65,6 @@ public class CeiAspect extends AbstractMapAspect implements AnalyticsElement {
     }
 
     /************ Enrichment & Analytics ************/
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-
-    }
-
-    /************  Map Function  ************/
 
     @Override
     public Object put(Object key, Object value) {

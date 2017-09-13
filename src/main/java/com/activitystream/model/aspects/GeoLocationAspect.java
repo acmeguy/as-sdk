@@ -9,7 +9,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
 
-public class GeoLocationAspect extends AbstractMapAspect implements EnrichableElement, AnalyticsElement {
+public class GeoLocationAspect extends AbstractMapAspect implements EnrichableElement {
 
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_GEO_LOCATION, GeoLocationAspect::new, AspectType.MergeStrategy.REPLACE) {
         /*
@@ -131,16 +131,6 @@ public class GeoLocationAspect extends AbstractMapAspect implements EnrichableEl
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
-    }
-
-    @Override
-    public void populateTimeSeriesEntry(TimeSeriesEntry entry, String context, long depth) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void addTimeSeriesDimensions(TimeSeriesEntry entry) {
-
     }
 
     /************ Assignment & Validation ************/

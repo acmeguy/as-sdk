@@ -4,7 +4,7 @@ import com.activitystream.model.ASEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static com.activitystream.model.aspects.PresentationAspect.presentation;
 
@@ -13,7 +13,7 @@ public class PresentationAspectTest {
 
     private static final Logger logger = LoggerFactory.getLogger(PresentationAspectTest.class);
 
-    @Test(groups = "unit")
+    @Test
     public void testSimplePresentation() throws Exception {
 
         ASEntity venue = new ASEntity("Venue", "983983");
