@@ -1,7 +1,7 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.ASEntity;
+import com.activitystream.model.config.ASConfig;
 import com.activitystream.model.interfaces.*;
 import com.activitystream.model.entities.BusinessEntity;
 import com.activitystream.model.entities.EntityChangeMap;
@@ -31,6 +31,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     }}; //todo - replace with real lookup
 
     public AddressAspect() {
+        put(ASConstants.FIELD_COUNTRY_CODE, ASConfig.getDefaultCountryCode());
     }
 
     //todo - Remove this silly/custom cleanup stuff
@@ -57,6 +58,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     }
 
     public AddressAspect(String address, String address2, String city, String postcode, String country, String countryCode) {
+        this();
         if (address != null && !address.isEmpty()) put(ASConstants.FIELD_ADDRESS,address);
         if (address2 != null && !address2.isEmpty()) put(ASConstants.FIELD_ADDRESS_2, address2);
         if (city != null && !city.isEmpty()) put(ASConstants.FIELD_CITY,city);
