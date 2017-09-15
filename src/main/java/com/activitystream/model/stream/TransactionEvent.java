@@ -413,39 +413,21 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     }
 
     public void setItemCount(Double count) {
-        put(ASConstants.FIELD_ITEM_COUNT, count);
-    }
-
-    public TransactionEvent addItemCount(Double count) {
-        put(ASConstants.FIELD_ITEM_COUNT, count);
-        return this;
-    }
-
-    public TransactionEvent addToItemCount(Double count) {
-        put(ASConstants.FIELD_ITEM_COUNT, count + (Double) getOrDefault(ASConstants.FIELD_ITEM_COUNT, 0d));
-        return this;
-    }
-
-    public TransactionEvent addItemCount(String count) {
-        put(ASConstants.FIELD_ITEM_COUNT, Double.parseDouble(count));
-        return this;
+        if (count != null) put(ASConstants.FIELD_ITEM_COUNT, count);
+        else remove(ASConstants.FIELD_ITEM_COUNT);
     }
 
     public Double getItemPrice() {
         return (Double) getOrDefault(ASConstants.FIELD_ITEM_PRICE, 0d);
     }
 
-    public TransactionEvent addItemPrice(Double itemPrice) {
-        put(ASConstants.FIELD_ITEM_PRICE, itemPrice);
-        return this;
-    }
-
     public void setItemPrice(String itemPrice) {
         put(ASConstants.FIELD_ITEM_PRICE, Double.parseDouble(itemPrice));
     }
 
-    public void setItemPrice(Double price) {
-        put(ASConstants.FIELD_ITEM_PRICE, price);
+    public void setItemPrice(Number price) {
+        if (price != null) put(ASConstants.FIELD_ITEM_PRICE, price.doubleValue());
+        else remove(ASConstants.FIELD_ITEM_PRICE);
     }
 
     public String getItemName() {

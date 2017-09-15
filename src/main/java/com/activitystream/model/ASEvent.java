@@ -47,6 +47,10 @@ public class ASEvent extends CustomerEvent {
         this(type.toString().replaceAll("_",".").toLowerCase(), origin, description, importance, Arrays.asList(involves));
     }
 
+    public ASEvent(POP_TYPES type, String origin) {
+        this(type.toString().replaceAll("_",".").toLowerCase(), origin, null, ImportanceLevel.IMPORTANT, (Object) null);
+    }
+
     public ASEvent(String type, String origin, String description, ImportanceLevel importance, Object... involves) {
         this(type, origin, description, importance, Arrays.asList(involves));
     }
@@ -205,6 +209,14 @@ public class ASEvent extends CustomerEvent {
 
     public ASEvent addRelationIfValid(String type, String entityType, String entityId) {
         return addRelationIfValid(type, entityType, entityId, (Map) null, "Some");
+    }
+
+    public ASEvent addRelationIfValid(String type, String entityReference) {
+        if (entityReference != null) {
+            EntityReference entReference = new EntityReference(entityReference);
+            if (entReference.isValid()) addRelationIfValid(type, entReference);
+        }
+        return this;
     }
 
     public ASEvent addRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {

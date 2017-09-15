@@ -134,7 +134,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * What is the tpe of this line item.
      * @param transactionType Relationship type
-     * @return the same class for chaining
+     * @return this ASLineItem for chaining
      */
     @Deprecated
     public ASLineItem addTransactionType(String transactionType) {
@@ -145,7 +145,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * Sets the type of relations will be created between the actor and the product in this line
      * @param type Relationship type
-     * @return the same class for chaining
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addTransactionType(LINE_TYPES type) {
         super.setTransactionType(type.toString());
@@ -155,10 +155,15 @@ public class ASLineItem extends TransactionEvent {
     /**
      * What product is the target of this line item
      * @param purchaseRelation the main relationship for the line item
-     * @return the same class for chaining
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addProduct(Relation purchaseRelation) {
         super.setPurchaseRelation(purchaseRelation);
+        return this;
+    }
+
+    public ASLineItem addProduct(String entityRef) {
+        addProduct(getTransactionType(),new ASEntity(entityRef));
         return this;
     }
 
@@ -167,7 +172,7 @@ public class ASLineItem extends TransactionEvent {
      * Please refer to the respective functions for documentation.
      * @param transactionType
      * @param product The product which is the target of this line item
-     * @return the same class for chaining
+     * @return this ASLineItem for chaining
      */
     @Deprecated
     public ASLineItem addProduct(String transactionType, ASEntity product) {
@@ -185,7 +190,7 @@ public class ASLineItem extends TransactionEvent {
      * Products are usually a complete entity but sometimes the variant (color, size) are treated as variant of a single product.
      * Inventory calculations are done down to the variant level.
      * @param variant
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addVariant(String variant) {
         super.setVariant(variant);
@@ -195,10 +200,21 @@ public class ASLineItem extends TransactionEvent {
     /**
      * How many items of the product are the subjects of this line item.
      * @param count
-     * @return
+     * @return this ASLineItem for chaining
      */
-    public ASLineItem addItemCount(Double count) {
-        super.setItemCount(count);
+    public ASLineItem addItemCount(Number count) {
+        if (count != null) super.setItemCount(count.doubleValue());
+        else super.setItemCount(null);
+        return this;
+    }
+
+    /**
+     * How many items of the product are the subjects of this line item.
+     * @param count
+     * @return this ASLineItem for chaining
+     */
+    public ASLineItem addItemCount(String count) {
+        if (count != null) addItemCount(Double.parseDouble(count));
         return this;
     }
 
@@ -206,9 +222,9 @@ public class ASLineItem extends TransactionEvent {
      * What is the price of the individual item.
      * If individual items of the same product have different prices then create multiple line items
      * @param price
-     * @return
+     * @return this ASLineItem for chaining
      */
-    public ASLineItem addItemPrice(Double price) {
+    public ASLineItem addItemPrice(Number price) {
         super.setItemPrice(price);
         return this;
     }
@@ -217,7 +233,7 @@ public class ASLineItem extends TransactionEvent {
      * What is the price of the individual item.
      * If individual items of the same product have different prices then create multiple line items
      * @param price
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addItemPrice(String price) {
         super.setItemPrice(price);
@@ -227,7 +243,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * What currency is used to pay for the product
      * @param currency
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addCurrency(String currency) {
         super.setCurrency(currency);
@@ -236,9 +252,9 @@ public class ASLineItem extends TransactionEvent {
 
     /**
      * What price type is being applied to the line item.
-     * Some products have different price types available in ticketing
-     * @param priceType
-     * @return
+     * @param priceType Price Type refers to the buyer type or speciality pricing ("Children", "Seniors") while Price Category refers to product specific
+     *                  pricing (Zone or Treatment)
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addPriceType(String priceType) {
         super.setPriceType(priceType);
@@ -249,7 +265,7 @@ public class ASLineItem extends TransactionEvent {
      * What price category is being applied to the line item.
      * Some products have different price categories available in ticketing
      * @param priceCategory
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addPriceCategory(String priceCategory) {
         super.setPriceCategory(priceCategory);
@@ -259,7 +275,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * If the revenue generated by this line should be categorised on a particular account key than that can be specified here
      * @param accountingKey
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addAccountingKey(String accountingKey) {
         super.setAccountingKey(accountingKey);
@@ -270,7 +286,7 @@ public class ASLineItem extends TransactionEvent {
      * If this products belonging to this line item are complimentary then that can be specified here.
      * This usually means that the price of the line item is 0 but that is not enforced here
      * @param complimentary
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addComplimentary(Boolean complimentary) {
         super.setComplimentary(complimentary);
@@ -278,9 +294,20 @@ public class ASLineItem extends TransactionEvent {
     }
 
     /**
+     * If this products belonging to this line item are complimentary then that can be specified here.
+     * This usually means that the price of the line item is 0 but that is not enforced here
+     * @return this ASLineItem for chaining
+     */
+    public ASLineItem markAsComplimentary() {
+        super.setComplimentary(true);
+        addItemPrice(0);
+        return this;
+    }
+
+    /**
      * Specify the discount that should be deducted from the total price of this line as a percentage of the itemPrice * itemCount amount
      * @param commission
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addCommissionFixed(Double commission) {
         super.setCommissionFixed(commission);
@@ -290,7 +317,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * Specify the discount that should be deducted from the total price of this line as a fixed amount
      * @param commission
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addCommissionFixed(String commission) {
         super.setCommissionFixed(commission);
@@ -301,7 +328,7 @@ public class ASLineItem extends TransactionEvent {
      * Specify how much commission should be calculated from the total for this line item
      * Commission is not added or deducted fromthe price. It's used to calculate the yield of the product.
      * @param commission
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addCommissionPercentage(Double commission) {
         super.setCommissionPercentage(commission);
@@ -312,7 +339,7 @@ public class ASLineItem extends TransactionEvent {
      * If this line item should have a particular description then add it here.
      * This should not be used if the description can easily be assembled/templated from any of the details of the line item or the product
      * @param description
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addDescription(String description) {
         super.setDescription(description);
@@ -323,7 +350,7 @@ public class ASLineItem extends TransactionEvent {
      * Specifies how much tax should be added on top of the total for this line item
      * total price = ((item_count * item_price) - discount) + ((item_count * item_price) - discount) * taxPercentage
      * @param taxPercentage
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addTaxPercentage(Double taxPercentage) {
         super.setTaxPercentage(taxPercentage);
@@ -334,7 +361,7 @@ public class ASLineItem extends TransactionEvent {
      * If the product has a start date/time then this is it.
      * Please specify this for any shows or events (if known)
      * @param validFrom
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addValidFrom(DateTime validFrom) {
         super.setValidFrom(validFrom);
@@ -345,7 +372,7 @@ public class ASLineItem extends TransactionEvent {
      * If the product has a end date/time then this is it
      * Please specify this for shows and events (if known)
      * @param validUntil
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addValidUntil(DateTime validUntil) {
         super.setValidUntil(validUntil);
@@ -357,7 +384,7 @@ public class ASLineItem extends TransactionEvent {
      * Line ids are used to identify duplicates
      * A order with 10 lines may. for example, have a unique id ofr each item of the order.
      * @param ids
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addLineIds(Set<String> ids) {
         super.setLineIds(ids);
@@ -373,7 +400,7 @@ public class ASLineItem extends TransactionEvent {
      * Information regarding which payment method is used to pay for this line item
      * This is often the same for the whole order but not without exceptions
      * @param paymentMethod
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addPaymentMethod(String paymentMethod) {
         super.setPaymentMethod(paymentMethod);
@@ -384,7 +411,7 @@ public class ASLineItem extends TransactionEvent {
      * If the payment is made with a card then this is a obfuscated code for that card.
      * This is not the credit card number it self but a card number always produces the same code
      * @param cardToken
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addCardToken(String cardToken) {
         super.setCardToken(cardToken);
@@ -397,7 +424,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * The business entity responsible for selling the production belonging to this line item
      * @param soldByEntityRef
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addSoldBy(EntityReference soldByEntityRef) {
         addRelationIfValid(REL_TYPES.SOLD_BY.toString(), soldByEntityRef);
@@ -407,7 +434,7 @@ public class ASLineItem extends TransactionEvent {
     /**
      * The business entity used to rate this entity (Offer / Rating table)
      * @param offerEntityRef
-     * @return
+     * @return this ASLineItem for chaining
      */
     public ASLineItem addOffer(EntityReference offerEntityRef) {
         addRelationIfValid(REL_TYPES.RATED_BY.toString(), offerEntityRef);
@@ -458,5 +485,8 @@ public class ASLineItem extends TransactionEvent {
         return this;
     }
 
+    public static ASLineItem lineItem() {
+        return new ASLineItem();
+    }
 
 }

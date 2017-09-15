@@ -1,9 +1,13 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASEntity;
+import com.activitystream.model.config.ASConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Test;
+import org.testng.Assert;
+
+import java.util.TimeZone;
 
 import static com.activitystream.model.aspects.PresentationAspect.presentation;
 
@@ -18,17 +22,18 @@ public class MetricsAspectTest {
         ASEntity venue = new ASEntity("Venue", "983983");
         venue.addMetric("built",1941, "capacity", 5272);
 
-        logger.warn("" + venue.toJSON());
+        Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"metrics\":{\"built\":1941.0,\"capacity\":5272.0}}}"),true);
     }
 
     @Test
     public void testMetricsTrackedTest() throws Exception {
 
+        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
         ASEntity venue = new ASEntity("Venue", "983983")
                 .addMetric("built",1941, "capacity", 5272)
                 .addOccurredAt("2017-10-31T12:00:00-01:00");
 
-        logger.warn("" + venue.toJSON());
+        Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"metrics\":{\"built\":1941.0,\"capacity\":5272.0},\"status\":{\"update_occurred_at\":\"2017-10-31T12:00:00.000-01:00\"}}}"),true);
     }
 
 }

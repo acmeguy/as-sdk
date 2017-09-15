@@ -1,6 +1,8 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
+import com.activitystream.model.ASEntity;
+import com.activitystream.model.config.ASConfig;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -10,6 +12,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.junit.Test;
 
+import java.util.TimeZone;
+
+import static com.activitystream.model.aspects.TimedAspect.timed;
 import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
 
@@ -18,6 +23,21 @@ public class TimedAspectTests {
     private static final Logger logger = LoggerFactory.getLogger(TimedAspectTests.class);
 
     @BeforeMethod(alwaysRun = true)
+
+    @Test
+    public void simpleTimedAspectTest() throws Exception {
+
+        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+
+        ASEntity venue = new ASEntity("Venue", "983983");
+        venue.addAspect(timed()
+                .addPeriod("Construction","1867","1871")
+                .addPeriod("Inaugurated","1871-03-29")
+                .addPeriod("Renovated","1996","2004")
+        );
+
+        Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"timed\":{\"construction\":{\"begins\":\"1867-01-01T00:00:00.000Z\",\"ends\":\"1871-01-01T00:00:00.000Z\",\"duration\":126230400000},\"inaugurated\":{\"begins\":\"1871-03-29T00:00:00.000Z\"},\"renovated\":{\"begins\":\"1996-01-01T00:00:00.000Z\",\"ends\":\"2004-01-01T00:00:00.000Z\",\"duration\":252460800000}}}}"),true);
+    }
 
     @Test
     public void testTimedAspectConstruction() throws Exception {

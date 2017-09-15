@@ -42,6 +42,11 @@ public class TagsAspect extends AbstractListAspect<String> {
      * Utility functions
      ************/
 
+    public TagsAspect addTags(String ... tags) {
+        addAll(Arrays.asList(tags));
+        return this;
+    }
+
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
@@ -52,6 +57,10 @@ public class TagsAspect extends AbstractListAspect<String> {
     @Override
     public void verify() {
 
+    }
+
+    public static TagsAspect tags() {
+        return new TagsAspect();
     }
 
 }

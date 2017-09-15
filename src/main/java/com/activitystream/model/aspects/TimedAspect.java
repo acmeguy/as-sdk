@@ -2,6 +2,7 @@ package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
 import com.activitystream.model.analytics.TimeSeriesEntry;
+import com.activitystream.model.utils.Slugify;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.InvalidPropertyContentError;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
@@ -93,7 +94,7 @@ public class TimedAspect extends AbstractMapAspect {
     public Object put(Object key, Object value) {
 
         String theKey = key.toString();
-        String theLCKey = theKey.toLowerCase();
+        String theLCKey = Slugify.asSlug(theKey);
         if (!theKey.equals(theLCKey)) {
             this.addProblem(new AdjustedPropertyWarning("The property name: '" + theKey + "' was converted to lower case"));
             theKey = theLCKey;

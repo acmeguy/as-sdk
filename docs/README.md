@@ -56,6 +56,8 @@ Event relations are used to link all related entities to an event. There is no l
   - [REFERENCES](as-event-relations#references)
   - [OBSERVES](as-event-relations#observes)
 
+Pleas read the [AS Event relations](as-event-relations) for more information on Event Relations (Roles) in Activity Stream.
+
 ## Composing a AS Entity Message
 Entity messages are used to send information regarding business entities to Activity Stream but entity information can also be embedded in event messages. 
 Entity messages can also be used to collect time series information for any business entity.  
@@ -80,7 +82,7 @@ This simple entity message produces the following JSON structure which is a vali
   }
 }
 ``` 
-Pleas read the [Introduction to AS Entity messages](as-entity-messages) for more information.
+Pleas read the [Introduction to AS Entity messages](as-entity-messages) for more information on Entity Relations (Links) in Activity Stream
 
 ### Basic Entity Relation Types (Links) 
 Entity relations are used to link together entities in a symbolic way. An entity can be linked to any other business entity in Activity Stream. Relationship 
@@ -94,6 +96,7 @@ The primary relationship types are:
   - [KNOWS](as-entity-relations#knows) 
   - [KNOWS_OF](as-entity-relations#knows-of)
 
+Pleas read the [AS Entity relations](as-entity-relations) for more information.
 
 ## Composing a Event message with embedded Entity information
 Entity information can easily be embedded in entity meassages and there is no limit to the levels of nesting.
@@ -158,7 +161,7 @@ A list of aspects that can be attached to any AS Event message
   - [Items](as-aspects#items)
   - [Metrics](as-aspects#metrics)
   - [Tags](as-aspects#tags)
-  - [Times](as-aspects#times)
+  - [Timed](as-aspects#times)
   - [Traffic Source](as-aspects#traffic-sources)
 
 Please refer type the [AS Entity relationship types]() for further information
@@ -174,7 +177,7 @@ A list of aspects that can be attached to any AS Entity
   - [Geo Location](as-aspects#geo-location)    
   - [Metrics](as-aspects#metrics)
   - [Presentation](as-aspects#presentation)
-  - [Times](as-aspects#times)
+  - [Timed](as-aspects#times)
 
 ## Sending messages to Activity Stream
 This SDK does not cover sending messages to Activity Stream as that may vary. Please checkout the [SDK Examples](https://github

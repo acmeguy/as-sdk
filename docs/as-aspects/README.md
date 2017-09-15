@@ -4,6 +4,13 @@
 Aspects offer feature rich and simple way to add commonly used information to both AS Events and AS Entities. Aspects can be seen as schema-bits/plug-ins 
 that, when used, trigger extended enrichment and handling on the server side and have their own custom features for processing, presentation and storage.
 
+##Tracked aspects
+
+Some of the following aspects are tracked. This means that their value, and any changes, are reflected in time-series. That way, for example, the Geo 
+Location Aspect can be used to store the location of a vehicle over time and the Metrics Aspect can be used to store its speed, fuel_level, temperature and 
+other relevant metrics over time.
+   
+
 ### AB Testing
 The ab_test aspect is used to store AB Test results. Analytics for AB Tests are immediately available as well as real-time dashboards tailored for AB testing
 
@@ -77,14 +84,72 @@ The defaults can be stored for each Event-Type but they can also be explicitly d
 ### Demography
 Used to store demography information for an entity.
 
-### Dimensions
+### Dimensions *(tracked)*
 Generic store for ad-hoc dimensions.
 
-### Geo Location
+### Geo Location *(tracked)*
 If an event specifies a (geo) location then Activity Stream resolves it and provides additional information for it.
 After enrichment* the aspect returns location specific information.
 
-### Metrics
+### Items
+Used to represent line-items or transaction items for commerce.
+```
+        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+
+        ASEvent purchaseEvent = new ASEvent(ASEvent.POP_TYPES.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
+        purchaseEvent.addOccurredAt("2017-01-01T12:00:00")
+                .addRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
+                .addAspect(items()
+                        .addLine(lineItem()
+                                .addTransactionType(ASLineItem.LINE_TYPES.PURCHASED)
+                                .addItemCount(1)
+                                .addItemPrice(32.5)
+                                .addProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
+                                .addPriceCategory("Section A")
+                                .addPriceType("Seniors")
+                                .addVariant("VIP")
+                                .markAsComplimentary()
+                        )
+                );
+```
+Produces this Event message in JSON:
+```
+{
+  "occurred_at": "2017-01-01T12:00:00.000Z",
+  "type": "as.commerce.transaction.completed",
+  "origin": "www.web",
+  "involves": [
+    {
+      "BUYER": {
+        "entity_ref": "Customer/983938"
+      }
+    }
+  ],
+  "importance": 3,
+  "aspects": {
+    "items": [
+      {
+        "currency": "USD",
+        "item_count": 1.0,
+        "item_price": 0.0,
+        "involves": [
+          {
+            "PURCHASED": {
+              "entity_ref": "Event/398928"
+            }
+          }
+        ],
+        "price_category": "Section A",
+        "price_type": "Seniors",
+        "variant": "VIP",
+        "complementary": true
+      }
+    ]
+  }
+}
+```
+
+### Metrics *(tracked)*
 Generic store for ad-hoc metrics.
 ```
     ASEntity venue = new ASEntity("Venue", "983983");
@@ -125,6 +190,7 @@ Produces this Entity message in JSON and forces a data-point to be created with 
 }
 ```
 Metrics are created on demand and there is no practical limit to the number of metric/value pairs that can be stored.
+
 ### Presentation
 Commonly used fields to display human-readable entity information but applies to events as well.
 ```
@@ -154,11 +220,60 @@ Produces this Entity messages in JSON:
 
 ### Tags
 An array of strings used to further classify events in the activity stream. You can use any tag you like but keep in mind that a small set (low cardinality) of tags is commonly more useful than a large set of tags.
+```
+ASEntity venue = new ASEntity("Venue", "983983");
+venue.addAspect(tags().addTags("National"));
+```
+Produces this Entity messages in JSON:
+```
+{
+  "entity_ref":"Venue/983983",
+  "aspects":{
+    "tags":["National"]
+  }
+}
+```
 
-### Times
-Used to store times or periods associated with an entity or an event.
+### Timed
+Used to store timestamps or periods associated with an entity or an event.
+
+**Please note**: The Timed aspect is not design to store rough periods even though it can. (All dates are parsed and converted to timestamps)
+
+Reserved period types (lower-case "slugs"):
+- begins (used as the main period of an event)   
+- on_sale (example timed-type for ticketing)   
+- doors_open (example timed-type for ticketing)   
+```
+ASEntity venue = new ASEntity("Venue", "983983");
+venue.addAspect(timed()
+        .addPeriod("construction","1867","1871")
+        .addPeriod("inaugurated","1871-03-29")
+        .addPeriod("renovated","1996","2004")
+);
+```
+Produces this Entity messages in JSON: 
+```
+{
+  "entity_ref":"Venue/983983",
+  "aspects":{
+    "timed":{
+      "construction":{
+        "begins":"1867-01-01T00:00:00.000Z",
+        "ends":"1871-01-01T00:00:00.000Z",
+        "duration":126230400000
+      },
+      "inaugurated":{
+        "begins":"1871-03-29T00:00:00.000Z"
+      },
+      "renovated":{
+        "begins":"1996-01-01T00:00:00.000Z",
+        "ends":"2004-01-01T00:00:00.000Z",
+        "duration":252460800000
+      }
+    }
+  }
+}
+```
 
 ### Traffic Source
 Used to track campaign and origin information. It's mostly used for web traffic but can be used for any event.
-
-

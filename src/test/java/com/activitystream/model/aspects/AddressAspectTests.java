@@ -25,8 +25,6 @@ public class AddressAspectTests {
                 .addCountryCode("UK")
                 .addCountry("United Kingdom"));
 
-        logger.warn("Address: " + venue.toJSON());
-
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"address\":{\"address\":\"Kensington Gore\",\"city\":\"Kensington\",\"state\":\"Greater London\",\"zip_code\":\"SW7 2AP\",\"country_code\":\"UK\",\"country\":\"United Kingdom\"}}}"),true);
     }
 

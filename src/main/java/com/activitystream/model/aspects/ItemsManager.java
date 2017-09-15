@@ -55,6 +55,11 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
 
     /************ Enrichment & Analytics ************/
 
+    public ItemsManager addLine(TransactionEvent event) {
+        add(event);
+        return this;
+    }
+
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
@@ -63,7 +68,7 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
     public ItemsManager mergeItemLine(TransactionEvent newLine) {
         for (TransactionEvent existingLine : this) {
             if (existingLine.equals(newLine)) {
-                existingLine.addToItemCount(newLine.getItemCount());
+                existingLine.setItemCount(newLine.getItemCount());
                 existingLine.setLineIds(newLine.getLineIds());
                 return this;
             }
@@ -86,4 +91,7 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
         //for (TransactionEvent item : (List<TransactionEvent>) this) item.verify();
     }
 
+    public static ItemsManager items() {
+        return new ItemsManager();
+    }
 }
