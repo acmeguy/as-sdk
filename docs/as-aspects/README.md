@@ -1,15 +1,42 @@
-# Activity Stream SDK :: Getting Started 
+# Activity Stream SDK :: Aspects 
 
-## Aspects
+## Introduction and index
 Aspects offer feature rich and simple way to add commonly used information to both AS Events and AS Entities. Aspects can be seen as schema-bits/plug-ins 
 that, when used, trigger extended enrichment and handling on the server side and have their own custom features for processing, presentation and storage.
 
-##Tracked aspects
+Some aspects are used for both AS Events and AS Entities but some are dedicated to either one.
 
-Some of the following aspects are tracked. This means that their value, and any changes, are reflected in time-series. That way, for example, the Geo 
+| AS Event Aspects | AS Entity Aspects |
+| ------------- | ------------- |
+| [AB Testing](#ab-testing) | [Address](#address)  |
+| [Attachments](#attachments) | [Attachments](#attachments)  |
+| [Classification](#classification) | [Classification](#classification)  |
+| [Client Device](#clientdevice) | [Demography](#dimensions)  |
+| [Client IP](#clientip) | [Dimensions](#dimensions) |
+| [Dimensions](#dimensions)  | [Geo location](#geo-location) |
+| [Geo location](#geo-location) | [Metrics](#metrics) |
+| [Items](#items)  | [Inventory](#inventory) |
+| [Metrics](#metrics) | [Presentation](#presentation) |
+| [Presentation](#presentation) | [Properties](#properties) |
+| [Properties](#properties) | [Tags](#tags) |
+| [Tags](#tags) | [Timed](#timed) |
+| [Timed](#timed) |  |
+| [Traffic Source](#traffic-source) |  |
+
+## Tracked aspects
+Some aspects are tracked. This means that their value, and any changes to them, are reflected in time-series. That way, for example, the Geo 
 Location Aspect can be used to store the location of a vehicle over time and the Metrics Aspect can be used to store its speed, fuel_level, temperature and 
 other relevant metrics over time.
-   
+
+- [AB Testing](#ab-testing)
+- [Attachments](#attachments)
+- [Classification](#classification)
+- [Demography](#dimensions)
+- [Dimensions](#dimensions)
+- [Geo location](#geo-location)
+- [Inventory](#inventory)
+- [Metrics](#metrics)
+  
 
 ### AB Testing
 The ab_test aspect is used to store AB Test results. Analytics for AB Tests are immediately available as well as real-time dashboards tailored for AB testing
@@ -215,6 +242,15 @@ Produces this AS Entity message in JSON:
     }
   }
 }
+```
+### Properties
+Used to store any custom properties for AS Events or AS Entities. Properties are stored in the JSON format received. The contents of properties is not 
+analysed or put into analytics store but they can be used in presenting the Entity or the event in the activity stream and are valid inputs for any 
+templating of events.
+```
+```
+Produces this AS Entity message in JSON:
+```
 ```
 
 ### Tags
