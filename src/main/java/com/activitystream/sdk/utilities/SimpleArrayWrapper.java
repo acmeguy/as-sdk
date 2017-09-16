@@ -1,13 +1,14 @@
 package com.activitystream.sdk.utilities;
 
-public class SimpleArrayWrapper {
+public class SimpleArrayWrapper implements ColumnarDataReader {
 
-    String[] line;
+    private String[] line;
 
     public SimpleArrayWrapper(String[] line) {
         this.line = line;
     }
 
+    @Override
     public String column(Enum field) {
         return this.line[field.ordinal()];
     }

@@ -9,6 +9,7 @@ import com.activitystream.model.interfaces.BaseStreamElement;
 import com.activitystream.model.interfaces.BaseStreamItem;
 import com.activitystream.model.relations.Relation;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -250,6 +251,20 @@ public class ASEntity extends BusinessEntity {
 
     public ASEntity addDeletedFlag(boolean deleted) {
         directPut(ASConstants.FIELD_DELETE, deleted);
+        return this;
+    }
+
+    public ASEntity addDimensionIfNotBlank(String dimension, String value) {
+        if (!Strings.isNullOrEmpty(value)) {
+            super.addDimension(dimension, value);
+        }
+        return this;
+    }
+
+    public ASEntity addPropertyIfNotBlank(String dimension, String value) {
+        if (!Strings.isNullOrEmpty(value)) {
+            super.addProperties(dimension, value);
+        }
         return this;
     }
 

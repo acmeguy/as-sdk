@@ -12,6 +12,7 @@ import com.activitystream.model.relations.RelationsManager;
 import com.activitystream.model.stream.CustomerEvent;
 import com.activitystream.model.stream.ImportanceLevel;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -246,6 +247,19 @@ public class ASEvent extends CustomerEvent {
         return this;
     }
 
+    public ASEvent addDimensionIfNotBlank(String dimension, String value) {
+        if (!Strings.isNullOrEmpty(value)) {
+            super.addDimension(dimension, value, this);
+        }
+        return this;
+    }
+
+    public ASEvent addPropertyIfNotBlank(String dimension, String value) {
+        if (!Strings.isNullOrEmpty(value)) {
+            super.addProperties(dimension, value);
+        }
+        return this;
+    }
 
     @Override
     public ASEvent addProperties(Object... properties) {

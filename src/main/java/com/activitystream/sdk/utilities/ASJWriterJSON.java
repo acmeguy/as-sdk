@@ -5,13 +5,14 @@ import com.activitystream.model.interfaces.BaseStreamItem;
 import com.activitystream.model.ASEvent;
 
 import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ASJWriterJSON {
+public class ASJWriterJSON implements Closeable {
 
     Map<File, BufferedWriter> asWriters = new LinkedHashMap();
     String ouputPath;
@@ -20,6 +21,12 @@ public class ASJWriterJSON {
     public ASJWriterJSON(String ouputPath, String nameTempalate) {
         this.ouputPath = ouputPath;
         this.nameTempalate = nameTempalate;
+    }
+
+    public <T extends BaseStreamItem> void writeStreamItems(T[] streamItem) throws IOException {
+        for (T item : streamItem) {
+            writeStreamItem(item);
+        }
     }
 
     public void writeStreamItem(BaseStreamItem streamItem) throws IOException {
