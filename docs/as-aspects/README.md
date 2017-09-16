@@ -11,7 +11,7 @@ Some aspects are used for both AS Events and AS Entities but some are dedicated 
 | [AB Testing](#ab-testing) | [Address](#address)  |
 | [Attachments](#attachments) | [Attachments](#attachments)  |
 | [Classification](#classification) | [Classification](#classification)  |
-| [Client Device](#clientdevice) | [Demography](#dimensions)  |
+| [Client Device](#clientdevice) | [Demography](#demography)  |
 | [Client IP](#clientip) | [Dimensions](#dimensions) |
 | [Dimensions](#dimensions)  | [Geo location](#geo-location) |
 | [Geo location](#geo-location) | [Metrics](#metrics) |
@@ -111,10 +111,10 @@ The defaults can be stored for each Event-Type but they can also be explicitly d
 ### Demography
 Used to store demography information for an entity.
 
-### Dimensions *(tracked)*
+### Dimensions
 Generic store for ad-hoc dimensions.
 
-### Geo Location *(tracked)*
+### Geo Location
 If an event specifies a (geo) location then Activity Stream resolves it and provides additional information for it.
 After enrichment* the aspect returns location specific information.
 
@@ -175,8 +175,8 @@ Produces this AS Event message in JSON:
 }
 ```
 
-### Metrics *(tracked)*
-Generic store for ad-hoc metrics.
+### Metrics
+Generic store for ad-hoc metrics. Metrics are tracked.
 ```
     ASEntity venue = new ASEntity("Venue", "983983");
     venue.addMetric("built",1941, "capacity", 5272);
