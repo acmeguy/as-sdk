@@ -21,8 +21,6 @@ public class DimensionsAspectTest {
         venue.addDimension("house_color","white");
         venue.addDimensions("door_faces","north", "door_color","brown");
 
-        logger.warn("venue " + venue.toJSON());
-
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"dimensions\":{\"house_color\":\"white\",\"door_faces\":\"north\",\"door_color\":\"brown\"}}}"),true);
     }
 
