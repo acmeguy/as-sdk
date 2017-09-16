@@ -247,20 +247,6 @@ public class ASEvent extends CustomerEvent {
         return this;
     }
 
-    public ASEvent addDimensionIfNotBlank(String dimension, String value) {
-        if (!Strings.isNullOrEmpty(value)) {
-            super.addDimension(dimension, value, this);
-        }
-        return this;
-    }
-
-    public ASEvent addPropertyIfNotBlank(String dimension, String value) {
-        if (!Strings.isNullOrEmpty(value)) {
-            super.addProperties(dimension, value);
-        }
-        return this;
-    }
-
     @Override
     public ASEvent addProperties(Object... properties) {
         super.addProperties(properties);

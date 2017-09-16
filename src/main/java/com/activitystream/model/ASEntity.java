@@ -254,20 +254,6 @@ public class ASEntity extends BusinessEntity {
         return this;
     }
 
-    public ASEntity addDimensionIfNotBlank(String dimension, String value) {
-        if (!Strings.isNullOrEmpty(value)) {
-            super.addDimension(dimension, value);
-        }
-        return this;
-    }
-
-    public ASEntity addPropertyIfNotBlank(String dimension, String value) {
-        if (!Strings.isNullOrEmpty(value)) {
-            super.addProperties(dimension, value);
-        }
-        return this;
-    }
-
     /************  UtilityFunctions ************/
 
     public String toJSON() throws JsonProcessingException {
