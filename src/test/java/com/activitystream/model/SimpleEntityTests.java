@@ -10,6 +10,8 @@ import org.testng.Assert;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
+import static com.activitystream.model.aspects.AddressAspect.address;
+import static com.activitystream.model.aspects.ClassificationAspect.classification;
 import static com.activitystream.model.aspects.DemographyAspect.demography;
 import static com.activitystream.model.aspects.PresentationAspect.presentation;
 import static com.activitystream.model.aspects.TrafficSource.trafficSource;
@@ -47,6 +49,46 @@ public class SimpleEntityTests {
         //Test the Stream ID
         Assert.assertEquals(customerWithRelations.getStreamId().toString().equals("08c80573-6440-3c74-8fbe-e1d7738d75b3"), true);
 
+    }
+
+    @Test
+    public void createCustomerEntityWithAspects() throws IOException {
+        ASEntity customer = new ASEntity("Agent","007")
+                .addAspect(presentation()
+                        .addLabel("James Bond")
+                        .addThumbnail("http://www.007.com/wp-content/uploads/2014/01/Roger-Moore-james-bond-BW.jpg")
+                        .addIcon("007-icon")
+                        .addDescription("Dude working for a Queen killing people, mostly")
+                        .addDetailsUrl("http://www.007.com/"))
+                .addAspect(demography()
+                        .addGender("male")
+                        .addBirthDate("1968-04-13")
+                        .addEmployment("Governmental Employee")
+                        .addEthnicity("Caucasian")
+                        .addMaritalStatus("Very Single")
+                        .addHousing("Lives alone")
+                        .addMosaicGroup("Wealthy World Traveller")
+                        .addEducation("Like to have a degree")
+                        .addIncome("400k$ - 800k$"))
+                .addAspect(address()
+                        .addAddress("61 Horseferry Road")
+                        .addPostCode("SW1")
+                        .addCity("Westminster")
+                        .addRegion("London")
+                        .addState("Greater London")
+                        .addCountry("United Kingdom")
+                        .addCountryCode("UK")
+                ).addAspect(classification()
+                        .addType("individual")
+                        .addVariant("employee")
+                        .addCategories("agent","secret")
+                        .addTags("kills bad guys","travels","mostly obeys","womanizer","loyal","utility")
+                )
+                .addRelationIfValid(ASEntityRelationTypes.AKA,"Email","007@mi5.gov.uk")
+                .addRelationIfValid(ASEntityRelationTypes.AKA,"Phone","+441007007007", "secure_line",true)
+                .addPartition("mi5_only");
+
+        Assert.assertEquals(customer.toJSON().equals("{\"entity_ref\":\"Agent/007\",\"aspects\":{\"presentation\":{\"label\":\"James Bond\",\"thumbnail\":\"http://www.007.com/wp-content/uploads/2014/01/Roger-Moore-james-bond-BW.jpg\",\"icon\":\"007-icon\",\"description\":\"Dude working for a Queen killing people, mostly\",\"details_url\":\"http://www.007.com/\"},\"demography\":{\"gender\":\"male\",\"gender_guessed\":false,\"birth_day\":13,\"birth_year\":1968,\"birth_month\":4,\"employment\":\"Governmental Employee\",\"ethnicity\":\"Caucasian\",\"marital_status\":\"Very Single\",\"income\":\"400k$ - 800k$\",\"mosaic_group\":\"Wealthy World Traveller\",\"education\":\"Like to have a degree\"},\"address\":{\"address\":\"61 Horseferry Road\",\"zip_code\":\"SW1\",\"city\":\"Westminster\",\"region\":\"London\",\"state\":\"Greater London\",\"country\":\"United Kingdom\",\"country_code\":\"UK\"},\"classification\":{\"type\":\"individual\",\"variant\":\"employee\",\"categories\":[\"agent\",\"secret\"],\"tags\":[\"kills bad guys\",\"travels\",\"mostly obeys\",\"womanizer\",\"loyal\",\"utility\"]}},\"relations\":[{\"AKA\":{\"entity_ref\":\"Email/007@mi5.gov.uk\"}},{\"AKA\":{\"entity_ref\":\"Phone/+441007007007\"},\"properties\":{\"secure_line\":true}}],\"partition\":\"mi5_only\"}"),true);
     }
 
     @Test

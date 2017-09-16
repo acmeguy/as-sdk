@@ -111,9 +111,62 @@ The defaults can be stored for each Event-Type but they can also be explicitly d
 ### Demography
 Used to store demography information for an entity.
 
+```
+ASEntity secretAgent = new ASEntity("Agent", "007");
+secretAgent.addAspect(demography()
+        .addGender("male")
+        .addBirthDate("1968-04-13")
+        .addEmployment("Governmental Employee")
+        .addEthnicity("Caucasian")
+        .addMaritalStatus("Very Single")
+        .addHousing("Lives alone")
+        .addMosaicGroup("Wealthy World Traveller")
+        .addEducation("Like to have a degree")
+        .addIncome("400k$ - 800k$"));
+```
+Produces this AS Entity message in JSON:
+```
+{
+  "entity_ref":"Agent/007",
+  "aspects":{
+    "demography":{
+      "gender":"male",
+      "gender_guessed":false,
+      "birth_day":13,
+      "birth_year":1968,
+      "birth_month":4,
+      "employment":"Governmental Employee",
+      "ethnicity":"Caucasian",
+      "marital_status":"Very Single",
+      "income":"400k$ - 800k$",
+      "mosaic_group":"Wealthy World Traveller","education":"Like to have a degree"
+    }
+  }
+}
+```
+
 ### Dimensions
 Generic store for ad-hoc dimensions.
-
+All values in dimensions are added to all time-series that are created for the AS Event or the AS Entity. In that way AB test results, page-views, purchases or 
+any other aspect that automatically generated time-series dynamically get extra dimensions for slicing and dicing.
+```
+ASEntity venue = new ASEntity("Venue", "983983");
+venue.addDimension("house_color","white");
+venue.addDimensions("door_faces","north", "door_color","brown");
+```
+Produces this AS Entity message in JSON:
+```
+{
+  "entity_ref":"Venue/983983",
+  "aspects":{
+    "dimensions":{
+      "house_color":"white",
+      "door_faces":"north",
+      "door_color":"brown"
+    }
+  }
+}
+```
 ### Geo Location
 If an event specifies a (geo) location then Activity Stream resolves it and provides additional information for it.
 After enrichment* the aspect returns location specific information.
@@ -246,12 +299,39 @@ Produces this AS Entity message in JSON:
 ### Properties
 Used to store any custom properties for AS Events or AS Entities. Properties are stored in the JSON format received. The contents of properties is not 
 analysed or put into analytics store but they can be used in presenting the Entity or the event in the activity stream and are valid inputs for any 
-templating of events.
+templating of events.  
+
 ```
+ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+ASEntity venue = new ASEntity("Venue", "983983")
+        .addProperties("some_boolean",true)
+        .addProperties("date", DateTime.parse("2017-01-01T00:00:00.000Z"))
+        .addProperties("a_map", Collections.singletonMap("map_value",Collections.singletonMap("nested",true)))
+        .addProperties("a_sttring", "Yes, I'm a String")
+        .addProperties("one_of_many", true, "two_of_many",true, "four_of_many",false, "item_index",4, "position_name","five");
 ```
 Produces this AS Entity message in JSON:
 ```
+{
+  "entity_ref":"Venue/983983",
+  "properties":{
+    "some_boolean":true,
+    "date":"2017-01-01T00:00:00.000Z",
+    "a_map":{
+      "map_value":{
+        "nested":true
+      }
+    },
+    "a_sttring":"Yes, I'm a String",
+    "one_of_many":true,
+    "two_of_many":true,
+    "four_of_many":false,
+    "item_index":4,
+    "position_name":"five"
+  }
+}
 ```
+*please note:* Properties are now stored as a part of the "aspect" structure.
 
 ### Tags
 An array of strings used to further classify events in the activity stream. You can use any tag you like but keep in mind that a small set (low cardinality) of tags is commonly more useful than a large set of tags.
