@@ -132,14 +132,15 @@ Produces this AS Entity message in JSON:
     "demography":{
       "gender":"male",
       "gender_guessed":false,
-      "birth_day":13,
       "birth_year":1968,
       "birth_month":4,
+      "birth_day":13,
       "employment":"Governmental Employee",
       "ethnicity":"Caucasian",
       "marital_status":"Very Single",
       "income":"400k$ - 800k$",
-      "mosaic_group":"Wealthy World Traveller","education":"Like to have a degree"
+      "mosaic_group":"Wealthy World Traveller",
+      "education":"Like to have a degree"
     }
   }
 }
