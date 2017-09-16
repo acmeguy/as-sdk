@@ -26,7 +26,7 @@ venue.addAspect(address()
         .addCountryCode("UK")
         .addCountry("United Kingdom"));
 ```
-Produces this Entity message in JSON:
+Produces this AS Entity message in JSON:
 ```
 {
   "entity_ref":"Venue/983983",
@@ -58,7 +58,7 @@ venue.addAspect(classification()
         .addVariant("Concert Hall")
         .addCategories("Classical","Pop","Variety","Shows"));
 ```
-Produces this Entity message in JSON:
+Produces this AS Entity message in JSON:
 ```
 {
   "entity_ref":"Venue/983983",
@@ -101,18 +101,17 @@ Used to represent line-items or transaction items for commerce.
                 .addRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
                 .addAspect(items()
                         .addLine(lineItem()
-                                .addTransactionType(ASLineItem.LINE_TYPES.PURCHASED)
-                                .addItemCount(1)
-                                .addItemPrice(32.5)
                                 .addProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
+                                .addItemCount(1)
+                                .addItemPrice(32.5) //this is turned into 0 when marked as complimentary
                                 .addPriceCategory("Section A")
                                 .addPriceType("Seniors")
                                 .addVariant("VIP")
-                                .markAsComplimentary()
+                                .markAsComplimentary() //Sets as complimentary and changes the price to 0
                         )
                 );
 ```
-Produces this Event message in JSON:
+Produces this AS Event message in JSON:
 ```
 {
   "occurred_at": "2017-01-01T12:00:00.000Z",
@@ -129,9 +128,6 @@ Produces this Event message in JSON:
   "aspects": {
     "items": [
       {
-        "currency": "USD",
-        "item_count": 1.0,
-        "item_price": 0.0,
         "involves": [
           {
             "PURCHASED": {
@@ -139,10 +135,13 @@ Produces this Event message in JSON:
             }
           }
         ],
+        "item_count": 1.0,
+        "item_price": 0.0,
         "price_category": "Section A",
         "price_type": "Seniors",
         "variant": "VIP",
-        "complementary": true
+        "complementary": true,
+        "currency": "USD"
       }
     ]
   }
@@ -155,7 +154,7 @@ Generic store for ad-hoc metrics.
     ASEntity venue = new ASEntity("Venue", "983983");
     venue.addMetric("built",1941, "capacity", 5272);
 ```
-Produces this Entity message in JSON:
+Produces this AS Entity message in JSON:
 ```
 {
   "entity_ref":"Venue/983983",
@@ -175,7 +174,7 @@ ASEntity venue = new ASEntity("Venue", "983983")
         .addMetric("built",1941, "capacity", 5272)
         .addOccurredAt("2017-10-31T12:00:00-01:00");
 ```
-Produces this Entity message in JSON and forces a data-point to be created with a specific time. 
+Produces this AS Entity message in JSON and forces a data-point to be created with a specific time. 
 ```
 {
   "entity_ref":"Venue/983983",
@@ -202,7 +201,7 @@ ASEntity venue = new ASEntity("Venue", "983983")
         .addThumbnail("https://cdn.royalalberthall.com/file/1396975600/32830992449")
         .addIcon("ol-venue"));
 ```
-Produces this Entity messages in JSON:
+Produces this AS Entity message in JSON:
 ```
 {
   "entity_ref":"Venue/983983",
@@ -224,7 +223,7 @@ An array of strings used to further classify events in the activity stream. You 
 ASEntity venue = new ASEntity("Venue", "983983");
 venue.addAspect(tags().addTags("National"));
 ```
-Produces this Entity messages in JSON:
+Produces this AS Entity message in JSON:
 ```
 {
   "entity_ref":"Venue/983983",
@@ -251,7 +250,7 @@ venue.addAspect(timed()
         .addPeriod("renovated","1996","2004")
 );
 ```
-Produces this Entity messages in JSON: 
+Produces this AS Entity message in JSON: 
 ```
 {
   "entity_ref":"Venue/983983",

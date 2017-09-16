@@ -252,14 +252,16 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
     }
 
     protected Object addDimension(String dimension, String value, AbstractMapElement root) {
-        DimensionsAspect dimensionsAspect = getAspectManager(true, root).getDimensions();
-        if (dimensionsAspect == null) {
-            dimensionsAspect = new DimensionsAspect() {{
-                put(dimension, value);
-            }};
-            getAspectManager().put(ASConstants.ASPECTS_DIMENSIONS, dimensionsAspect);
-        } else {
-            dimensionsAspect.put(dimension, value);
+        if (value != null && !value.isEmpty()) {
+            DimensionsAspect dimensionsAspect = getAspectManager(true, root).getDimensions();
+            if (dimensionsAspect == null) {
+                dimensionsAspect = new DimensionsAspect() {{
+                    put(dimension, value);
+                }};
+                getAspectManager().put(ASConstants.ASPECTS_DIMENSIONS, dimensionsAspect);
+            } else {
+                dimensionsAspect.put(dimension, value);
+            }
         }
         return this;
     }
@@ -292,14 +294,16 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
     }
 
     public Object addProperties(String property, Object value) {
-        Map<String, Object> properties = getProperties();
-        if (properties == null) {
-            properties = new LinkedHashMap<String,Object>() {{
-                put(property, value);
-            }};
-            put(ASConstants.FIELD_PROPERTIES, properties);
-        } else {
-            properties.put(property, value);
+        if (value != null) {
+            Map<String, Object> properties = getProperties();
+            if (properties == null) {
+                properties = new LinkedHashMap<String,Object>() {{
+                    put(property, value);
+                }};
+                put(ASConstants.FIELD_PROPERTIES, properties);
+            } else {
+                properties.put(property, value);
+            }
         }
         return this;
     }
