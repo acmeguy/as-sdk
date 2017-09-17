@@ -6,6 +6,8 @@
 
 ## Common and custom role properties
 
+## Custom Roles
+
 ## ACTOR
 ### BUYER
 ### SOLD_BY
