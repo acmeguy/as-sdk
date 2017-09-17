@@ -1,6 +1,6 @@
 # Activity Stream :: AS Entity Messages
 
-##Introduction to AS Entities
+## Introduction to AS Entities
 Entities (Business objects) represent any object that is referenced by events in the activity stream. 
 An insurance company would typically, and at least, have Customer, Vehicle, Policy and Claim as entity-types and numerous entities of each entity-type.
 
