@@ -195,6 +195,11 @@ public class ASEvent extends CustomerEvent {
 
     /************  UtilityFunctions ************/
 
+    public ASEvent addType(PAST type) {
+        put(ASConstants.FIELD_TYPE, type.toString().replaceAll("_",".").toLowerCase());
+        return this;
+    }
+
     public ASEvent addType(String type) {
         put(ASConstants.FIELD_TYPE, type);
         return this;

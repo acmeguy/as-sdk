@@ -132,7 +132,13 @@ public class ClientIpAspect extends AbstractMapAspect implements CompactableElem
     }
 
     public String getIp() {
-        return (String) get("ip");
+        return (String) get(ASConstants.FIELD_IP);
+    }
+
+    public ClientIpAspect addIp(String ip) {
+        if (ip != null && !ip.isEmpty()) put(ASConstants.FIELD_IP, ip);
+        else remove(ASConstants.FIELD_IP);
+        return this;
     }
 
     public String getEntityReference() {
@@ -196,5 +202,13 @@ public class ClientIpAspect extends AbstractMapAspect implements CompactableElem
     @Override
     public void verify() {
 
+    }
+
+    public static ClientIpAspect clientIP() {
+        return new ClientIpAspect();
+    }
+
+    public static ClientIpAspect clientIP(String clientIP) {
+        return new ClientIpAspect(clientIP, null);
     }
 }

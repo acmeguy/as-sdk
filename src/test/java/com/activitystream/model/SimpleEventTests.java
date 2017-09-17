@@ -1,5 +1,6 @@
 package com.activitystream.model;
 
+import com.activitystream.model.relations.ASEntityRelationTypes;
 import com.activitystream.model.relations.ASEventRelationTypes;
 import com.activitystream.model.relations.Relation;
 import com.activitystream.model.stream.ImportanceLevel;
@@ -10,9 +11,53 @@ import org.testng.Assert;
 
 import java.io.IOException;
 
+import static com.activitystream.model.aspects.ClassificationAspect.classification;
+import static com.activitystream.model.aspects.ClientDeviceAspect.clientDevice;
+import static com.activitystream.model.aspects.ClientIpAspect.clientIP;
+import static com.activitystream.model.aspects.PresentationAspect.presentation;
+
 public class SimpleEventTests {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleEventTests.class);
+
+    @Test
+    public void basicASEventTests() throws IOException {
+
+        //Minimum valid Message
+        ASEvent webVisitStarts = new ASEvent()
+                .addType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
+                .addOrigin("wwww.mysite.domain")
+                .addOccurredAt("2017-01-01T00:00:00.000Z")
+                .addRelationIfValid(ASEventRelationTypes.ACTOR,"Customer","007")
+                .addAspect(classification()
+                        .addType("virtual")
+                        .addVariant("web"))
+                .addAspect(clientIP("127.0.0.1"))
+                .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
+
+        Assert.assertEquals(webVisitStarts.toJSON().equals("{\"type\":\"as.crm.visit.started\",\"origin\":\"wwww.mysite.domain\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/007\"}}],\"aspects\":{\"classification\":{\"type\":\"virtual\",\"variant\":\"web\"},\"client_ip\":{\"ip\":\"127.0.0.1\"},\"client_device\":{\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36\"}}}"),true);
+
+        ASEntity customer = new ASEntity("Customer","30893928")
+                .addAspect(presentation()
+                        .addLabel("John Doe"))
+                .addRelationIfValid(ASEntityRelationTypes.AKA,"Email", "john.doe@gmail.com")
+                .addRelationIfValid(ASEntityRelationTypes.AKA,"Phone", "+150012348765");
+
+        webVisitStarts = new ASEvent()
+                .addType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
+                .addOrigin("wwww.mysite.domain")
+                .addOccurredAt("2017-01-01T00:00:00.000Z")
+                .addRelation(ASEventRelationTypes.ACTOR,customer)
+                .addAspect(classification()
+                        .addType("virtual")
+                        .addVariant("web"))
+                .addAspect(clientIP("127.0.0.1"))
+                .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
+
+        Assert.assertEquals(webVisitStarts.toJSON().equals("{\"type\":\"as.crm.visit.started\",\"origin\":\"wwww.mysite.domain\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/30893928\",\"aspects\":{\"presentation\":{\"label\":\"John Doe\"}},\"relations\":[{\"AKA\":{\"entity_ref\":\"Email/john.doe@gmail.com\"}},{\"AKA\":{\"entity_ref\":\"Phone/+150012348765\"}}]}}],\"aspects\":{\"classification\":{\"type\":\"virtual\",\"variant\":\"web\"},\"client_ip\":{\"ip\":\"127.0.0.1\"},\"client_device\":{\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36\"}}}"),true);
+
+        logger.warn("asEvent: " + webVisitStarts.toJSON());
+    }
 
     @Test
     public void testBasicMessageValidation() throws IOException {

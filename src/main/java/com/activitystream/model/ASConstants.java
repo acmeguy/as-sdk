@@ -215,6 +215,8 @@ public class ASConstants {
     public static final String FIELD_BEGINS = "begins";
     public static final String FIELD_ENDS = "ends";
 
+    public static final String FIELD_IP = "ip";
+
     public static final String FIELD_LABEL = "label";
     public static final String FIELD_DETAILS_URL = "details_url";
     public static final String FIELD_THUMBNAIL = "thumbnail";

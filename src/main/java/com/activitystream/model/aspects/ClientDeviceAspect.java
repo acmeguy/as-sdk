@@ -56,6 +56,12 @@ public class ClientDeviceAspect extends AbstractMapAspect implements Compactable
         return (String) get(ASConstants.FIELD_USER_AGENT);
     }
 
+    public ClientDeviceAspect addUserAgent(String userAgent) {
+        if (userAgent != null && !userAgent.isEmpty()) put(ASConstants.FIELD_USER_AGENT,userAgent);
+        else remove(ASConstants.FIELD_USER_AGENT);
+        return this;
+    }
+
     @Override
     public void compact() {
     }
@@ -115,5 +121,13 @@ public class ClientDeviceAspect extends AbstractMapAspect implements Compactable
     @Override
     public void verify() {
 
+    }
+
+    public static ClientDeviceAspect clientDevice() {
+        return new ClientDeviceAspect();
+    }
+
+    public static ClientDeviceAspect clientDevice(String clientDevice) {
+        return new ClientDeviceAspect(clientDevice, null);
     }
 }
