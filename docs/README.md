@@ -1,4 +1,4 @@
-# Activity Stream SDK :: Getting Started 
+# Activity Stream :: Getting Started using the SDK 
 
 ## Introduction
 This SDK currently contains only a Java version but other versions will be available soon with c#, python and go planned for the 3nd wave.

@@ -1,4 +1,4 @@
-# Activity Stream SDK :: Aspects 
+# Activity Stream :: AS Aspects 
 
 ## Introduction and index
 Aspects offer feature rich and simple way to add commonly used information to both AS Events and AS Entities. Aspects can be seen as schema-bits/plug-ins 

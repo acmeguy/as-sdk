@@ -1,4 +1,4 @@
-#Activity Stream SDK :: Event Messages
+# Activity Stream :: AS Event Messages
 
 ##Introduction to AS Events
 The activity stream is based on events that are sent from various business or operations systems every time something of operational or business relevance happens. 

@@ -1,4 +1,4 @@
-#Activity Stream SDK :: Entity Messages
+# Activity Stream :: AS Entity Messages
 
 ##Introduction to AS Entities
 Entities (Business objects) represent any object that is referenced by events in the activity stream. 
