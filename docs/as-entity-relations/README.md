@@ -1,12 +1,12 @@
-# Activity Stream :: AS Event Relations (Roles) 
+# Activity Stream :: AS Entity Relations (Links) 
 
 ## Introduction
 
-
-##Diagram
 ![Entity Relations - Links](ASEntityRelations.png)
 
-### IS
+## Common and custom link properties
+
+## IS
 ### AKA
 ### ALIAS
 ### SOCIAL_ID

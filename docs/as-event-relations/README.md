@@ -2,10 +2,9 @@
 
 ## Introduction
 
-
-##Diagram
 ![Event Relations - Roles](ASEventRelations.png)
 
+## Common and custom role properties
 
 ## ACTOR
 ### BUYER
