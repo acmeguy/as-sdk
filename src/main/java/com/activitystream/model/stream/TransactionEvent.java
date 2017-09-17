@@ -1,7 +1,6 @@
 package com.activitystream.model.stream;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.aspects.*;
 import com.activitystream.model.config.ASConfig;
 import com.activitystream.model.entities.BusinessEntity;
@@ -458,12 +457,12 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     }
 
     boolean getComplimentary() {
-        return (boolean) getOrDefault(ASConstants.FIELD_COMPLEMENTARY, false);
+        return (boolean) getOrDefault(ASConstants.FIELD_COMPLIMENTARY, false);
     }
 
     public void setComplimentary(Boolean complimentary) {
-        if (complimentary != null && complimentary) put(ASConstants.FIELD_COMPLEMENTARY, complimentary);
-        else remove(ASConstants.FIELD_COMPLEMENTARY);
+        if (complimentary != null && complimentary) put(ASConstants.FIELD_COMPLIMENTARY, complimentary);
+        else remove(ASConstants.FIELD_COMPLIMENTARY);
     }
 
     double getCommissionPercentage() {
@@ -627,9 +626,10 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
             case ASConstants.FIELD_LINE_IDS:
                 value = validator().processSimpleValueList(theKey, value, false);
                 break;
-            case ASConstants.FIELD_COMPLEMENTARY:
+            case ASConstants.FIELD_COMPLIMENTARY:
+            case "complementary":
             case "is_comp":
-                theKey = ASConstants.FIELD_COMPLEMENTARY;
+                theKey = ASConstants.FIELD_COMPLIMENTARY;
                 value = validator().processBoolean(theKey, value, false);
                 break;
             case ASConstants.FIELD_ITEM_COUNT:

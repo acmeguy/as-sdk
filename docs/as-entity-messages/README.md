@@ -22,7 +22,7 @@ Event Sourcing - The ultimate time-machine
 Entities are only updated with event/entity messages and each alteration is stored as an event in the activity stream. This allows us to know the state of the entity at any point in time.
 
 
-## Composite AS Entity message example
+## AS Entity message example
 ```
 ASEntity secretAgent = new ASEntity("Agent","007")
         .addAspect(presentation()

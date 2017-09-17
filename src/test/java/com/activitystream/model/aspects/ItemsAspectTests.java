@@ -29,7 +29,7 @@ public class ItemsAspectTests {
 
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
-        ASEvent purchaseEvent = new ASEvent(ASEvent.POP_TYPES.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
+        ASEvent purchaseEvent = new ASEvent(ASEvent.PAST.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
         purchaseEvent.addOccurredAt("2017-01-01T12:00:00")
                 .addRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
                 .addAspect(items()
@@ -44,7 +44,7 @@ public class ItemsAspectTests {
                         )
                 );
 
-        Assert.assertEquals(purchaseEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"www.web\",\"involves\":[{\"BUYER\":{\"entity_ref\":\"Customer/983938\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/398928\"}}],\"item_count\":1.0,\"item_price\":0.0,\"price_category\":\"Section A\",\"price_type\":\"Seniors\",\"variant\":\"VIP\",\"complementary\":true}]}}"),true);
+        Assert.assertEquals(purchaseEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"www.web\",\"involves\":[{\"BUYER\":{\"entity_ref\":\"Customer/983938\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/398928\"}}],\"item_count\":1.0,\"item_price\":0.0,\"price_category\":\"Section A\",\"price_type\":\"Seniors\",\"variant\":\"VIP\",\"complimentary\":true}]}}"),true);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ItemsAspectTests {
 
         ASEvent event = new ASEvent(
                 "2017-09-01T10:10:10.010-0000",
-                ASEvent.POP_TYPES.AS_COMMERCE_TRANSACTION_COMPLETED,
+                ASEvent.PAST.AS_COMMERCE_TRANSACTION_COMPLETED,
                 "test",
                 null,
                 ImportanceLevel.IMPORTANT,

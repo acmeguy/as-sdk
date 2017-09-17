@@ -163,7 +163,7 @@
                 {"name": "commission_percentage", "type": ["null","double"], "doc":"How many percentages of the sale should be considered commission"},
                 {"name": "discount_percentage", "type": ["null","double"], "doc":"How much discount should be deducted from the item price."},
                 {"name": "tax_percentage", "type": ["null","double"], "doc":"How much tax should be added on top of the item price."},
-                {"name": "complementary", "type": "boolean", "doc":"Is this a complimentary item (not sold)"},
+                {"name": "complimentary", "type": "boolean", "doc":"Is this a complimentary item (not sold)"},
                 {"name": "currency", "type": ["null","string"], "doc":"What currency was used to pay for the item"},
                 {"name": "variant", "type": ["null","string"], "doc":"What product sub-type/variant was sold (from Invoentory)"},
                 {"name": "accounting_key", "type": ["null","string"], "doc":"Should this revenue be assigned to a specific accounting key"},

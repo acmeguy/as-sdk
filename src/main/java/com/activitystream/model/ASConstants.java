@@ -119,7 +119,7 @@ public class ASConstants {
     public static final String FIELD_TRANSACTION_TYPE = "transaction_type";
     public static final String FIELD_PRODUCT = "product";
     public static final String FIELD_ITEM_COUNT = "item_count";
-    public static final String FIELD_COMPLEMENTARY = "complementary";
+    public static final String FIELD_COMPLIMENTARY = "complimentary";
     public static final String FIELD_ITEM_PRICE = "item_price";
     public static final String FIELD_ITEMS_FOR_SALE = "items_for_sale";
     public static final String FIELD_ITEMS_IN_STOCK = "items_in_stock";

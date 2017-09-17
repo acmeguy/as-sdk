@@ -12,7 +12,6 @@ import com.activitystream.model.relations.RelationsManager;
 import com.activitystream.model.stream.CustomerEvent;
 import com.activitystream.model.stream.ImportanceLevel;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -21,34 +20,99 @@ import java.util.*;
 public class ASEvent extends CustomerEvent {
 
     /**
+     * Predefined AS Event Types (PAST)
      * Popular AS event types put here for convenience
-     *
+     * Custom event types are created just by adding them to the event as type.
      */
-    public static enum POP_TYPES {
-        AS_COMMERCE_TRANSACTION_COMPLETED,
-        AS_COMMERCE_CART_UPDATED,
+    public static enum PAST {
 
-        AS_ENTERTAINMENT_SHOW_STARTS,
-        AS_ENTERTAINMENT_SHOW_ENDS,
-        AS_ENTERTAINMENT_SHOW_ANNOUNCED,
-        AS_ENTERTAINMENT_SHOW_PRESALE_STARTS,
-        AS_ENTERTAINMENT_SHOW_ONSALE_STARTS,
-        AS_ENTERTAINMENT_SEAT_ASSIGNED,
-        AS_ENTERTAINMENT_SEAT_UNASSIGNED,
-        AS_ENTERTAINMENT_TICKET_ISSUED,
-        AS_ENTERTAINMENT_TICKET_INVALIDATED,
-        AS_ENTERTAINMENT_TICKET_TRANSFERRED,
-        AS_ENTERTAINMENT_TICKET_USED
+        AS_COMMERCE_PRODUCT_VIEWED,
+        AS_COMMERCE_PRODUCT_SEARCHED,
+        AS_COMMERCE_PRODUCT_CARTED,
+        AS_COMMERCE_PRODUCT_UNCARTED,
+        AS_COMMERCE_PRODUCT_UNAVAILABLE,
+
+        AS_COMMERCE_ORDER_UPDATED,
+        AS_COMMERCE_ORDER_ABANDONED,
+        AS_COMMERCE_ORDER_DELIVERY_SELECTED,
+        AS_COMMERCE_ORDER_RESERVATION_STARTED,
+        AS_COMMERCE_ORDER_RESERVATION_TIMEOUT,
+        AS_COMMERCE_ORDER_REVIEWED,
+
+        AS_COMMERCE_PAYMENT_COMPLETED,
+        AS_COMMERCE_PAYMENT_STARTED,
+        AS_COMMERCE_PAYMENT_FAILED,
+        AS_COMMERCE_PAYMENT_TIMEDOUT,
+
+        AS_COMMERCE_TRANSACTION_COMPLETED,
+
+        AS_COMMERCE_SHIPMENT_CREATED,
+        AS_COMMERCE_SHIPMENT_PREPARED,
+        AS_COMMERCE_SHIPMENT_PICKUP,
+        AS_COMMERCE_SHIPMENT_HOP,
+        AS_COMMERCE_SHIPMENT_DELIVERED,
+        AS_COMMERCE_SHIPMENT_DELIVERY_ATTEMPTED,
+        AS_COMMERCE_SHIPMENT_DELIVERY_FAILED,
+
+        AS_PM_ISSUE_CREATED,
+        AS_PM_ISSUE_ASSIGNED,
+        AS_PM_ISSUE_PROMOTED,
+        AS_PM_ISSUE_DEMOTED,
+        AS_PM_ISSUE_SOLVED,
+        AS_PM_ISSUE_CLOSED,
+        AS_PM_ISSUE_REOPENED,
+        AS_PM_ISSUE_UPDATED,
+        AS_PM_ISSUE_RATED,
+        AS_PM_ISSUE_COMMENT_CREATED,
+
+        AS_MESSAGE_SENT,
+        AS_MESSAGE_BOUNCED,
+        AS_MESSAGE_OPENED,
+        AS_MESSAGE_CLICKED,
+        AS_MESSAGE_SUBSCRIBED,
+        AS_MESSAGE_UNSUBSCRIBED,
+
+        AS_CONVERSATION_ATTEMPTED,
+        AS_CONVERSATION_STARTED,
+        AS_CONVERSATION_ENDED,
+
+        AS_SEAT_ASSIGNED,
+        AS_SEAT_UNASSIGNED,
+
+        AS_EVENT_TICKET_ISSUED,
+        AS_EVENT_TICKET_INVALIDATED,
+        AS_EVENT_TICKET_TRANSFERRED,
+        AS_EVENT_TICKET_USED,
+        AS_EVENT_TICKET_REUSED,
+        AS_EVENT_STARTS,
+        AS_EVENT_ENDS,
+        AS_EVENT_ANNOUNCED,
+        AS_EVENT_CANCELLED,
+        AS_EVENT_PRESALE_STARTS,
+        AS_EVENT_ONSALE_STARTS,
+        AS_EVENT_DOORS_OPEN,
+        AS_EVENT_DOORS_CLOSE,
+
+        AS_AUTHENTICATION_USER_CREATED,
+        AS_AUTHENTICATION_USER_REMOVED,
+        AS_AUTHENTICATION_USER_BLOCKED,
+        AS_AUTHENTICATION_PASSWORD_SET,
+        AS_AUTHENTICATION_PASSWORD_CHANGED,
+        AS_AUTHENTICATION_PASSWORD_CONFIRMED,
+        AS_AUTHENTICATION_EMAIL_CONFIRMED,
+        AS_AUTHENTICATION_LOGIN_SUCCEED,
+        AS_AUTHENTICATION_LOGIN_FAILED,
+        AS_AUTHENTICATION_LOGOUT_SUCCEED,
     }
 
     public ASEvent() {
     }
 
-    public ASEvent(POP_TYPES type, String origin, String description, ImportanceLevel importance, Object... involves) {
+    public ASEvent(PAST type, String origin, String description, ImportanceLevel importance, Object... involves) {
         this(type.toString().replaceAll("_",".").toLowerCase(), origin, description, importance, Arrays.asList(involves));
     }
 
-    public ASEvent(POP_TYPES type, String origin) {
+    public ASEvent(PAST type, String origin) {
         this(type.toString().replaceAll("_",".").toLowerCase(), origin, null, ImportanceLevel.IMPORTANT, (Object) null);
     }
 
@@ -60,7 +124,7 @@ public class ASEvent extends CustomerEvent {
         this(new DateTime(), type, origin, description, importance, involves);
     }
 
-    public ASEvent(String occurred_at, POP_TYPES type, String origin, String description, ImportanceLevel importance, Object... involves) {
+    public ASEvent(String occurred_at, PAST type, String origin, String description, ImportanceLevel importance, Object... involves) {
         this(occurred_at, type.toString().replaceAll("_",".").toLowerCase(), origin, description, importance, Arrays.asList(involves));
     }
 

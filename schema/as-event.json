@@ -434,7 +434,7 @@
         "item_count":             { "type":"number", "description":"How many items of this product+type+variant were bought." },
         "item_price":             { "type":"number", "description":"What was the price for individual item (before tax and discount)" },
         "commission_percentage":  { "type":"number", "description":"How many percentages of the sale should be considered commission" },
-        "complementary":          { "type":"boolean", "description":"Is this a complimentary item (not sold)" },
+        "complimentary":          { "type":"boolean", "description":"Is this a complimentary item (not sold)" },
         "discount_percentage":    { "type":"number", "description":"How much discount should be deducted from the item price." },
         "tax_percentage":         { "type":"number", "description":"How much tax should be added on top of the item price."},
         "aspects":                { "$ref": "#/definitions/item-aspects", "description":"Aspects that can be added to item line" },

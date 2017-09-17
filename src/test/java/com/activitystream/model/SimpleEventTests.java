@@ -21,12 +21,13 @@ public class SimpleEventTests {
         ASEvent asEvent = new ASEvent()
                 .addType("as.application.authentication.login")
                 .addOrigin("your.web.application")
-                .addOccurredAt("2017-01-01T00:00:00.000")
+                .addOccurredAt("2017-01-01T00:00:00.000Z")
                 .addImportance(ImportanceLevel.NOT_IMPORTANT)
                 .addRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314");
 
         Assert.assertEquals(asEvent.isValid(), true);
         Assert.assertEquals(asEvent.validator().hasErrors(), 0);
+        Assert.assertEquals(asEvent.toJSON().equals("{\"type\":\"as.application.authentication.login\",\"origin\":\"your.web.application\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"importance\":2,\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/314\"}}]}"), true);
 
         //Valid Message
         asEvent = new ASEvent("as.commerce.purchase.complete", "as.sdk.test", null, ImportanceLevel.NOT_IMPORTANT, "Customer/314");

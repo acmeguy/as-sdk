@@ -221,7 +221,7 @@ Produces this AS Event message in JSON:
         "price_category": "Section A",
         "price_type": "Seniors",
         "variant": "VIP",
-        "complementary": true,
+        "complimentary": true,
         "currency": "USD"
       }
     ]
