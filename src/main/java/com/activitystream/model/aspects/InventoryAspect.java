@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
 import com.activitystream.model.validation.IgnoredPropertyError;
 import org.slf4j.Logger;
@@ -89,6 +88,7 @@ public class InventoryAspect extends AbstractMapAspect {
         put(ASConstants.FIELD_ITEMS_RETURNED, 0d);
         put(ASConstants.FIELD_ITEMS_RESERVED, 0d);
         put(ASConstants.FIELD_ITEMS_ON_HOLD, 0d);
+        put(ASConstants.FIELD_ITEMS_COMPLIMENTARY, 0d);
         put(ASConstants.FIELD_ITEMS_UNSELLABLE, 0d);
         put(ASConstants.FIELD_ITEMS_IN_STOCK, getOrDefault(ASConstants.FIELD_ITEMS_FOR_SALE, 0d));
         for (Map category : (List<Map>) getOrDefault(ASConstants.FIELD_PRICE_CATEGORIES, new LinkedList())) {
@@ -97,6 +97,7 @@ public class InventoryAspect extends AbstractMapAspect {
             category.put(ASConstants.FIELD_ITEMS_UNSELLABLE, 0d);
             category.put(ASConstants.FIELD_ITEMS_RETURNED, 0d);
             category.put(ASConstants.FIELD_ITEMS_RESERVED, 0d);
+            category.put(ASConstants.FIELD_ITEMS_COMPLIMENTARY, 0d);
             category.put(ASConstants.FIELD_ITEMS_IN_STOCK, category.getOrDefault(ASConstants.FIELD_ITEMS_FOR_SALE, 0d));
         }
         for (Map variant : (List<Map>) getOrDefault(ASConstants.FIELD_VARIANTS, new LinkedList())) {
@@ -105,6 +106,7 @@ public class InventoryAspect extends AbstractMapAspect {
             variant.put(ASConstants.FIELD_ITEMS_UNSELLABLE, 0d);
             variant.put(ASConstants.FIELD_ITEMS_RETURNED, 0d);
             variant.put(ASConstants.FIELD_ITEMS_RESERVED, 0d);
+            variant.put(ASConstants.FIELD_ITEMS_COMPLIMENTARY, 0d);
             variant.put(ASConstants.FIELD_ITEMS_IN_STOCK, variant.getOrDefault(ASConstants.FIELD_ITEMS_FOR_SALE, 0d));
         }
     }
@@ -131,6 +133,7 @@ public class InventoryAspect extends AbstractMapAspect {
             case ASConstants.FIELD_ITEMS_RESERVED:
             case ASConstants.FIELD_ITEMS_SOLD:
             case ASConstants.FIELD_ITEMS_RETURNED:
+            case ASConstants.FIELD_ITEMS_COMPLIMENTARY:
             case ASConstants.FIELD_GROSS_SOLD:
                 value = validator().processDouble(theKey, value, false, null, null);
                 break;
@@ -186,6 +189,7 @@ public class InventoryAspect extends AbstractMapAspect {
         Number itemUnsellable = (Number) availabilityMap.getOrDefault(ASConstants.FIELD_ITEMS_UNSELLABLE, 0d);
         Number itemForSale = (Number) availabilityMap.getOrDefault(ASConstants.FIELD_ITEMS_FOR_SALE, 0d);
         Number localItemSold = (Number) localMap.getOrDefault(ASConstants.FIELD_ITEMS_SOLD, 0d);
+        Number localItemComps = (Number) localMap.getOrDefault(ASConstants.FIELD_ITEMS_COMPLIMENTARY, 0d);
         Number localItemReturned = (Number) localMap.getOrDefault(ASConstants.FIELD_ITEMS_RETURNED, 0d);
         localMap.put(ASConstants.FIELD_ITEMS_ON_HOLD, itemOnHold.doubleValue());
         localMap.put(ASConstants.FIELD_ITEMS_UNSELLABLE, itemUnsellable.doubleValue());
@@ -193,9 +197,10 @@ public class InventoryAspect extends AbstractMapAspect {
         localMap.put(ASConstants.FIELD_ITEMS_IN_STOCK, itemForSale.doubleValue() - (localItemSold.doubleValue() + localItemReturned.doubleValue()));
         localMap.put(ASConstants.FIELD_ITEMS_RETURNED, Math.abs(localItemReturned.doubleValue()));
         localMap.put(ASConstants.FIELD_ITEMS_SOLD, localItemSold.doubleValue());
+        localMap.put(ASConstants.FIELD_ITEMS_COMPLIMENTARY, localItemComps.doubleValue());
     }
 
-    public void doUpdateInventory(Double itemCount, String variant, String priceCategory) {
+    public void doUpdateInventory(Double itemCount, String variant, String priceCategory, Boolean complementary) {
 
         logger.debug("------------------------------------------------------------------------------");
         logger.debug("Inventory change               : " + itemCount + " " + variant + " " + priceCategory);
@@ -203,15 +208,20 @@ public class InventoryAspect extends AbstractMapAspect {
 
         if (itemCount == null) return;
 
+        boolean comp = (complementary != null && complementary);
+
         synchronized (this) {
-            if (this.containsKey(ASConstants.FIELD_ITEMS_SOLD) && this.get(ASConstants.FIELD_ITEMS_SOLD) != null) {
-                if (this.get(ASConstants.FIELD_ITEMS_SOLD) instanceof Integer) {
-                    this.put(ASConstants.FIELD_ITEMS_SOLD, new Double("" + (((Integer) this.get(ASConstants.FIELD_ITEMS_SOLD)) + itemCount)));
+            String soldField = (comp) ? ASConstants.FIELD_ITEMS_COMPLIMENTARY : ASConstants.FIELD_ITEMS_SOLD;
+
+            if (this.containsKey(soldField) && this.get(soldField) != null) {
+
+                if (this.get(soldField) instanceof Integer) {
+                    this.put(soldField, new Double("" + (((Integer) this.get(soldField)) + itemCount)));
                 } else {
-                    this.put(ASConstants.FIELD_ITEMS_SOLD, ((Double) ((Double) this.get(ASConstants.FIELD_ITEMS_SOLD)) + itemCount));
+                    this.put(soldField, ((Double) ((Double) this.get(soldField)) + itemCount));
                 }
             } else {
-                this.put(ASConstants.FIELD_ITEMS_SOLD, itemCount);
+                this.put(soldField, itemCount);
             }
 
             if (this.containsKey(ASConstants.FIELD_ITEMS_IN_STOCK) && this.get(ASConstants.FIELD_ITEMS_IN_STOCK) != null) {
@@ -245,15 +255,11 @@ public class InventoryAspect extends AbstractMapAspect {
                             if (price_category.containsKey(ASConstants.FIELD_PRICE_CATEGORY) &&
                                     price_category.get(ASConstants.FIELD_PRICE_CATEGORY).equals(priceCategory)) {
                                 found = true;
-                                if (price_category.containsKey(ASConstants.FIELD_ITEMS_SOLD)) {
-                                    if (price_category.get(ASConstants.FIELD_ITEMS_SOLD) instanceof Integer) {
-                                        price_category.put(
-                                                ASConstants.FIELD_ITEMS_SOLD,
-                                                new Double("" + (((Integer) price_category.get(ASConstants.FIELD_ITEMS_SOLD)) + itemCount)));
+                                if (price_category.containsKey(soldField)) {
+                                    if (price_category.get(soldField) instanceof Integer) {
+                                        price_category.put(soldField,new Double("" + (((Integer) price_category.get(soldField)) + itemCount)));
                                     } else {
-                                        price_category.put(
-                                                ASConstants.FIELD_ITEMS_SOLD,
-                                                ((Double) ((Double) price_category.get(ASConstants.FIELD_ITEMS_SOLD)) + itemCount));
+                                        price_category.put(soldField,((Double) ((Double) price_category.get(soldField)) + itemCount));
                                     }
                                 }
                                 if (price_category.containsKey(ASConstants.FIELD_ITEMS_IN_STOCK)) {
@@ -280,7 +286,8 @@ public class InventoryAspect extends AbstractMapAspect {
                         if (!found) {
                             price_categories.add(new ConcurrentHashMap<String, Object>() {{
                                 put(ASConstants.FIELD_PRICE_CATEGORY, priceCategory);
-                                put(ASConstants.FIELD_ITEMS_SOLD, new Double(itemCount));
+                                put(ASConstants.FIELD_ITEMS_SOLD, new Double((comp) ? 0 : itemCount ));
+                                put(ASConstants.FIELD_ITEMS_COMPLIMENTARY, new Double((comp) ? itemCount : 0));
                                 put(ASConstants.FIELD_ITEMS_IN_STOCK, new Double(itemCount * -1));
                                 put(ASConstants.FIELD_ITEMS_RESERVED, new Double(0));
                                 put(ASConstants.FIELD_ITEMS_RETURNED, new Double(0));
@@ -291,7 +298,8 @@ public class InventoryAspect extends AbstractMapAspect {
                         price_categories = new LinkedList();
                         price_categories.add(new ConcurrentHashMap<String, Object>() {{
                             put(ASConstants.FIELD_PRICE_CATEGORY, priceCategory);
-                            put(ASConstants.FIELD_ITEMS_SOLD, new Double(itemCount));
+                            put(ASConstants.FIELD_ITEMS_SOLD, new Double((comp) ? 0 : itemCount));
+                            put(ASConstants.FIELD_ITEMS_COMPLIMENTARY, new Double((comp) ? itemCount : 0));
                             put(ASConstants.FIELD_ITEMS_IN_STOCK, new Double(itemCount * -1));
                             put(ASConstants.FIELD_ITEMS_RESERVED, new Double(0));
                             put(ASConstants.FIELD_ITEMS_RETURNED, new Double(0));
@@ -306,7 +314,6 @@ public class InventoryAspect extends AbstractMapAspect {
         }
         logger.debug("Inventory aspect after changes : " + this);
     }
-
     @Override
     public void verify() {
 

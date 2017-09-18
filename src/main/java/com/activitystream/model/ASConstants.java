@@ -127,6 +127,7 @@ public class ASConstants {
     public static final String FIELD_ITEMS_UNSELLABLE = "items_unsellable";
     public static final String FIELD_ITEMS_RESERVED = "items_reserved";
     public static final String FIELD_ITEMS_SOLD = "items_sold";
+    public static final String FIELD_ITEMS_COMPLIMENTARY = "items_complimentary";
     public static final String FIELD_ITEMS_RETURNED = "items_returned";
     public static final String FIELD_GROSS_SOLD = "gross_sold";
     public static final String FIELD_PRICE_CATEGORIES = "price_categories";

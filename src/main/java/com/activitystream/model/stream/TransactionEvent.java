@@ -461,7 +461,10 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     }
 
     public void setComplimentary(Boolean complimentary) {
-        if (complimentary != null && complimentary) put(ASConstants.FIELD_COMPLIMENTARY, complimentary);
+        if (complimentary != null && complimentary) {
+            put(ASConstants.FIELD_COMPLIMENTARY, complimentary);
+            if (complimentary) setItemPrice(0);
+        }
         else remove(ASConstants.FIELD_COMPLIMENTARY);
     }
 

@@ -300,7 +300,6 @@ public class ASLineItem extends TransactionEvent {
      */
     public ASLineItem markAsComplimentary() {
         super.setComplimentary(true);
-        addItemPrice(0);
         return this;
     }
 
