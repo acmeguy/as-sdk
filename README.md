@@ -21,7 +21,7 @@ Use these maven coordinates:
     <dependency>
         <groupId>com.activitystream</groupId>
         <artifactId>as-sdk</artifactId>
-        <version>0.1.1</version>
+        <version>0.1.2</version>
     </dependency>
 
 ### SDK Design Principles
