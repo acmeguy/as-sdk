@@ -5,10 +5,23 @@ This SDK currently contains only a Java version but other versions will be avail
 The examples in this documentation will be updated to include versions in all supported languages and the 
 [as-sdk-examples](https://github.com/activitystream/as-sdk-examples) project will contain reusable examples in these languages as well.
 
-This short getting started tutorial demonstrates how to construct messages ready to be sent to Activity Stream.  
+This short getting started tutorial demonstrates how to construct messages ready to be sent to Activity Stream.
+
+## Getting started material
+Dive right in or take a while to read:
+ - [Key Concepts](key-concepts)   
+ - [Event Messages](as-event-messages)
+ - [Event Relations](as-event-relations) (Roles)
+ - [Entity Messages](as-entity-messages)
+ - [Entity Relations](as-entity-messages) (Links)
+ - [Aspects](as-aspects)
 
 ## Including the SDK in your project
-Maven code N/A
+    <dependency>
+        <groupId>com.activitystream</groupId>
+        <artifactId>as-sdk</artifactId>
+        <version>0.1.2</version>
+    </dependency>
 
 ## Initializing the SDK
 You can set the default country_code, currency and timezone before using the SDK. This can be handy if your data, for example, contains only local time 

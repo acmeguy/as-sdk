@@ -11,7 +11,8 @@ Both of these can be cloned and extended and pull-requests are welcome.
 It's a good start to read the **[Getting started guide](/docs)** but the examples also contains boilerplate code designed to get you off to a
 quick start.
 We want to grow our message examples directory, included in the examples, considerably and with your help. Please respect those messages as a guideline
-for you messages but keep in mind that you can extend or alter them at will .
+for you messages but keep in mind that you can extend or alter them at will.
+
 
 ### Importing the SDK into your project
 
