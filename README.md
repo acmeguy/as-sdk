@@ -41,7 +41,7 @@ The [AS Schema](/schema) directory will contain the AS schema in different forma
  - [X] Add utility functions that make it easier to work with the SDK in "detached" mode
  - [X] Open source the as-sdk and unlock the github project
  - [ ] Add unit tests from core 
- - [ ] Move the appropriate material/documentation from api.activitystream.com to here
+ - [ ] Move the appropriate material/documentation from [api.activitystream.com](http://api.activitystream.com) to here
  - [ ] Add automatic building and maven releasing for this SDK
  - [ ] Clean up the project so that different languages have project files likely to useful for that language
  - [ ] Open the as-sdk-examples repository
