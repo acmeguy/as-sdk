@@ -13,7 +13,7 @@ Dive right in or take a while to read:
  - [Event Messages](as-event-messages)
  - [Event Relations](as-event-relations) (Roles)
  - [Entity Messages](as-entity-messages)
- - [Entity Relations](as-entity-messages) (Links)
+ - [Entity Relations](as-entity-relations) (Links)
  - [Aspects](as-aspects)
 
 ## Including the SDK in your project
