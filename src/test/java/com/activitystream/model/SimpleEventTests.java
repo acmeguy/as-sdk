@@ -55,8 +55,6 @@ public class SimpleEventTests {
                 .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
 
         Assert.assertEquals(webVisitStarts.toJSON().equals("{\"type\":\"as.crm.visit.started\",\"origin\":\"wwww.mysite.domain\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/30893928\",\"aspects\":{\"presentation\":{\"label\":\"John Doe\"}},\"relations\":[{\"AKA\":{\"entity_ref\":\"Email/john.doe@gmail.com\"}},{\"AKA\":{\"entity_ref\":\"Phone/+150012348765\"}}]}}],\"aspects\":{\"classification\":{\"type\":\"virtual\",\"variant\":\"web\"},\"client_ip\":{\"ip\":\"127.0.0.1\"},\"client_device\":{\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36\"}}}"),true);
-
-        logger.warn("asEvent: " + webVisitStarts.toJSON());
     }
 
     @Test

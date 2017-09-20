@@ -33,8 +33,6 @@ public class MetricsAspectTest {
                 .addMetric("built",1941, "capacity", 5272)
                 .addOccurredAt("2017-10-31T12:00:00-01:00");
 
-        logger.warn("venue " + venue.toJSON());
-
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"metrics\":{\"built\":1941.0,\"capacity\":5272.0}},\"occurred_at\":\"2017-10-31T12:00:00.000-01:00\"}"),true);
     }
 
