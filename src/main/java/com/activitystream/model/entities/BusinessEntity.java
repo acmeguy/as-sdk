@@ -377,7 +377,7 @@ public class BusinessEntity extends AbstractMapElement
             case ASConstants.FIELD_REGISTERED_AT:
                 return null;
             case ASConstants.FIELD_OCCURRED_AT:
-                return getStatusAspect().put(ASConstants.FIELD_UPDATE_OCCURRED_AT, value);
+                break;
             case "_received_at":
                 value = validator().processIsoDateTime(theKey, value, true);
                 break;

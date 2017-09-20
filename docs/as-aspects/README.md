@@ -8,34 +8,27 @@ Some aspects are used for both AS Events and AS Entities but some are dedicated 
 
 | AS Event Aspects | AS Entity Aspects |
 | ------------- | ------------- |
-| [AB Testing](#ab-testing) | [Address](#address)  |
+| [AB Testing](#ab-testing) `tracked*` | [Address](#address)  |
 | [Attachments](#attachments) | [Attachments](#attachments)  |
 | [Classification](#classification) | [Classification](#classification)  |
 | [Client Device](#clientdevice) | [Demography](#demography)  |
 | [Client IP](#clientip) | [Dimensions](#dimensions) |
-| [Dimensions](#dimensions)  | [Geo location](#geo-location) |
-| [Geo location](#geo-location) | [Metrics](#metrics) |
-| [Items](#items)  | [Inventory](#inventory) |
-| [Metrics](#metrics) | [Presentation](#presentation) |
-| [Presentation](#presentation) | [Properties](#properties) |
-| [Properties](#properties) | [Tags](#tags) |
-| [Tags](#tags) | [Timed](#timed) |
+| [Customer Experience Index](as-aspects#cei) `tracked` | [Geo location](#geo-location) `tracked` |
+| [Dimensions](#dimensions) `tracked` | [Metrics](#metrics) `tracked` |
+| [Geo location](#geo-location) `tracked` | Identifiable |
+| Identifiable  | [Inventory](#inventory) `tracked` |
+| [Items](#items)  | [Presentation](#presentation) |
+| [Metrics](#metrics) | [Properties](#properties) |
+| [Presentation](#presentation) | [Tags](#tags) |
+| [Properties](#properties) | [Timed](#timed) |
+| [Tags](#tags) |  |
 | [Timed](#timed) |  |
 | [Traffic Source](#traffic-source) |  |
 
-## Tracked aspects
-Some aspects are tracked. This means that their value, and any changes to them, are reflected in time-series. That way, for example, the Geo 
+\* Some aspects are tracked. This means that their value, and any changes to them, are reflected in time-series. That way, for example, the Geo 
 Location Aspect can be used to store the location of a vehicle over time and the Metrics Aspect can be used to store its speed, fuel_level, temperature and 
 other relevant metrics over time.
 
-- [AB Testing](#ab-testing)
-- [Attachments](#attachments)
-- [Classification](#classification)
-- [Demography](#dimensions)
-- [Dimensions](#dimensions)
-- [Geo location](#geo-location)
-- [Inventory](#inventory)
-- [Metrics](#metrics)
   
 
 ### AB Testing
@@ -171,6 +164,9 @@ Produces this AS Entity message in JSON:
 ### Geo Location
 If an event specifies a (geo) location then Activity Stream resolves it and provides additional information for it.
 After enrichment* the aspect returns location specific information.
+
+### Identifiable
+Used to assign external IDs to AS Events and AS Entities. This allows an external system to look up individual stream items (Events or Entities) 
 
 ### Items
 Used to represent line-items or transaction items for commerce.

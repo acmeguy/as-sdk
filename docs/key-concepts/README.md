@@ -32,6 +32,13 @@ That way a Car cab, for example, be [BELONGS TO](as-entity-relations#belongs-to)
 ## AS Aspects
 [Aspects]() are message extensions which unlock rich support in Activity Stream, both in terms of processing and presentation.
 
-## Completely extendable 
+## Stream Item
+All things involved in an activity stream is collectively called a Stream Item. This includes entities, events and comments.
 
-## Only relationship modelling
+## Customer Entity types, Roles and Links 
+
+## Relationship-only modelling
+
+## Time series data and the Internet of things
+
+## 

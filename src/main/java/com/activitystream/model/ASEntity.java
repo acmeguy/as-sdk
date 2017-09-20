@@ -200,13 +200,13 @@ public class ASEntity extends BusinessEntity {
 
     public ASEntity addOccurredAt(DateTime timestamp) {
         if (timestamp != null) put(ASConstants.FIELD_OCCURRED_AT, timestamp);
-        else remove(ASConstants.FIELD_OCCURRED_AT, timestamp);
+        else remove(ASConstants.FIELD_OCCURRED_AT);
         return this;
     }
 
     public ASEntity addOccurredAt(String timestamp) {
         if (timestamp != null) put(ASConstants.FIELD_OCCURRED_AT, DateTime.parse(timestamp));
-        else remove(ASConstants.FIELD_OCCURRED_AT, timestamp);
+        else remove(ASConstants.FIELD_OCCURRED_AT);
         return this;
     }
 

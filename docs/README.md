@@ -15,6 +15,8 @@ Dive right in or take a while to read:
  - [Entity Messages](as-entity-messages)
  - [Entity Relations](as-entity-relations) (Links)
  - [Aspects](as-aspects)
+ - API documentation
+ - Sending messages to Activity Stream
 
 ## Including the SDK in your project
     <dependency>
@@ -161,7 +163,7 @@ Aspects offer feature rich and simple way to add commonly used information to bo
 that, when used, trigger extended enrichment and handling on the server side and have their own custom features for processing, presentation and storage.
   
 ### Event Aspects
-A list of aspects that can be attached to any AS Event message 
+A list of [aspects](as-aspects) that can be attached to any AS Event message 
 
   - [AB Testing](as-aspects#ab-testing)  
   - [Attachments](as-aspects#attachemnts)  
@@ -171,8 +173,10 @@ A list of aspects that can be attached to any AS Event message
   - [Customer Experience Index](as-aspects#cei)  
   - [Dimensions](as-aspects#dimensions)    
   - [Geo Location](as-aspects#geo-location)    
+  - [Identifiable](as-aspects#identifiable)
   - [Items](as-aspects#items)
   - [Metrics](as-aspects#metrics)
+  - [Presentation](as-aspects#presentation)
   - [Tags](as-aspects#tags)
   - [Timed](as-aspects#times)
   - [Traffic Source](as-aspects#traffic-sources)
@@ -187,7 +191,8 @@ A list of aspects that can be attached to any AS Entity
   - [Classification](as-aspects#classification)    
   - [Demography](as-aspects#demography)    
   - [Dimensions](as-aspects#dimensions)    
-  - [Geo Location](as-aspects#geo-location)    
+  - [Geo Location](as-aspects#geo-location)
+  - [Identifiable](as-aspects#identifiable)    
   - [Metrics](as-aspects#metrics)
   - [Presentation](as-aspects#presentation)
   - [Timed](as-aspects#times)
