@@ -19,107 +19,6 @@ import java.util.*;
 
 public class ASEvent extends CustomerEvent {
 
-    /**
-     * Predefined AS Event Types (PAST)
-     * Popular AS event types put here for convenience
-     *
-     * Custom event types are created just by adding them to the event as type.
-     *
-     * Please note. Some of these events are generic events but they can be made more specific by adding the classification aspect on them.
-     * That way, for example, a "as.crm.message.sent" event could have the classification.type = 'email' and the classification.variant = 'marketing'
-     * or the "as.crm.visit.started" have the classification.type = 'virtual' and the classification.variant = 'web'.
-     *
-     */
-    public static enum PAST {
-
-        AS_COMMERCE_PRODUCT_VIEWED,
-        AS_COMMERCE_PRODUCT_SEARCHED,
-        AS_COMMERCE_PRODUCT_CARTED,
-        AS_COMMERCE_PRODUCT_UNCARTED,
-        AS_COMMERCE_PRODUCT_UNAVAILABLE,
-
-        AS_COMMERCE_ORDER_UPDATED,
-        AS_COMMERCE_ORDER_ABANDONED,
-        AS_COMMERCE_ORDER_DELIVERY_SELECTED,
-        AS_COMMERCE_ORDER_RESERVATION_STARTED,
-        AS_COMMERCE_ORDER_RESERVATION_TIMEOUT,
-        AS_COMMERCE_ORDER_REVIEWED,
-
-        AS_COMMERCE_PAYMENT_COMPLETED,
-        AS_COMMERCE_PAYMENT_STARTED,
-        AS_COMMERCE_PAYMENT_FAILED,
-        AS_COMMERCE_PAYMENT_TIMEDOUT,
-
-        AS_COMMERCE_TRANSACTION_COMPLETED,
-
-        AS_COMMERCE_SHIPMENT_CREATED,
-        AS_COMMERCE_SHIPMENT_PREPARED,
-        AS_COMMERCE_SHIPMENT_PICKUP,
-        AS_COMMERCE_SHIPMENT_HOP,
-        AS_COMMERCE_SHIPMENT_DELIVERED,
-        AS_COMMERCE_SHIPMENT_DELIVERY_ATTEMPTED,
-        AS_COMMERCE_SHIPMENT_DELIVERY_FAILED,
-
-        AS_PM_ISSUE_CREATED,
-        AS_PM_ISSUE_ASSIGNED,
-        AS_PM_ISSUE_PROMOTED,
-        AS_PM_ISSUE_DEMOTED,
-        AS_PM_ISSUE_SOLVED,
-        AS_PM_ISSUE_CLOSED,
-        AS_PM_ISSUE_REOPENED,
-        AS_PM_ISSUE_UPDATED,
-        AS_PM_ISSUE_RATED,
-        AS_PM_ISSUE_COMMENT_CREATED,
-
-        AS_CRM_VISIT_SCHEDULED,
-        AS_CRM_VISIT_UNSCHEDULED,
-        AS_CRM_VISIT_STARTED,
-        AS_CRM_VISIT_ENDED,
-        AS_CRM_VISIT_CANCELLED,
-
-        AS_CRM_MESSAGE_SENT,
-        AS_CRM_MESSAGE_BOUNCED,
-        AS_CRM_MESSAGE_OPENED,
-        AS_CRM_MESSAGE_CLICKED,
-        AS_CRM_MESSAGE_SUBSCRIBED,
-        AS_CRM_MESSAGE_UNSUBSCRIBED,
-
-        AS_CRM_CONVERSATION_ATTEMPTED,
-        AS_CRM_CONVERSATION_STARTED,
-        AS_CRM_CONVERSATION_ENDED,
-
-        AS_MARKETING_CONTENT_SHOWN,
-        AS_MARKETING_CONTENT_CLICKED,
-
-        AS_EVENT_TICKET_ISSUED,
-        AS_EVENT_TICKET_INVALIDATED,
-        AS_EVENT_TICKET_TRANSFERRED,
-        AS_EVENT_TICKET_USED,
-        AS_EVENT_TICKET_REUSED,
-        AS_EVENT_SEAT_ASSIGNED,
-        AS_EVENT_SEAT_UNASSIGNED,
-        AS_EVENT_STARTS,
-        AS_EVENT_ENDS,
-        AS_EVENT_ANNOUNCED,
-        AS_EVENT_CANCELLED,
-        AS_EVENT_PRESALE_STARTS,
-        AS_EVENT_ONSALE_STARTS,
-        AS_EVENT_DOORS_OPEN,
-        AS_EVENT_DOORS_CLOSE,
-
-        AS_AUTHENTICATION_USER_CREATED,
-        AS_AUTHENTICATION_USER_REMOVED,
-        AS_AUTHENTICATION_USER_BLOCKED,
-        AS_AUTHENTICATION_PASSWORD_SET,
-        AS_AUTHENTICATION_PASSWORD_CHANGED,
-        AS_AUTHENTICATION_PASSWORD_CONFIRMED,
-        AS_AUTHENTICATION_EMAIL_CONFIRMED,
-
-        AS_ACCESS_LOGIN_SUCCEED,
-        AS_ACCESS_LOGIN_FAILED,
-        AS_ACCESS_LOGOUT_SUCCEED,
-        AS_ACCESS_BLOCKED,
-    }
 
     public ASEvent() {
     }
@@ -375,6 +274,114 @@ public class ASEvent extends CustomerEvent {
     }
 
 
+    /**
+     * Predefined AS Event Types (PAST)
+     * Popular AS event types put here for convenience
+     *
+     * Custom event types are created just by adding them to the event as type.
+     *
+     * Please note. Some of these events are generic events but they can be made more specific by adding the classification aspect on them.
+     * That way, for example, a "as.crm.message.sent" event could have the classification.type = 'email' and the classification.variant = 'marketing'
+     * or the "as.crm.visit.started" have the classification.type = 'virtual' and the classification.variant = 'web'.
+     *
+     */
+    public static enum PAST {
+
+        AS_COMMERCE_PRODUCT_VIEWED,
+        AS_COMMERCE_PRODUCT_SEARCHED,
+        AS_COMMERCE_PRODUCT_CARTED,
+        AS_COMMERCE_PRODUCT_UNCARTED,
+        AS_COMMERCE_PRODUCT_UNAVAILABLE,
+
+        AS_COMMERCE_ORDER_UPDATED,
+        AS_COMMERCE_ORDER_ABANDONED,
+        AS_COMMERCE_ORDER_DELIVERY_SELECTED,
+        AS_COMMERCE_ORDER_RESERVATION_STARTED,
+        AS_COMMERCE_ORDER_RESERVATION_TIMEOUT,
+        AS_COMMERCE_ORDER_REVIEWED,
+
+        AS_COMMERCE_PAYMENT_COMPLETED,
+        AS_COMMERCE_PAYMENT_STARTED,
+        AS_COMMERCE_PAYMENT_FAILED,
+        AS_COMMERCE_PAYMENT_TIMEDOUT,
+
+        AS_COMMERCE_TRANSACTION_COMPLETED,
+
+        AS_COMMERCE_SHIPMENT_CREATED,
+        AS_COMMERCE_SHIPMENT_PREPARED,
+        AS_COMMERCE_SHIPMENT_PICKUP,
+        AS_COMMERCE_SHIPMENT_HOP,
+        AS_COMMERCE_SHIPMENT_DELIVERED,
+        AS_COMMERCE_SHIPMENT_DELIVERY_ATTEMPTED,
+        AS_COMMERCE_SHIPMENT_DELIVERY_FAILED,
+
+        AS_PM_ISSUE_CREATED,
+        AS_PM_ISSUE_ASSIGNED,
+        AS_PM_ISSUE_PROMOTED,
+        AS_PM_ISSUE_DEMOTED,
+        AS_PM_ISSUE_SOLVED,
+        AS_PM_ISSUE_CLOSED,
+        AS_PM_ISSUE_REOPENED,
+        AS_PM_ISSUE_UPDATED,
+        AS_PM_ISSUE_RATED,
+        AS_PM_ISSUE_COMMENT_CREATED,
+
+        AS_CRM_VISIT_SCHEDULED,
+        AS_CRM_VISIT_UNSCHEDULED,
+        AS_CRM_VISIT_STARTED,
+        AS_CRM_VISIT_ENDED,
+        AS_CRM_VISIT_CANCELLED,
+
+        AS_CRM_MESSAGE_SENT,
+        AS_CRM_MESSAGE_BOUNCED,
+        AS_CRM_MESSAGE_OPENED,
+        AS_CRM_MESSAGE_CLICKED,
+        AS_CRM_MESSAGE_SUBSCRIBED,
+        AS_CRM_MESSAGE_UNSUBSCRIBED,
+
+        AS_CRM_MESSAGE_EMAIL_SENT,
+        AS_CRM_MESSAGE_EMAIL_BOUNCED,
+        AS_CRM_MESSAGE_EMAIL_OPENED,
+        AS_CRM_MESSAGE_EMAIL_CLICKED,
+        AS_CRM_MESSAGE_EMAIL_SUBSCRIBED,
+        AS_CRM_MESSAGE_EMAIL_UNSUBSCRIBED,
+
+        AS_CRM_CONVERSATION_ATTEMPTED,
+        AS_CRM_CONVERSATION_STARTED,
+        AS_CRM_CONVERSATION_ENDED,
+
+        AS_MARKETING_CONTENT_SHOWN,
+        AS_MARKETING_CONTENT_CLICKED,
+
+        AS_EVENT_TICKET_ISSUED,
+        AS_EVENT_TICKET_INVALIDATED,
+        AS_EVENT_TICKET_TRANSFERRED,
+        AS_EVENT_TICKET_USED,
+        AS_EVENT_TICKET_REUSED,
+        AS_EVENT_SEAT_ASSIGNED,
+        AS_EVENT_SEAT_UNASSIGNED,
+        AS_EVENT_STARTS,
+        AS_EVENT_ENDS,
+        AS_EVENT_ANNOUNCED,
+        AS_EVENT_CANCELLED,
+        AS_EVENT_PRESALE_STARTS,
+        AS_EVENT_ONSALE_STARTS,
+        AS_EVENT_DOORS_OPEN,
+        AS_EVENT_DOORS_CLOSE,
+
+        AS_AUTHENTICATION_USER_CREATED,
+        AS_AUTHENTICATION_USER_REMOVED,
+        AS_AUTHENTICATION_USER_BLOCKED,
+        AS_AUTHENTICATION_PASSWORD_SET,
+        AS_AUTHENTICATION_PASSWORD_CHANGED,
+        AS_AUTHENTICATION_PASSWORD_CONFIRMED,
+        AS_AUTHENTICATION_EMAIL_CONFIRMED,
+
+        AS_ACCESS_LOGIN_SUCCEED,
+        AS_ACCESS_LOGIN_FAILED,
+        AS_ACCESS_LOGOUT_SUCCEED,
+        AS_ACCESS_BLOCKED,
+    }
 
 
 }

@@ -45,4 +45,5 @@ The [AS Schema](/schema) directory will contain the AS schema in different forma
  - [ ] Move the appropriate material/documentation from [api.activitystream.com](http://api.activitystream.com) to here
  - [ ] Add automatic building and maven releasing for this SDK
  - [ ] Clean up the project so that different languages have project files likely to useful for that language
- - [ ] Open the as-sdk-examples repository
+ - [X] Open the as-sdk-examples repository
+
