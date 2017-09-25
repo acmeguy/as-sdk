@@ -16,13 +16,15 @@ for you messages but keep in mind that you can extend or alter them at will.
 
 ### Importing the SDK into your project
 
-Use these maven coordinates:
+Use these maven coordinates for Java*:
 
     <dependency>
         <groupId>com.activitystream</groupId>
         <artifactId>as-sdk</artifactId>
         <version>0.1.3</version>
     </dependency>
+
+*AS SDK will be available for other languages soon*
 
 ### SDK Design Principles
 * Keep as-sdk as light as possible by introducing the as few external dependencies as possible.
