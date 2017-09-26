@@ -25,7 +25,7 @@ public class SimpleEventTests {
 
         //Minimum valid Message
         ASEvent webVisitStarts = new ASEvent()
-                .addType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
+                .addType(ASEvent.PRE.AS_CRM_VISIT_STARTED)
                 .addOrigin("wwww.mysite.domain")
                 .addOccurredAt("2017-01-01T00:00:00.000Z")
                 .addRelationIfValid(ASEventRelationTypes.ACTOR,"Customer","007")
@@ -44,7 +44,7 @@ public class SimpleEventTests {
                 .addRelationIfValid(ASEntityRelationTypes.AKA,"Phone", "+150012348765");
 
         webVisitStarts = new ASEvent()
-                .addType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
+                .addType(ASEvent.PRE.AS_CRM_VISIT_STARTED)
                 .addOrigin("wwww.mysite.domain")
                 .addOccurredAt("2017-01-01T00:00:00.000Z")
                 .addRelation(ASEventRelationTypes.ACTOR,customer)

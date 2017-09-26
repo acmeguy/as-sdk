@@ -262,10 +262,15 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     }
 
     public void setLineIds(Set<String> ids) {
+        if (ids != null && ids.isEmpty()) put(ASConstants.FIELD_LINE_IDS, ids);
+        else remove(ASConstants.FIELD_LINE_IDS);
+    }
+
+    public void addToLineIds(Set<String> ids) {
         if (ids != null && !ids.isEmpty()) {
             Set<String> lineIds = getLineIds();
             lineIds.addAll(ids);
-            super.put(ASConstants.FIELD_LINE_IDS, lineIds);
+            setLineIds(lineIds);
         }
     }
 
@@ -412,6 +417,11 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     }
 
     public void setItemCount(Double count) {
+        if (count != null) put(ASConstants.FIELD_ITEM_COUNT, count);
+        else remove(ASConstants.FIELD_ITEM_COUNT);
+    }
+
+    public void addItemCount(Double count) {
         if (count != null) put(ASConstants.FIELD_ITEM_COUNT, count);
         else remove(ASConstants.FIELD_ITEM_COUNT);
     }

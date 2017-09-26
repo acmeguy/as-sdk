@@ -386,7 +386,7 @@ public class ASLineItem extends TransactionEvent {
      * @return this ASLineItem for chaining
      */
     public ASLineItem addLineIds(Set<String> ids) {
-        super.setLineIds(ids);
+        super.addToLineIds(ids);
         return this;
     }
 

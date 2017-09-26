@@ -23,11 +23,11 @@ public class ASEvent extends CustomerEvent {
     public ASEvent() {
     }
 
-    public ASEvent(PAST type, String origin, String description, ImportanceLevel importance, Object... involves) {
+    public ASEvent(PRE type, String origin, String description, ImportanceLevel importance, Object... involves) {
         this(type.toString().replaceAll("_",".").toLowerCase(), origin, description, importance, Arrays.asList(involves));
     }
 
-    public ASEvent(PAST type, String origin) {
+    public ASEvent(PRE type, String origin) {
         this(type.toString().replaceAll("_",".").toLowerCase(), origin, null, ImportanceLevel.IMPORTANT, (Object) null);
     }
 
@@ -39,7 +39,7 @@ public class ASEvent extends CustomerEvent {
         this(new DateTime(), type, origin, description, importance, involves);
     }
 
-    public ASEvent(String occurred_at, PAST type, String origin, String description, ImportanceLevel importance, Object... involves) {
+    public ASEvent(String occurred_at, PRE type, String origin, String description, ImportanceLevel importance, Object... involves) {
         this(occurred_at, type.toString().replaceAll("_",".").toLowerCase(), origin, description, importance, Arrays.asList(involves));
     }
 
@@ -94,7 +94,7 @@ public class ASEvent extends CustomerEvent {
 
     /************  UtilityFunctions ************/
 
-    public ASEvent addType(PAST type) {
+    public ASEvent addType(PRE type) {
         put(ASConstants.FIELD_TYPE, type.toString().replaceAll("_",".").toLowerCase());
         return this;
     }
@@ -250,7 +250,7 @@ public class ASEvent extends CustomerEvent {
     public ASEvent addLineItem(ASLineItem itemLine) {
         AspectManager aspectManager = getAspectManager(true);
         ItemsManager itemsManager = (ItemsManager) aspectManager.getOrCreateAspect(ItemsManager.ASPECT_TYPE.getAspectSignature());
-        itemsManager.add(itemLine);
+        itemsManager.mergeItemLine(itemLine);
         return this;
     }
 
@@ -275,7 +275,7 @@ public class ASEvent extends CustomerEvent {
 
 
     /**
-     * Predefined AS Event Types (PAST)
+     * Predefined AS Event Types (PRE)
      * Popular AS event types put here for convenience
      *
      * Custom event types are created just by adding them to the event as type.
@@ -285,7 +285,7 @@ public class ASEvent extends CustomerEvent {
      * or the "as.crm.visit.started" have the classification.type = 'virtual' and the classification.variant = 'web'.
      *
      */
-    public static enum PAST {
+    public static enum PRE {
 
         AS_COMMERCE_PRODUCT_VIEWED,
         AS_COMMERCE_PRODUCT_SEARCHED,
@@ -298,12 +298,9 @@ public class ASEvent extends CustomerEvent {
         AS_COMMERCE_ORDER_DELIVERY_SELECTED,
         AS_COMMERCE_ORDER_RESERVATION_STARTED,
         AS_COMMERCE_ORDER_RESERVATION_TIMEOUT,
+        AS_COMMERCE_ORDER_RESERVATION_COMPLETED,
         AS_COMMERCE_ORDER_REVIEWED,
-
-        AS_COMMERCE_PAYMENT_COMPLETED,
-        AS_COMMERCE_PAYMENT_STARTED,
-        AS_COMMERCE_PAYMENT_FAILED,
-        AS_COMMERCE_PAYMENT_TIMEDOUT,
+        AS_COMMERCE_ORDER_COMPLETED,
 
         AS_COMMERCE_TRANSACTION_COMPLETED,
 
@@ -315,22 +312,50 @@ public class ASEvent extends CustomerEvent {
         AS_COMMERCE_SHIPMENT_DELIVERY_ATTEMPTED,
         AS_COMMERCE_SHIPMENT_DELIVERY_FAILED,
 
+        AS_ERP_PAYMENT_COMPLETED,
+        AS_ERP_PAYMENT_STARTED,
+        AS_ERP_PAYMENT_ABANDONED,
+        AS_ERP_PAYMENT_FAILED,
+        AS_ERP_PAYMENT_TIMEDOUT,
+        AS_ERP_PAYMENT_OVERDUE,
+
+        AS_ERP_INVOICE_SENT,
+        AS_ERP_INVOICE_OVERDUE,
+        AS_ERP_INVOICE_CREATED,
+        AS_ERP_INVOICE_CANCELLED,
+
+        AS_ERP_COLLECTION_LETTER_CREATED,
+        AS_ERP_COLLECTION_LETTER_SENT,
+        AS_ERP_COLLECTION_LEAGAL_ACTION_STARTED,
+        AS_ERP_COLLECTION_LEAGAL_ACTION_CONCLUDED,
+        AS_ERP_COLLECTION_LEAGAL_ACTION_SETTLED,
+
+        AS_SUBSCIPTIONS_SUBSCRIPTION_CREATED,
+        AS_SUBSCIPTIONS_SUBSCRIPTION_CANCELLED,
+        AS_SUBSCIPTIONS_SUBSCRIPTION_EXPIRED,
+        AS_SUBSCIPTIONS_SUBSCRIPTION_RENEWED,
+
         AS_PM_ISSUE_CREATED,
         AS_PM_ISSUE_ASSIGNED,
         AS_PM_ISSUE_PROMOTED,
         AS_PM_ISSUE_DEMOTED,
         AS_PM_ISSUE_SOLVED,
         AS_PM_ISSUE_CLOSED,
-        AS_PM_ISSUE_REOPENED,
         AS_PM_ISSUE_UPDATED,
         AS_PM_ISSUE_RATED,
         AS_PM_ISSUE_COMMENT_CREATED,
+        AS_PM_ISSUE_IMPEEDED,
+        AS_PM_ISSUE_PAUSED,
+        AS_PM_ISSUE_RESUMED,
 
         AS_CRM_VISIT_SCHEDULED,
+        AS_CRM_VISIT_RESCHEDULED,
         AS_CRM_VISIT_UNSCHEDULED,
         AS_CRM_VISIT_STARTED,
         AS_CRM_VISIT_ENDED,
-        AS_CRM_VISIT_CANCELLED,
+
+        AS_CRM_VISIT_WEB_STARTED,
+        AS_CRM_VISIT_WEB_ENDED,
 
         AS_CRM_MESSAGE_SENT,
         AS_CRM_MESSAGE_BOUNCED,
@@ -346,41 +371,140 @@ public class ASEvent extends CustomerEvent {
         AS_CRM_MESSAGE_EMAIL_SUBSCRIBED,
         AS_CRM_MESSAGE_EMAIL_UNSUBSCRIBED,
 
+        AS_CRM_CONVERSATION_SCHEDULED,
+        AS_CRM_CONVERSATION_RESCHEDULED,
+        AS_CRM_CONVERSATION_UNSCHEDULED,
         AS_CRM_CONVERSATION_ATTEMPTED,
         AS_CRM_CONVERSATION_STARTED,
         AS_CRM_CONVERSATION_ENDED,
 
         AS_MARKETING_CONTENT_SHOWN,
+        AS_MARKETING_CONTENT_SERVED,
+        AS_MARKETING_CONTENT_IMPRESSION,
+        AS_MARKETING_CONTENT_INTERACTION,
         AS_MARKETING_CONTENT_CLICKED,
+
+        AS_MARKETING_AD_SHOWN,
+        AS_MARKETING_AD_SERVED,
+        AS_MARKETING_AD_IMPRESSION,
+        AS_MARKETING_AD_INTERACTION,
+        AS_MARKETING_AD_CALLEDTOACTION_SELECTED,
 
         AS_EVENT_TICKET_ISSUED,
         AS_EVENT_TICKET_INVALIDATED,
         AS_EVENT_TICKET_TRANSFERRED,
         AS_EVENT_TICKET_USED,
-        AS_EVENT_TICKET_REUSED,
+        AS_EVENT_TICKET_SCANNED,
+        AS_EVENT_TICKET_SCAN_FAILED,
+
         AS_EVENT_SEAT_ASSIGNED,
         AS_EVENT_SEAT_UNASSIGNED,
+
         AS_EVENT_STARTS,
         AS_EVENT_ENDS,
         AS_EVENT_ANNOUNCED,
         AS_EVENT_CANCELLED,
         AS_EVENT_PRESALE_STARTS,
+        AS_EVENT_PRESALE_ENDS,
         AS_EVENT_ONSALE_STARTS,
         AS_EVENT_DOORS_OPEN,
         AS_EVENT_DOORS_CLOSE,
 
+        AS_CONTENT_MEDIA_PLAYBACK_STARTED,
+        AS_CONTENT_MEDIA_PLAYBACK_STOPED,
+        AS_CONTENT_MEDIA_PLAYBACK_SKIPPED,
+        AS_CONTENT_MEDIA_PLAYBACK_PAUSED,
+        AS_CONTENT_MEDIA_PLAYBACK_RESUMED,
+        AS_CONTENT_MEDIA_PLAYBACK_SCRUBBED,
+        AS_CONTENT_MEDIA_PLAYBACK_FAILED,
+        AS_CONTENT_MEDIA_PLAYBACK_TIMEDOUT,
+        AS_CONTENT_MEDIA_PLAYBACK_ERROR,
+
+        AS_CONTENT_MEDIA_PLAYLIST_CREATED,
+        AS_CONTENT_MEDIA_PLAYLIST_REMOVED,
+        AS_CONTENT_MEDIA_PLAYLIST_EDITED,
+        AS_CONTENT_MEDIA_PLAYLIST_REORDERED,
+        AS_CONTENT_MEDIA_PLAYLIST_MEDIA_ADDED,
+        AS_CONTENT_MEDIA_PLAYLIST_MEDIA_REMOVED,
+        AS_CONTENT_MEDIA_PLAYLIST_MEDIA_REORDERED,
+        AS_CONTENT_MEDIA_PLAYLIST_MEDIA_EDITED,
+
         AS_AUTHENTICATION_USER_CREATED,
         AS_AUTHENTICATION_USER_REMOVED,
         AS_AUTHENTICATION_USER_BLOCKED,
+
         AS_AUTHENTICATION_PASSWORD_SET,
         AS_AUTHENTICATION_PASSWORD_CHANGED,
         AS_AUTHENTICATION_PASSWORD_CONFIRMED,
-        AS_AUTHENTICATION_EMAIL_CONFIRMED,
+        AS_AUTHENTICATION_PASSWORD_RESET,
+        AS_AUTHENTICATION_PASSWORD_RESET_LINK_SENT,
+        AS_AUTHENTICATION_PASSWORD_REMINDER_SENT,
+
+        AS_AUTHENTICATION_EMAIL_ADDED,
+        AS_AUTHENTICATION_EMAIL_REMOVED,
+        AS_AUTHENTICATION_EMAIL_CHANGED,
+        AS_AUTHENTICATION_EMAIL_VERIFICATION_SENT,
+        AS_AUTHENTICATION_EMAIL_VERIFIED,
+        AS_AUTHENTICATION_EMAIL_INVALID_PROVIDED,
 
         AS_ACCESS_LOGIN_SUCCEED,
         AS_ACCESS_LOGIN_FAILED,
         AS_ACCESS_LOGOUT_SUCCEED,
         AS_ACCESS_BLOCKED,
+
+        AS_GAMES_CHALLENCE_POSED,
+        AS_GAMES_CHALLENCE_ACCEPTED,
+        AS_GAMES_CHALLENCE_REJECTED,
+        AS_GAMES_CHALLENCE_TIMEDOUT,
+
+        AS_GAMES_GAME_STARTED,
+        AS_GAMES_GAME_ENDED,
+        AS_GAMES_GAME_WON,
+        AS_GAMES_GAME_LOST,
+        AS_GAMES_GAME_FORFITTED,
+        AS_GAMES_GAME_EXPIRED,
+        AS_GAMES_GAME_FORCED,
+
+        AS_GAMES_MOVE_MADE,
+        AS_GAMES_MOVE_FAILED,
+
+        AS_GAMES_LEVEL_STARTED,
+        AS_GAMES_LEVEL_COMPLETED,
+
+        AS_APP_APPLICATION_STARTUP_STARTED,
+        AS_APP_APPLICATION_STARTUP_CANCELLED,
+        AS_APP_APPLICATION_STARTUP_COMPLETED,
+        AS_APP_APPLICATION_SHUTDOWN_STARTED,
+        AS_APP_APPLICATION_SHUTDOWN_COMPLETED,
+
+        AS_APP_PROVISIONING_TENANT_CREATED,
+        AS_APP_PROVISIONING_TENANT_REMOVED,
+        AS_APP_PROVISIONING_TENANT_ACTIVATED,
+        AS_APP_PROVISIONING_TENANT_DEACTIVATED,
+        AS_APP_PROVISIONING_SUBTENANT_CREATED,
+        AS_APP_PROVISIONING_SUBTENANT_REMOVED,
+        AS_APP_PROVISIONING_SUBTENANT_ACTIVATED,
+        AS_APP_PROVISIONING_SUBTENANT_DEACTIVATED,
+        AS_APP_PROVISIONING_USER_CREATED,
+        AS_APP_PROVISIONING_USER_REMOVED,
+        AS_APP_PROVISIONING_USER_ACTIVATED,
+        AS_APP_PROVISIONING_USER_DEACTIVATED,
+
+        AS_APP_CONFIG_SETINGS_CHANGED,
+        AS_APP_CONFIG_APIKEY_CREATED,
+        AS_APP_CONFIG_APIKEY_REMOVED,
+        AS_APP_CONFIG_ENDPOINT_CREATED,
+        AS_APP_CONFIG_ENDPOINT_REMOVED,
+        AS_APP_CONFIG_SERVICE_ACTIVATED,
+        AS_APP_CONFIG_SERVICE_DEACTIVATED,
+        AS_APP_CONFIG_SERVICE_EXPIRED,
+
+        AS_APP_USAGE_DASHBOARD_FETCHED,
+        AS_APP_USAGE_ENTERPRISE_SEARCH_SEARCHED,
+        AS_APP_USAGE_SESSION_STARTED,
+        AS_APP_USAGE_SESSION_ENDED,
+        AS_APP_USAGE_SESSION_EXPIRED,
+
     }
 
 

@@ -29,7 +29,7 @@ public class ItemsAspectTests {
 
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
-        ASEvent purchaseEvent = new ASEvent(ASEvent.PAST.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
+        ASEvent purchaseEvent = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
         purchaseEvent.addOccurredAt("2017-01-01T12:00:00")
                 .addRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
                 .addAspect(items()
@@ -54,7 +54,7 @@ public class ItemsAspectTests {
 
         ASEvent event = new ASEvent(
                 "2017-09-01T10:10:10.010-0000",
-                ASEvent.PAST.AS_COMMERCE_TRANSACTION_COMPLETED,
+                ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED,
                 "test",
                 null,
                 ImportanceLevel.IMPORTANT,
@@ -69,7 +69,41 @@ public class ItemsAspectTests {
 
         //add it again to see item count go up
         event.mergeLineItem(itemLine);
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"item_count\":1.0,\"item_price\":30.2,\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/3873\"}}]}]}}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"item_count\":2.0,\"item_price\":30.2,\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/3873\"}}]}]}}"),true);
+    }
+
+    @Test
+    public void testSimpleItemsReturnedMessage() throws IOException {
+
+        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+
+        ASEvent event = new ASEvent(
+                "2017-09-01T10:10:10.010-0000",
+                ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED,
+                "test",
+                null,
+                ImportanceLevel.IMPORTANT,
+                "Customer/3"
+        );
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3}"),true);
+
+        event.addLineItem(
+                lineItem()
+                        .addProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
+                        .addItemCount(1)
+                        .addItemPrice(30.2)
+        );
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":1.0,\"item_price\":30.2}]}}"),true);
+
+        //add the same product again item count go up
+        event.mergeLineItem(
+                lineItem()
+                        .addProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
+                        .addItemCount(1)
+                        .addItemPrice(30.2)
+        );
+
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":2.0,\"item_price\":30.2}]}}"),true);
     }
 
 
