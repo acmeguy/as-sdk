@@ -1,7 +1,7 @@
 {
   "id": "http://api.activitystream.com/v1/schema#",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "AS Business Activity Monitorin Message",
+  "title": "AS Business Activity Monitoring Message",
   "description":"Event Message. Also known as Business Activity Monitoring Message (BAMM)",
   "type": "object",
   "properties": {
