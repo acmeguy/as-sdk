@@ -30,3 +30,8 @@ deployment to OSSRH and an automated release to the Central Repository:
 
     export GPG_TTY=$(tty)
     mvn clean deploy
+    TAG=0.1.4-or-whatever
+    git tag $TAG
+    git push origin $TAG
+    Update reference to the latest version number in README.md and docs/README.md
+    Bump the new SNAPSHOT version number
