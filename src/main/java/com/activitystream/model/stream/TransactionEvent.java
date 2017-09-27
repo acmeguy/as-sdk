@@ -421,11 +421,6 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
         else remove(ASConstants.FIELD_ITEM_COUNT);
     }
 
-    public void addItemCount(Double count) {
-        if (count != null) put(ASConstants.FIELD_ITEM_COUNT, count);
-        else remove(ASConstants.FIELD_ITEM_COUNT);
-    }
-
     public Double getItemPrice() {
         return (Double) getOrDefault(ASConstants.FIELD_ITEM_PRICE, 0d);
     }

@@ -68,7 +68,7 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
     public ItemsManager mergeItemLine(TransactionEvent newLine) {
         for (TransactionEvent existingLine : this) {
             if (existingLine.equals(newLine)) {
-                existingLine.addItemCount(existingLine.getItemCount() + newLine.getItemCount());
+                existingLine.setItemCount(existingLine.getItemCount() + newLine.getItemCount());
                 existingLine.addToLineIds(newLine.getLineIds());
                 return this;
             }
