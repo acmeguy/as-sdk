@@ -354,6 +354,10 @@ public class BusinessEntity extends AbstractMapElement
     public void verify() {
         if (!containsKey(ASConstants.FIELD_ENTITY_REF))
             addProblem(new MissingPropertyError("Field '" + ASConstants.FIELD_ENTITY_REF + "' is required."));
+
+        else if ( !((EntityReference) get(ASConstants.FIELD_ENTITY_REF)).isValid())
+            addProblem(new MissingPropertyError("Field '" + ASConstants.FIELD_ENTITY_REF + "' is not valid."));
+
     }
 
     public Object directPut(Object key, Object value) {

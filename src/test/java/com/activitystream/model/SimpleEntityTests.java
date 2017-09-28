@@ -28,12 +28,19 @@ public class SimpleEntityTests {
         Assert.assertEquals(customer.isValid(), false);
         Assert.assertEquals(customer.validator().hasErrors(), 1);
 
-        customer = new ASEntity("Customer","0071","John McDoe");
+        //Testing different coding styles
+        customer = new ASEntity()
+                .addEntityReference("Customer","0071")
+                .addAspect(presentation()
+                        .addLabel("John McDoe")
+                );
         Assert.assertEquals(customer.toJSON(),"{\"entity_ref\":\"Customer/0071\",\"aspects\":{\"presentation\":{\"label\":\"John McDoe\"}}}");
 
+        //Testing different coding styles
         customer = new ASEntity("Customer","0071","John McDoe", "John is great");
         Assert.assertEquals(customer.toJSON(),"{\"entity_ref\":\"Customer/0071\",\"aspects\":{\"presentation\":{\"label\":\"John McDoe\",\"description\":\"John is great\"}}}");
 
+        //Testing different coding styles
         ASEntity sameCustomer = new ASEntity(new EntityReference("Customer","0071"),"John McDoe", "John is great");
         Assert.assertEquals(sameCustomer.toJSON().equals(customer.toJSON()), true);
         Assert.assertEquals(sameCustomer.getStreamId().toString().equals("08c80573-6440-3c74-8fbe-e1d7738d75b3"), true);

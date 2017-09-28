@@ -17,9 +17,6 @@ public interface BaseStreamElement extends VerifiableElement {
 
     BusinessEntity getRootBusinessEntity();
 
-    void addEntityReferences(BaseStreamElement baseStreamElement);
-
-
     /************  Persistence ************/
 
     //SavableElement save(Tenant tenant, PersistenceCache cache);

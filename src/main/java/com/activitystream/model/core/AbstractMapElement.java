@@ -64,11 +64,6 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
         return true;
     }
 
-    @Override
-    public void addEntityReferences(BaseStreamElement baseStreamElement) {
-
-    }
-
     /**
      * Calculate a footprint for the Stream Item
      * The Footprint is used to calculate a unique Stream ID

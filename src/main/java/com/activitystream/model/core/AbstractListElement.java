@@ -76,11 +76,6 @@ public abstract class AbstractListElement<T> extends LinkedList<T> implements Ba
         this.securityScope = scope;
     }
 
-    @Override
-    public void addEntityReferences(BaseStreamElement baseStreamElement) {
-
-    }
-
     /************ Validation and Error Handling ************/
 
     @Override

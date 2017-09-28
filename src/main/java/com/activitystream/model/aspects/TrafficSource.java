@@ -36,7 +36,7 @@ public class TrafficSource extends InternalEntity {
 
     /**
      * Traffic source for events and transaction lines
-     * @param type The type of source "campaign", "web", "social" etc...
+     * @param type The type of source "campaign", "social", "organic" etc...
      * @param campaign The campaign responsible for the the traffic (if present)
      * @param source The source it self (exact site the traffic came from)
      * @param medium The medium used mail, web etc.
@@ -46,16 +46,6 @@ public class TrafficSource extends InternalEntity {
         if (campaign != null && !campaign.isEmpty()) put(ASConstants.FIELD_CAMPAIGN, campaign);
         if (source != null && !source.isEmpty()) put(ASConstants.FIELD_SOURCE, source);
         if (medium != null && !medium.isEmpty()) put(ASConstants.FIELD_MEDIUM, medium);
-    }
-
-    /**
-     * Accepts the type os source and the exact source only
-     * @param type The type of source "campaign", "web", "social" etc...
-     * @param source The traffic source (website, for example)
-     */
-    public TrafficSource(String type, String source) {
-        put(ASConstants.FIELD_TYPE, type);
-        if (source != null && !source.isEmpty()) put(ASConstants.FIELD_SOURCE, source);
     }
 
     @Override

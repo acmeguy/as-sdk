@@ -122,6 +122,16 @@ public class ASEntity extends BusinessEntity {
         return addRelation(relation, (BaseStreamItem) root);
     }
 
+    public ASEntity addEntityReference(String entityType, String uniqueId) {
+        put(ASConstants.FIELD_ENTITY_REF, new EntityReference(entityType, uniqueId));
+        return this;
+    }
+
+    public ASEntity addEntityReference(EntityReference entityReference) {
+        put(ASConstants.FIELD_ENTITY_REF, entityReference);
+        return this;
+    }
+
     @Override
     public ASEntity addRelation(Relation relation, BaseStreamItem root) {
         super.addRelation(relation, root);
