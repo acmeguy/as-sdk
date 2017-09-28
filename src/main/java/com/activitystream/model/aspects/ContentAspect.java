@@ -39,16 +39,56 @@ public class ContentAspect extends AbstractMapAspect implements EnrichableElemen
         return (String) get(ASConstants.FIELD_TITLE);
     }
 
+    public void setTitle(String title) {
+        if (title != null && !title.isEmpty()) put(ASConstants.FIELD_TITLE, title);
+        else remove(ASConstants.FIELD_TITLE);
+    }
+
+    public ContentAspect addTitle(String title) {
+        setTitle(title);
+        return this;
+    }
+
     public String getSubtitle() {
         return (String) get(ASConstants.FIELD_SUBTITLE);
+    }
+
+    public void setSubtitle(String subtitle) {
+        if (subtitle != null && !subtitle.isEmpty()) put(ASConstants.FIELD_SUBTITLE, subtitle);
+        else remove(ASConstants.FIELD_SUBTITLE);
+    }
+
+    public ContentAspect addSubtitle(String subtitle) {
+        setSubtitle(subtitle);
+        return this;
     }
 
     public String getByline() {
         return (String) get(ASConstants.FIELD_BYLINE);
     }
 
+    public void setByline(String byline) {
+        if (byline != null && !byline.isEmpty()) put(ASConstants.FIELD_BYLINE, byline);
+        else remove(ASConstants.FIELD_BYLINE);
+    }
+
+    public ContentAspect addByline(String byline) {
+        setByline(byline);
+        return this;
+    }
+
     public String getContent() {
         return (String) get(ASConstants.FIELD_CONTENT);
+    }
+
+    public void setContent(String content) {
+        if (content != null && !content.isEmpty()) put(ASConstants.FIELD_CONTENT, content);
+        else remove(ASConstants.FIELD_CONTENT);
+    }
+
+    public ContentAspect addContent(String content) {
+        setContent(content);
+        return this;
     }
 
     /************ Assignment & Validation ************/
@@ -117,5 +157,9 @@ public class ContentAspect extends AbstractMapAspect implements EnrichableElemen
     }
 
     /************  Persistence ************/
+
+    public static ContentAspect content() {
+        return new ContentAspect();
+    }
 
 }

@@ -11,6 +11,10 @@ public class ResolvableAspect extends AbstractMapAspect {
     public ResolvableAspect() {
     }
 
+    public ResolvableAspect(String externalId) {
+        setExternalId(externalId);
+    }
+
     @Override
     public void loadFromValue(Object value) {
         if (value instanceof String) {
@@ -35,8 +39,28 @@ public class ResolvableAspect extends AbstractMapAspect {
         return (String) get(ASConstants.FIELD_EXTERNAL_ID);
     }
 
+    public void setExternalId(String externalId) {
+        if (externalId != null && !externalId.isEmpty()) put(ASConstants.FIELD_EXTERNAL_ID, externalId);
+        else remove(ASConstants.FIELD_EXTERNAL_ID);
+    }
+
+    public ResolvableAspect addExternalId(String externalId) {
+        setExternalId(externalId);
+        return this;
+    }
+
     public String getBatchId() {
         return (String) get(ASConstants.FIELD_BATCH_ID);
+    }
+
+    public void setBatchId(String batchId) {
+        if (batchId != null && !batchId.isEmpty()) put(ASConstants.FIELD_EXTERNAL_ID, batchId);
+        else remove(ASConstants.FIELD_BATCH_ID);
+    }
+
+    public ResolvableAspect addBatchId(String batchId) {
+        setBatchId(batchId);
+        return this;
     }
 
     /************ Assignment & Validation ************/
@@ -67,6 +91,14 @@ public class ResolvableAspect extends AbstractMapAspect {
     @Override
     public void verify() {
 
+    }
+
+    public static ResolvableAspect resolvable() {
+        return new ResolvableAspect();
+    }
+
+    public static ResolvableAspect resolvable(String externalId) {
+        return new ResolvableAspect(externalId);
     }
 
 }

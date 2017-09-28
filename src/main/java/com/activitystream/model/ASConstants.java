@@ -169,6 +169,7 @@ public class ASConstants {
     public static final String ASPECTS_TIMED = "timed";
     public static final String ASPECTS_STATUS = "status";
     public static final String ASPECTS_LOCALE = "locale";
+    public static final String ASPECTS_IDENTIFIABLE = "identifiable";
     public static final String ASPECTS_SETTINGS = "settings";
     public static final String ASPECTS_PRODUCT_VIEW = "productview";
     public static final String ASPECTS_TRAFFIC_SOURCE = "traffic_source";
@@ -293,7 +294,7 @@ public class ASConstants {
 
     public static final List<String> ALL_ASPECT_FIELDS =
             Arrays.asList(ASPECTS_CLASSIFICATION, ASPECTS_DIMENSIONS, ASPECTS_AB_TEST, ASPECTS_ADDRESS, ASPECTS_ATTACHMENTS, ASPECTS_CEI, ASPECTS_CLIENT_DEVICE,
-                    ASPECTS_CLIENT_IP, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
+                    ASPECTS_CLIENT_IP, ASPECTS_RESOLVABLE, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
                     ASPECTS_GEO_LOCATION, ASPECTS_METRICS);
 
 

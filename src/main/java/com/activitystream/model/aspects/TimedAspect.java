@@ -184,9 +184,6 @@ public class TimedAspect extends AbstractMapAspect {
     public void verify() {
         if (legacyComponent != null)
             legacyComponent.verify();
-
-        if (size() > 1)
-            addProblem(new InvalidPropertyContentError("Timed aspect only supports one type (for now)."));
     }
 
     /************  Persistence ************/
