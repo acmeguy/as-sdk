@@ -7,7 +7,7 @@ Use an appropriate settings.xml
     <servers>
         <server>
             <id>ossrh</id>
-            <username>${OSSRH_USERNAME}</username>
+            <username>activitystream-it</username>
             <password>${OSSRH_PASSWORD}</password>
         </server>
     </servers>
@@ -29,10 +29,12 @@ Change the version tag in pom.xml to a new non-snapshot version.
 deployment to OSSRH and an automated release to the Central Repository:
 
     export GPG_TTY=$(tty)
+    export OSSRH_PASSWORD="the_password_here"
+    Update the version field in pom.xml to the desired version name, not with -SNAPSHOT
     mvn clean deploy
     Update reference to the latest version number in README.md and docs/README.md
-    Bump the new SNAPSHOT version number
-    TAG=0.1.5
+    In pom.xml, bump the version number and add -SNAPSHOT in pom.xml
+    TAG=0.1.6
     Commit your changes to git.
     git tag $TAG
     git push origin $TAG
