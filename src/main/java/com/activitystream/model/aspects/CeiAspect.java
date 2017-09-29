@@ -20,17 +20,6 @@ public class CeiAspect extends AbstractMapAspect {
     public void loadFromValue(Object value) {
     }
 
-    /************
-     * Utility functions
-     ************/
-
-    /*
-    @Override
-    protected Map<String, Object> fromElement(SavableElement element, StreamItemAccessPolicy accessPolicy) {
-        return Collections.emptyMap();
-    }
-    */
-
     @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
@@ -41,28 +30,89 @@ public class CeiAspect extends AbstractMapAspect {
      ************/
 
     public Float getEngagement() {
-        return (Float) get(ASConstants.FIELD_ENDS);
+        return (Float) get(ASConstants.FIELD_ENGAGEMENT);
+    }
+
+    public void setEngagement(Float engagement) {
+        if (engagement != null) put(ASConstants.FIELD_ENGAGEMENT, engagement);
+        else remove(ASConstants.FIELD_ENGAGEMENT);
+    }
+
+    public CeiAspect addEngagement(Number engagement) {
+        setEngagement((engagement != null) ? engagement.floatValue() : null);
+        return this;
     }
 
     public Float getHappiness() {
         return (Float) get(ASConstants.FIELD_HAPPINESS);
     }
 
+    public void setHappiness(Float happiness) {
+        if (happiness != null) put(ASConstants.FIELD_HAPPINESS, happiness);
+        else remove(ASConstants.FIELD_HAPPINESS);
+    }
+
+    public CeiAspect addHappiness(Number happiness) {
+        setHappiness((happiness != null) ? happiness.floatValue() : null);
+        return this;
+    }
+
     public Float getCare() {
         return (Float) get(ASConstants.FIELD_CARE);
+    }
+
+    public void setCare(Float care) {
+        if (care != null) put(ASConstants.FIELD_CARE, care);
+        else remove(ASConstants.FIELD_CARE);
+    }
+
+    public CeiAspect addCare(Number care) {
+        setCare((care != null) ? care.floatValue() : null);
+        return this;
     }
 
     public Float getIntent() {
         return (Float) get(ASConstants.FIELD_INTENT);
     }
 
+    public void setIntent(Float intent) {
+        if (intent != null) put(ASConstants.FIELD_INTENT, intent);
+        else remove(ASConstants.FIELD_INTENT);
+    }
+
+    public CeiAspect addIntent(Number intent) {
+        setIntent((intent != null) ? intent.floatValue() : null);
+        return this;
+    }
+
     public Float getRating() {
         return (Float) get(ASConstants.FIELD_RATING);
+    }
+
+    public void setRating(Float rating) {
+        if (rating != null) put(ASConstants.FIELD_RATING, rating);
+        else remove(ASConstants.FIELD_RATING);
+    }
+
+    public CeiAspect addRating(Number rating) {
+        setRating((rating != null) ? rating.floatValue() : null);
+        return this;
     }
 
     public Float getDuration() {
         return (Float) get(ASConstants.FIELD_DURATION);
     }
+
+    public void setDuration(Float duration) {
+        if (duration != null) put(ASConstants.FIELD_DURATION, duration);
+        else remove(ASConstants.FIELD_DURATION);
+    }
+
+    public CeiAspect addDuration(Float duration) {
+        setDuration(duration);
+        return this;
+    }
+
 
     /************ Enrichment & Analytics ************/
 
@@ -99,4 +149,7 @@ public class CeiAspect extends AbstractMapAspect {
 
     }
 
+    public static CeiAspect cei() {
+        return new CeiAspect();
+    }
 }

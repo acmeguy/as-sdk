@@ -58,4 +58,9 @@ public class TrafficSourceAspect extends AbstractListAspect<TrafficSource> imple
         add(trafficSource);
         return this;
     }
+
+    public AspectInterface addTrafficSource(String type, String campaign, String source, String medium) {
+        add(new TrafficSource(type, campaign, source, medium));
+        return this;
+    }
 }

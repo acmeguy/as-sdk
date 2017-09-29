@@ -84,15 +84,45 @@ public class TrafficSource extends InternalEntity {
      * Utility functions
      ************/
 
+    public String getType() {
+        return (String) get(ASConstants.FIELD_TYPE);
+    }
+
+    /**
+     * Sets the traffic source type
+     * @param type The type of source "campaign", "social", "organic" etc...
+     */
+    public void setType(String type) {
+        if (type != null && !type.isEmpty()) put(ASConstants.FIELD_TYPE, type);
+        else remove(ASConstants.FIELD_TYPE);
+    }
+
+    /**
+     * Sets the traffic source type
+     * @param type The type of source "campaign", "social", "organic" etc...
+     */
+    public TrafficSource addType(String type) {
+        setType(type);
+        return this;
+    }
+
     public String getCampaign() {
         return (String) get(ASConstants.FIELD_CAMPAIGN);
     }
 
+    /**
+     * Sets the campaign for the traffic source (If campaign)
+     * @param campaign The campaign responsible for the the traffic (if present)
+     */
     public void setCampaign(String campaign) {
         if (campaign != null && !campaign.isEmpty()) put(ASConstants.FIELD_CAMPAIGN, campaign);
         else remove(ASConstants.FIELD_CAMPAIGN);
     }
 
+    /**
+     * Sets the campaign for the traffic source (If campaign)
+     * @param campaign The campaign responsible for the the traffic (if present)
+     */
     public TrafficSource addCampaign(String campaign) {
         setCampaign(campaign);
         return this;
@@ -111,11 +141,19 @@ public class TrafficSource extends InternalEntity {
         return (String) get(ASConstants.FIELD_SOURCE);
     }
 
+    /**
+     * Sets the traffic source site
+     * @param source The source it self (exact site the traffic came from)
+     */
     public void setSource(String source) {
         if (source != null && !source.isEmpty()) put(ASConstants.FIELD_SOURCE, source);
         else remove(ASConstants.FIELD_SOURCE);
     }
 
+    /**
+     * Sets the traffic source site
+     * @param source The source it self (exact site the traffic came from)
+     */
     public TrafficSource addSource(String source) {
         setSource(source);
         return this;
@@ -138,33 +176,58 @@ public class TrafficSource extends InternalEntity {
         return (String) get(ASConstants.FIELD_MEDIUM);
     }
 
+    /**
+     * Sets the medium type of the source
+     * @param medium The medium used mail, web etc.
+     */
     public void setMedium(String medium) {
         if (medium != null && !medium.isEmpty()) put(ASConstants.FIELD_MEDIUM, medium);
         else remove(ASConstants.FIELD_MEDIUM);
     }
 
+    /**
+     * Sets the medium type of the source
+     * @param medium The medium used mail, web etc.
+     */
     public TrafficSource addMedium(String medium) {
         setMedium(medium);
         return this;
     }
 
-    public String getType() {
-        return (String) get(ASConstants.FIELD_TYPE);
+    public String getTypeKey() {
+        return Validator.normalizeRef(getType());
     }
 
-    public void setType(String type) {
-        if (type != null && !type.isEmpty()) put(ASConstants.FIELD_TYPE, type);
-        else remove(ASConstants.FIELD_TYPE);
+    public EntityReference getMediumRef() {
+        if (!containsKey(ASConstants.FIELD_MEDIUM)) return null;
+        return new EntityReference(ASConstants.AS_UTM_MEDIUM, getMediumKey(), (String) get(ASConstants.FIELD_MEDIUM));
     }
 
-    public TrafficSource addType(String type) {
-        setType(type);
+    public String getReferrer() {
+        return (String) getOrDefault(ASConstants.FIELD_REFERRER, "unknown");
+    }
+
+    /**
+     * Sets the traffic referrer site
+     * @param referrer The site that referred traffic to the location that is reporting this (2nd degree)
+     */
+    public void setReferrer(String referrer) {
+        if (referrer != null && !referrer.isEmpty()) put(ASConstants.FIELD_REFERRER, referrer);
+        else remove(ASConstants.FIELD_REFERRER);
+    }
+
+    public TrafficSource addReferrer(String referrer) {
+        setReferrer(referrer);
         return this;
     }
 
+    public String getReferrerKey() {
+        return Validator.normalizeRef(getReferrer());
+    }
 
-    public String getTypeKey() {
-        return Validator.normalizeRef(getType());
+    public EntityReference getReferrerRef() {
+        if (!containsKey(ASConstants.FIELD_REFERRER)) return null;
+        return new EntityReference(ASConstants.AS_WEB_DOMAIN, getReferrerKey(), (String) get(ASConstants.FIELD_REFERRER));
     }
 
     public String getTerm() {
@@ -185,33 +248,6 @@ public class TrafficSource extends InternalEntity {
         return Validator.normalizeRef(getTerm());
     }
 
-    public EntityReference getMediumRef() {
-        if (!containsKey(ASConstants.FIELD_MEDIUM)) return null;
-        return new EntityReference(ASConstants.AS_UTM_MEDIUM, getMediumKey(), (String) get(ASConstants.FIELD_MEDIUM));
-    }
-
-    public String getReferrer() {
-        return (String) getOrDefault(ASConstants.FIELD_REFERRER, "unknown");
-    }
-
-    public void setReferrer(String referrer) {
-        if (referrer != null && !referrer.isEmpty()) put(ASConstants.FIELD_REFERRER, referrer);
-        else remove(ASConstants.FIELD_REFERRER);
-    }
-
-    public TrafficSource addReferrer(String referrer) {
-        setReferrer(referrer);
-        return this;
-    }
-
-    public String getReferrerKey() {
-        return Validator.normalizeRef(getReferrer());
-    }
-
-    public EntityReference getReferrerRef() {
-        if (!containsKey(ASConstants.FIELD_REFERRER)) return null;
-        return new EntityReference(ASConstants.AS_WEB_DOMAIN, getReferrerKey(), (String) get(ASConstants.FIELD_REFERRER));
-    }
 
     @Override
     public void onEachEntityReference(Consumer<EntityReference> action) {

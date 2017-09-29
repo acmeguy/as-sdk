@@ -254,6 +254,13 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return null;
     }
 
+    public AddressAspect addLatLong(String latLong) {
+        if (latLong != null && !latLong.isEmpty()) put(ASConstants.FIELD_LATLONG, latLong);
+        else remove(ASConstants.FIELD_LATLONG);
+        return this;
+    }
+
+
     public GeoLocationAspect getGeoLocation() {
 
         GeoLocationAspect geoLocationAspect = null;

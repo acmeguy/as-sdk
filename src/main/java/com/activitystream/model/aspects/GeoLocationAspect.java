@@ -61,8 +61,8 @@ public class GeoLocationAspect extends AbstractMapAspect implements EnrichableEl
         return (Double) value;
     }
 
-    public GeoLocationAspect addLatitude(Float latitude) {
-        if (latitude != null) put(ASConstants.FIELD_LATITUDE, latitude);
+    public GeoLocationAspect addLatitude(Number latitude) {
+        if (latitude != null) put(ASConstants.FIELD_LATITUDE, latitude.floatValue());
         else remove(ASConstants.FIELD_LATITUDE);
         return this;
     }
@@ -73,8 +73,8 @@ public class GeoLocationAspect extends AbstractMapAspect implements EnrichableEl
         return (Double) value;
     }
 
-    public GeoLocationAspect addLongitude(Float longitude) {
-        if (longitude != null) put(ASConstants.FIELD_LONGITUDE, longitude);
+    public GeoLocationAspect addLongitude(Number longitude) {
+        if (longitude != null) put(ASConstants.FIELD_LONGITUDE, longitude.floatValue());
         else remove(ASConstants.FIELD_LONGITUDE);
         return this;
     }
