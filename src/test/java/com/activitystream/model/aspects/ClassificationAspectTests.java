@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import static com.activitystream.model.aspects.ClassificationAspect.classification;
 
-
 public class ClassificationAspectTests {
 
     private static final Logger logger = LoggerFactory.getLogger(ClassificationAspectTests.class);
@@ -39,7 +38,6 @@ public class ClassificationAspectTests {
                 .addCategories("Tragic Comedy","Black Humor")
                 );
         Assert.assertEquals(event.toJSON().equals("{\"entity_ref\":\"Event/SHOW-ABC123\",\"aspects\":{\"classification\":{\"type\":\"Play\",\"variant\":\"Comedy\",\"categories\":[\"Tragic Comedy\",\"Black Humor\"]}}}"),true);
-
 
     }
 

@@ -35,9 +35,9 @@
     "ab_test": {
       "description": "AB Test is to simplify tracking and and results for AB Tests",
       "properties":{
-        "id":           { "type": "string", "description": "The ID of the AB test" },
-        "variant":      { "type": "string", "description": "What variant of the AB test is active" },
-        "outcome":      { "type": "string", "description": "What is the outcome of the AB test" },
+        "id":           { "$ref": "#/definitions/as_min_len_string", "description": "The ID of the AB test" },
+        "variant":      { "$ref": "#/definitions/as_min_len_string", "description": "What variant of the AB test is active" },
+        "outcome":      { "$ref": "#/definitions/as_min_len_string", "description": "What is the outcome of the AB test" },
         "metric":       { "type": "number", "description": "Key metric outcome (Added with things in the metrics aspect)" },
         "amount":       { "type": "number", "description": "Key metric, monitory, outcome (Added with things in the metrics aspect)" },
         "properties":   { "$ref": "#/definitions/properties", "description": "Free format properties to add to the AB test results" }
@@ -179,7 +179,8 @@
       "properties":{
         "type":         { "$ref": "#/definitions/as_min_len_string", "description": "Main classification category" },
         "variant":      { "$ref": "#/definitions/as_min_len_string", "description": "Main classification sub-category" },
-        "categories":   { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "description": "Addition sub-categories" }
+        "categories":   { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "description": "Addition sub-categories" },
+        "tags":         { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "description": "Additional tags (Behavioral tags for example)" }
       },
       "additionalProperties": false,
       "required":["type"]
@@ -209,28 +210,35 @@
     },
 
     "content": {
-      "properties":{},
+      "description": "A generic content storage aspect for article, emails or other typical content",
+      "properties":{
+        "title":          { "$ref": "#/definitions/as_min_len_string", "description": "The title of the content or a subject of an email" },
+        "subtitle":       { "$ref": "#/definitions/as_min_len_string", "description": "The ubtitle of the content" },
+        "byline":         { "$ref": "#/definitions/as_min_len_string", "description": "Additional title for the content" },
+        "content":        { "$ref": "#/definitions/as_min_len_string", "description": "The content it self (HTML or Base64 encoded)" }
+      },
       "additionalProperties": false,
-      "minItems": 1
+      "minItems": 1,
+      "required": ["title"]
     },
 
     "demography": {
-      "description": "Demography information, usually attached to entitites representing a person",
+      "description": "Demography information, usually attached to entities representing a person (Most values are free format)",
       "properties":{
-        "gender":         { "$ref": "#/definitions/as_min_len_string" },
-        "gender_guessed": { "type":"boolean"},
-        "birth_year":     { "type":"integer"},
-        "birth_month":    { "type":"integer"},
-        "birth_day":      { "type":"integer"},
-        "birth_date":     { "type":"string","format":"date-time"},
-        "family_size":    { "type":"integer"},
-        "ethnicity":      { "$ref": "#/definitions/as_min_len_string" },
-        "marital_status": { "$ref": "#/definitions/as_min_len_string" },
-        "mosaic_group":   { "$ref": "#/definitions/as_min_len_string" },
-        "employment":     { "$ref": "#/definitions/as_min_len_string" },
-        "income":         { "$ref": "#/definitions/as_min_len_string" },
-        "housing":        { "$ref": "#/definitions/as_min_len_string" },
-        "education":      { "$ref": "#/definitions/as_min_len_string" }
+        "gender":         { "$ref": "#/definitions/as_min_len_string", "description": "Gender information" },
+        "gender_guessed": { "type":"boolean", "description": "True if the gender was guessed by some algorithm."},
+        "birth_year":     { "type":"integer", "description": "The birth year for less-than-full birth information"},
+        "birth_month":    { "type":"integer", "description": "The birth month for less-than-full birth information"},
+        "birth_day":      { "type":"integer", "description": "The birth day for less-than-full birth information"},
+        "birth_date":     { "type":"string","format":"date-time", "description": "The full birthday"},
+        "family_size":    { "type":"integer", "description": "Family size information"},
+        "ethnicity":      { "$ref": "#/definitions/as_min_len_string", "description": "Ethnicity information" },
+        "marital_status": { "$ref": "#/definitions/as_min_len_string", "description": "Marital status information" },
+        "mosaic_group":   { "$ref": "#/definitions/as_min_len_string", "description": "Mosiac group information" },
+        "employment":     { "$ref": "#/definitions/as_min_len_string", "description": "Employment or profession information" },
+        "income":         { "$ref": "#/definitions/as_min_len_string", "description": "Income information" },
+        "housing":        { "$ref": "#/definitions/as_min_len_string", "description": "Housing information" },
+        "education":      { "$ref": "#/definitions/as_min_len_string", "description": "Education information" }
       },
       "minItems": 1,
       "additionalProperties": false
@@ -270,11 +278,12 @@
     },
 
     "entity_relation": {
+      "description": "Used to define relationships/links between entities",
       "properties":{
-        "type":       { "$ref": "#/definitions/as_entity_relation_type" },
-        "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
-        "entity":     { "$ref": "#/definitions/entity" },
-        "label":      { "$ref": "#/definitions/as_min_len_string" },
+        "type":       { "$ref": "#/definitions/as_entity_relation_type", "description": "The type of the Entity->Entity relationship"},
+        "entity_ref": { "$ref": "#/definitions/as_entity_ref", "description": "The ID reference of the remote entity" },
+        "entity":     { "$ref": "#/definitions/entity", "description": "The remote entity for embedded entity information" },
+        "label":      { "$ref": "#/definitions/as_min_len_string", "description": "The human readable label of the remote entity (for simple registration of embedded entities)" },
         "weight":     { "type": "number", "description":"Indicates the streangth of the releationship or 'trust in it'" },
         "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
         "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
@@ -306,7 +315,7 @@
     },
 
     "event_relation_shorthand": {
-      "description": "A relationship between an event and the entities involved in that event in a short  hand format",
+      "description": "A relationship between an event and a entity involved in that event using a short-hand format",
       "patternProperties":{
         "^(ACTOR|AFFECTS|INVOLVES|REFERENCES|OBSERVES|RELAYED_BY|CREATES|UPDATES|REMOVES)(\\:[A-Z|_]{3,}){0,3}$" : {
           "anyOf":[
@@ -326,13 +335,12 @@
     },
 
     "event_relation": {
-      "description": "A relationship between an event and the entities involved in that event",
+      "description": "A relationship between an event and a entity involved in that event",
       "properties":{
-        "role":       { "$ref": "#/definitions/as_event_relation_type" },
-        "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
-        "entity":     { "$ref": "#/definitions/entity" },
-        "weight":     { "type": "number" },
-        "properties": { "$ref": "#/definitions/properties" }
+        "role":       { "$ref": "#/definitions/as_event_relation_type", "description":"The role of the entity in the event (See Event role types in documentation)" },
+        "entity_ref": { "$ref": "#/definitions/as_entity_ref", "description":"The ID reference of the entity" },
+        "entity":     { "$ref": "#/definitions/entity", "description":"The Entity defenition for an entity embedded in the event" },
+        "properties": { "$ref": "#/definitions/properties", "description":"Additional properties for the Event->Entity relationship" }
       },
       "additionalProperties": false,
       "required": ["role"]
@@ -341,7 +349,7 @@
     "geo_location": {
       "description": "A physical GEO location [Tracked Aspect]",
       "properties":{
-        "latitude":   { "type":"number", "description":"Latitude as s Double number"},
+        "latitude":   { "type":"number", "description":"Latitude as s Double number" },
         "longitude":  { "type":"number", "description":"Longitude as a Double number" }
       },
       "additionalProperties": false,
@@ -547,7 +555,7 @@
 
     "timed": {
       "type":"object",
-      "description":"A list of times or periods relevant for the entity or the event",
+      "description":"A list of times or periods relevant for the entity or the event. (use 'begins' for events or shows that have fixed start time)",
       "patternProperties":{
         "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "$ref": "#/definitions/timed_entry" }
       },
@@ -617,7 +625,7 @@
 
     "as_event_relation_type": {
       "type": "string",
-      "pattern": "^(ACTOR|AFFECTS|INVOLVES|REFERENCES|OBSRERVES|CREATES|REMOVES|UPDATES)([\\:(A-Z|_){3,}]){0,3}$"
+      "pattern": "^(ACTOR|AFFECTS|INVOLVES|REFERENCES|OBSERVES|CREATES|REMOVES|UPDATES)([\\:(A-Z|_){3,}]){0,3}$"
     },
 
     "as_rel_item_type": {

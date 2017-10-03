@@ -27,7 +27,7 @@
     "ab_test": {
       "description": "AB Test is to simplify tracking and and results for AB Tests",
       "properties":{
-        "id":           { "type": "string", "description": "The ID of the AB test" },
+        "id":           { "type": "#/definitions/as_min_len_string", "description": "The ID of the AB test" },
         "variant":      { "type": "string", "description": "What variant of the AB test is active" },
         "outcome":      { "type": "string", "description": "What is the outcome of the AB test" },
         "metric":       { "type": "number", "description": "Key metric outcome (Added with things in the metrics aspect)" },
