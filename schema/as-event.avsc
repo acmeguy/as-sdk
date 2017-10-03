@@ -60,8 +60,8 @@
         "country_code": { "$ref": "#/definitions/as_min_len_string", "description": "The two letter ISO code for the country" },
         "country":      { "$ref": "#/definitions/as_min_len_string", "description": "The name of the country" },
         "hasc":         { "$ref": "#/definitions/as_min_len_string", "description": "The HASC code used for this are (if available)" },
-        "zip_latlong":  { "$ref": "#/definitions/as_min_len_string", "description": "The Latitude Longitude pair for the postal code" },
-        "latlong":      { "$ref": "#/definitions/as_min_len_string", "description": "The Latitude-Longitude pair for the address it self" },
+        "zip_latlong":  { "$ref": "#/definitions/as_min_len_string", "description": "The Latitude,Longitude pair for the postal code" },
+        "latlong":      { "$ref": "#/definitions/as_min_len_string", "description": "The Latitude,Longitude pair for the address it self" },
         "_verified":    { "type": "boolean", "description": "Has the address been verified (Internal)" },
         "_altered":     { "type": "boolean", "description": "Has the addredd been altered (Internal)" }
       },
