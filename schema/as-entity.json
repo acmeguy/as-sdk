@@ -151,7 +151,7 @@
         "birth_year":     { "type":"integer", "description": "The birth year for less-than-full birth information"},
         "birth_month":    { "type":"integer", "description": "The birth month for less-than-full birth information"},
         "birth_day":      { "type":"integer", "description": "The birth day for less-than-full birth information"},
-        "birth_date":     { "type":"string","format":"date-time", "description": "The full birthday"},
+        "birth_date":     { "$rel":"string", "description": "The full birthday"},
         "family_size":    { "type":"integer", "description": "Family size information"},
         "ethnicity":      { "type": "string", "minLength": 1, "description": "Ethnicity information" },
         "marital_status": { "type": "string", "minLength": 1, "description": "Marital status information" },
@@ -250,8 +250,8 @@
         "type":       { "$ref": "#/definitions/as_entity_relation_type" },
         "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
         "entity":     { "$ref": "#/definitions/entity" },
-        "label":      { "$ref": "#/definitions/as_min_len_string" },
-        "weight":     { "type": "number" },
+        "label":      { "type": "string", "minLength": 1 },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5 },
         "properties": { "$ref": "#/definitions/properties" },
         "$direction": { "$ref": "#/definitions/as_rel_direction" },
         "$from": { "$ref": "#/definitions/as_timestamp" },
@@ -273,7 +273,7 @@
         }
       },
       "properties":{
-        "weight":     { "type": "number" },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5 },
         "properties": { "$ref": "#/definitions/properties" },
         "$direction": { "$ref": "#/definitions/as_rel_direction" },
         "$from": { "$ref": "#/definitions/as_timestamp" },
@@ -381,24 +381,9 @@
       "minItems": 1
     },
 
-    "as_min_len_string": {
-      "type":"string",
-      "pattern":"^(.){1,}$"
-    },
-
-    "as_min_len_number": {
-      "type":"number",
-      "pattern":"^([0-9|\\.|\\,]){1,}$"
-    },
-
     "as_timestamp": {
       "type":"string",
       "format":"date-time"
-    },
-
-    "as_timed_type": {
-      "type":"string",
-      "pattern": "^(period|begins|duration|onsale|door|available|valid)([_(A_Z|_)+]){0,3}$"
     },
 
     "as_rel_direction": {
@@ -409,11 +394,6 @@
     "as_entity_relation_type": {
       "type": "string",
       "pattern": "^(IS|ALIAS|SOCIAL_ID|AKA|CLOSE|KNOWS|PART_OF|PROXY_FOR|ON_BEHALF_OF|RELAYED_BY|ASSOCIATED_WITH|RELATED_TO|HAS_RELATIONS_TO|OF_TYPE|HOSTED_AT|MEMBER_OF|STARS_IN|INSTRUMENTAL_IN|APPEARS_IN|ASSISTS_IN|VERSION_OF|KNOWS_OF|PAIRED_WITH|RATED_BY|POWERED_BY|BELONGS_TO|LOCATED_AT|LOCATED_IN|MEASURES|RESIDES_AT|INTEGRAL_TO|)([\\:(A-Z|_)+]){0,3}$"
-    },
-
-    "as_res_identifier": {
-      "type": "string",
-      "pattern": "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$"
     },
 
     "as_entity_ref": {

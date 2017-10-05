@@ -5,7 +5,7 @@
   "description":"AS Event Message. Also known as Business Activity Monitoring Message (BAMM) (Used to send business activity information to Activity Stream",
   "type": "object",
   "properties": {
-    "occurred_at":  { "$ref": "#/definitions/as_timestamp", "format":"date-time", "description": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},
+    "occurred_at":  { "$ref": "#/definitions/as_timestamp", "description": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},
     "type":         { "$ref": "#/definitions/as_res_identifier", "description": "Event Type Identifier (lower cased and dot separated)" },
     "origin":       { "$ref": "#/definitions/as_res_identifier", "description": "Origin Identifier (lower cased and dot separated)" },
     "importance":   { "type": "number", "minimum": 0, "maximum": 5, "description": "The importance level of the event (See imp. levels)." },
@@ -237,7 +237,7 @@
         "birth_year":     { "type":"integer", "description": "The birth year for less-than-full birth information"},
         "birth_month":    { "type":"integer", "description": "The birth month for less-than-full birth information"},
         "birth_day":      { "type":"integer", "description": "The birth day for less-than-full birth information"},
-        "birth_date":     { "type":"string","format":"date-time", "description": "The full birthday"},
+        "birth_date":     { "type":"string", "description": "The full birthday"},
         "family_size":    { "type":"integer", "description": "Family size information"},
         "ethnicity":      { "type": "string", "minLength": 1, "description": "Ethnicity information" },
         "marital_status": { "type": "string", "minLength": 1, "description": "Marital status information" },
@@ -292,7 +292,7 @@
         "entity_ref": { "$ref": "#/definitions/as_entity_ref", "description": "The ID reference of the remote entity" },
         "entity":     { "$ref": "#/definitions/entity", "description": "The remote entity for embedded entity information" },
         "label":      { "type": "string", "minLength": 1, "description": "The human readable label of the remote entity (for simple registration of embedded entities)" },
-        "weight":     { "type": "number", "description":"Indicates the streangth of the releationship or 'trust in it'" },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5, "description":"Indicates the streangth of the releationship or 'trust in it'" },
         "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
         "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
         "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
@@ -313,7 +313,7 @@
         }
       },
       "properties":{
-        "weight":     { "type": "number", "description":"Indicates the streangth of the releationship or 'trust in it'" },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5, "description":"Indicates the streangth of the releationship or 'trust in it'" },
         "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
         "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
         "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
@@ -334,7 +334,7 @@
         }
       },
       "properties":{
-        "weight":     { "type": "number", "description":"Indicates the streangth of the releationship or 'trust in it'" },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5, "description":"Indicates the streangth of the releationship or 'trust in it'" },
         "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
         "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
         "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
@@ -467,7 +467,7 @@
         }
       },
       "properties":{
-        "weight":     { "type": "number" },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5 },
         "properties": { "$ref": "#/definitions/properties" }
       },
       "additionalProperties": false
@@ -479,7 +479,7 @@
         "role":       { "$ref": "#/definitions/as_rel_item_type" },
         "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
         "entity":     { "$ref": "#/definitions/entity" },
-        "weight":     { "type": "number" },
+        "weight":     { "type": "number", "minimum": -5, "maximum": 5 },
         "properties": { "$ref": "#/definitions/properties" }
       },
       "additionalProperties": false,
@@ -619,24 +619,9 @@
       "minItems": 1
     },
 
-    "as_min_len_string": {
-      "type":"string",
-      "pattern":"^(.){1,}$"
-    },
-
-    "as_min_len_number": {
-      "type":"number",
-      "pattern":"^([0-9|\\.|\\,]){1,}$"
-    },
-
     "as_timestamp": {
       "type":"string",
       "format":"date-time"
-    },
-
-    "as_timed_type": {
-      "type":"string",
-      "pattern": "^(period|begins|duration|onsale|door|available|valid)([_[A-Z|_]+]){0,3}$"
     },
 
     "as_rel_direction": {
