@@ -5,6 +5,7 @@ The Activity Stream SDK is split up in to two components
 * **as-sdk** that contains core SDK files (this)
 * **[as-sdk-examples](https://github.com/activitystream/as-sdk-examples)** which contains reusable code and message examples
 
+
 Both of these can be cloned and extended and pull-requests are welcome.
 
 ### Getting started
@@ -13,6 +14,8 @@ quick start.
 We want to grow our message examples directory, included in the examples, considerably and with your help. Please respect those messages as a guideline
 for you messages but keep in mind that you can extend or alter them at will.
 
+### The Activity Stream Schema
+The [AS Schema](/schema) directory will contain the AS schema in different formats.
 
 ### Importing the SDK into your project
 
@@ -33,8 +36,6 @@ Use these maven coordinates for Java*:
 terminology used in the AS Message model.
 * Provide a wide range of [examples](https://github.com/activitystream/as-sdk-examples) tailored for specific verticals  
 
-### The Activity Stream Schema
-The [AS Schema](/schema) directory will contain the AS schema in different formats.
 
 ### Contact and support
 * Feel free to create issues here or contact our [Integration Support team directly](mailto:integration-support@activitystream.com).
