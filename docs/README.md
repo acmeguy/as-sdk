@@ -36,11 +36,11 @@ ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+6:00"));
 Event messages are used to report any business activity that should be logged in Activity Stream.
 ```
 ASEvent asEvent = new ASEvent()
-        .addType("as.application.authentication.login")
-        .addOrigin("your.web.application")
-        .addOccurredAt("2017-01-01T00:00:00.000Z")
-        .addImportance(ImportanceLevel.NOT_IMPORTANT)
-        .addRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314");
+        .withType("as.application.authentication.login")
+        .withOrigin("your.web.application")
+        .withOccurredAt("2017-01-01T00:00:00.000Z")
+        .withImportance(ImportanceLevel.NOT_IMPORTANT)
+        .withRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314");
 ```
 This simple login message produces the following JSON structure which is a valid Activity Stream event messages.
 ```
@@ -78,10 +78,10 @@ Entity messages are used to send information regarding business entities to Acti
 Entity messages can also be used to collect time series information for any business entity.  
 ```
 asEntity = new ASEntity("Customer","0071")
-        .addAspect(presentation()
-                .addLabel("John McDoe")
-                .addDescription("John is great")
-                .addDetailsUrl("https://en.wikipedia.org/wiki/john.mcdoe")
+        .withAspect(presentation()
+                .withLabel("John McDoe")
+                .withDescription("John is great")
+                .withDetailsUrl("https://en.wikipedia.org/wiki/john.mcdoe")
         );
 ```
 This simple entity message produces the following JSON structure which is a valid Activity Stream entity messages.
@@ -117,18 +117,18 @@ Pleas read the [AS Entity relations](as-entity-relations) for more information.
 Entity information can easily be embedded in entity meassages and there is no limit to the levels of nesting.
 ```
 customer = new ASEntity("Customer","0071")
-        .addAspect(presentation()
-                .addLabel("John McDoe")
-                .addDescription("John is great")
-                .addDetailsUrl("https://en.wikipedia.org/wiki/john.mcdoe")
+        .withAspect(presentation()
+                .withLabel("John McDoe")
+                .withDescription("John is great")
+                .withDetailsUrl("https://en.wikipedia.org/wiki/john.mcdoe")
         );
 
 ASEvent asEvent = new ASEvent()
-        .addType("as.application.authentication.login")
-        .addOrigin("your.web.application")
-        .addOccurredAt("2017-01-01T00:00:00.000Z")
-        .addImportance(ImportanceLevel.NOT_IMPORTANT)
-        .addRelationIfValid(ASEventRelationTypes.ACTOR, customer);
+        .withType("as.application.authentication.login")
+        .withOrigin("your.web.application")
+        .withOccurredAt("2017-01-01T00:00:00.000Z")
+        .withImportance(ImportanceLevel.NOT_IMPORTANT)
+        .withRelationIfValid(ASEventRelationTypes.ACTOR, customer);
 ```
 This event message produces the following JSON structure:
 ```

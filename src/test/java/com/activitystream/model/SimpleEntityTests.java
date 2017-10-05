@@ -91,8 +91,8 @@ public class SimpleEntityTests {
                         .withCategories("agent","secret")
                         .withTags("kills bad guys","travels","mostly obeys","womanizer","loyal","utility")
                 )
-                .addRelationIfValid(ASEntityRelationTypes.AKA,"Email","007@mi5.gov.uk")
-                .addRelationIfValid(ASEntityRelationTypes.AKA,"Phone","+441007007007", "secure_line",true)
+                .withRelationIfValid(ASEntityRelationTypes.AKA,"Email","007@mi5.gov.uk")
+                .withRelationIfValid(ASEntityRelationTypes.AKA,"Phone","+441007007007", "secure_line",true)
                 .withPartition("mi5_only");
 
         Assert.assertEquals(customer.toJSON().equals("{\"entity_ref\":\"Agent/007\",\"aspects\":{\"presentation\":{\"label\":\"James Bond\",\"thumbnail\":\"http://www.007.com/wp-content/uploads/2014/01/Roger-Moore-james-bond-BW.jpg\",\"icon\":\"007-icon\",\"description\":\"Dude working for a Queen killing people, mostly\",\"details_url\":\"http://www.007.com/\"},\"demography\":{\"gender\":\"male\",\"gender_guessed\":false,\"birth_day\":13,\"birth_year\":1968,\"birth_month\":4,\"employment\":\"Governmental Employee\",\"ethnicity\":\"Caucasian\",\"marital_status\":\"Very Single\",\"income\":\"400k$ - 800k$\",\"mosaic_group\":\"Wealthy World Traveller\",\"education\":\"Like to have a degree\"},\"address\":{\"address\":\"61 Horseferry Road\",\"zip_code\":\"SW1\",\"city\":\"Westminster\",\"region\":\"London\",\"state\":\"Greater London\",\"country\":\"United Kingdom\",\"country_code\":\"UK\"},\"classification\":{\"type\":\"individual\",\"variant\":\"employee\",\"categories\":[\"agent\",\"secret\"],\"tags\":[\"kills bad guys\",\"travels\",\"mostly obeys\",\"womanizer\",\"loyal\",\"utility\"]}},\"relations\":[{\"AKA\":{\"entity_ref\":\"Email/007@mi5.gov.uk\"}},{\"AKA\":{\"entity_ref\":\"Phone/+441007007007\"},\"properties\":{\"secure_line\":true}}],\"partition\":\"mi5_only\"}"),true);

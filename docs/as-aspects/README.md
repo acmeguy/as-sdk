@@ -38,13 +38,13 @@ The ab_test aspect is used to store AB Test results. Analytics for AB Tests are 
 Sets the address of a entity.
 ```
 ASEntity venue = new ASEntity("Venue", "983983");
-venue.addAspect(address()
-        .addAddress("Kensington Gore")
-        .addCity("Kensington")
-        .addState("Greater London")
-        .addPostCode("SW7 2AP")
-        .addCountryCode("UK")
-        .addCountry("United Kingdom"));
+venue.withAspect(address()
+        .withAddress("Kensington Gore")
+        .withCity("Kensington")
+        .withState("Greater London")
+        .withPostCode("SW7 2AP")
+        .withCountryCode("UK")
+        .withCountry("United Kingdom"));
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -73,10 +73,10 @@ It provides a 3 level structure beneath the Entity Type (EntityType -> Classific
 .type -> Classification.variant -> Classification.categories).  Properties should be filled out in this order: type, variant, categories.
 ```
 ASEntity venue = new ASEntity("Venue", "983983");
-venue.addAspect(classification()
-        .addType("Theater")
-        .addVariant("Concert Hall")
-        .addCategories("Classical","Pop","Variety","Shows"));
+venue.withAspect(classification()
+        .withType("Theater")
+        .withVariant("Concert Hall")
+        .withCategories("Classical","Pop","Variety","Shows"));
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -106,16 +106,16 @@ Used to store demography information for an entity.
 
 ```
 ASEntity secretAgent = new ASEntity("Agent", "007");
-secretAgent.addAspect(demography()
-        .addGender("male")
-        .addBirthDate("1968-04-13")
-        .addEmployment("Governmental Employee")
-        .addEthnicity("Caucasian")
-        .addMaritalStatus("Very Single")
-        .addHousing("Lives alone")
-        .addMosaicGroup("Wealthy World Traveller")
-        .addEducation("Like to have a degree")
-        .addIncome("400k$ - 800k$"));
+secretAgent.withAspect(demography()
+        .withGender("male")
+        .withBirthDate("1968-04-13")
+        .withEmployment("Governmental Employee")
+        .withEthnicity("Caucasian")
+        .withMaritalStatus("Very Single")
+        .withHousing("Lives alone")
+        .withMosaicGroup("Wealthy World Traveller")
+        .withEducation("Like to have a degree")
+        .withIncome("400k$ - 800k$"));
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -145,8 +145,8 @@ All values in dimensions are added to all time-series that are created for the A
 any other aspect that automatically generated time-series dynamically get extra dimensions for slicing and dicing.
 ```
 ASEntity venue = new ASEntity("Venue", "983983");
-venue.addDimension("house_color","white");
-venue.addDimensions("door_faces","north", "door_color","brown");
+venue.withDimension("house_color","white");
+venue.withDimensions("door_faces","north", "door_color","brown");
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -174,16 +174,16 @@ Used to represent line-items or transaction items for commerce.
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEvent purchaseEvent = new ASEvent(ASEvent.POP_TYPES.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
-        purchaseEvent.addOccurredAt("2017-01-01T12:00:00")
-                .addRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
-                .addAspect(items()
-                        .addLine(lineItem()
-                                .addProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
-                                .addItemCount(1)
-                                .addItemPrice(32.5) //this is turned into 0 when marked as complimentary
-                                .addPriceCategory("Section A")
-                                .addPriceType("Seniors")
-                                .addVariant("VIP")
+        purchaseEvent.withOccurredAt("2017-01-01T12:00:00")
+                .withRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
+                .withAspect(items()
+                        .withLine(lineItem()
+                                .withProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
+                                .withItemCount(1)
+                                .withItemPrice(32.5) //this is turned into 0 when marked as complimentary
+                                .withPriceCategory("Section A")
+                                .withPriceType("Seniors")
+                                .withVariant("VIP")
                                 .markAsComplimentary() //Sets as complimentary and changes the price to 0
                         )
                 );
@@ -229,7 +229,7 @@ Produces this AS Event message in JSON:
 Generic store for ad-hoc metrics. Metrics are tracked.
 ```
     ASEntity venue = new ASEntity("Venue", "983983");
-    venue.addMetric("built",1941, "capacity", 5272);
+    venue.withMetric("built",1941, "capacity", 5272);
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -248,8 +248,8 @@ store.
 If a timestamp is provided then the time-series datapoint will be stored using that time but it defaults to current time. 
 ```
 ASEntity venue = new ASEntity("Venue", "983983")
-        .addMetric("built",1941, "capacity", 5272)
-        .addOccurredAt("2017-10-31T12:00:00-01:00");
+        .withMetric("built",1941, "capacity", 5272)
+        .withOccurredAt("2017-10-31T12:00:00-01:00");
 ```
 Produces this AS Entity message in JSON and forces a data-point to be created with a specific time. 
 ```
@@ -271,12 +271,12 @@ Metrics are created on demand and there is no practical limit to the number of m
 Commonly used fields to display human-readable entity information but applies to events as well.
 ```
 ASEntity venue = new ASEntity("Venue", "983983")
-    .addAspect(presentation()
-        .addLabel("Royal Albert Hall")
-        .addDescription("The Royal Albert Hall is a concert hall on the northern edge of South Kensington, London, which holds the Proms concerts annually each summer since 1941. It has a capacity of up to 5,272 seats.")
-        .addDetailsUrl("https://www.royalalberthall.com/")
-        .addThumbnail("https://cdn.royalalberthall.com/file/1396975600/32830992449")
-        .addIcon("ol-venue"));
+    .withAspect(presentation()
+        .withLabel("Royal Albert Hall")
+        .withDescription("The Royal Albert Hall is a concert hall on the northern edge of South Kensington, London, which holds the Proms concerts annually each summer since 1941. It has a capacity of up to 5,272 seats.")
+        .withDetailsUrl("https://www.royalalberthall.com/")
+        .withThumbnail("https://cdn.royalalberthall.com/file/1396975600/32830992449")
+        .withIcon("ol-venue"));
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -301,11 +301,11 @@ templating of events.
 ```
 ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 ASEntity venue = new ASEntity("Venue", "983983")
-        .addProperties("some_boolean",true)
-        .addProperties("date", DateTime.parse("2017-01-01T00:00:00.000Z"))
-        .addProperties("a_map", Collections.singletonMap("map_value",Collections.singletonMap("nested",true)))
-        .addProperties("a_sttring", "Yes, I'm a String")
-        .addProperties("one_of_many", true, "two_of_many",true, "four_of_many",false, "item_index",4, "position_name","five");
+        .withProperties("some_boolean",true)
+        .withProperties("date", DateTime.parse("2017-01-01T00:00:00.000Z"))
+        .withProperties("a_map", Collections.singletonMap("map_value",Collections.singletonMap("nested",true)))
+        .withProperties("a_sttring", "Yes, I'm a String")
+        .withProperties("one_of_many", true, "two_of_many",true, "four_of_many",false, "item_index",4, "position_name","five");
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -334,7 +334,7 @@ Produces this AS Entity message in JSON:
 An array of strings used to further classify events in the activity stream. You can use any tag you like but keep in mind that a small set (low cardinality) of tags is commonly more useful than a large set of tags.
 ```
 ASEntity venue = new ASEntity("Venue", "983983");
-venue.addAspect(tags().addTags("National"));
+venue.withAspect(tags().withTags("National"));
 ```
 Produces this AS Entity message in JSON:
 ```
@@ -357,10 +357,10 @@ Reserved period types (lower-case "slugs"):
 - doors_open (example timed-type for ticketing)   
 ```
 ASEntity venue = new ASEntity("Venue", "983983");
-venue.addAspect(timed()
-        .addPeriod("construction","1867","1871")
-        .addPeriod("inaugurated","1871-03-29")
-        .addPeriod("renovated","1996","2004")
+venue.withAspect(timed()
+        .withPeriod("construction","1867","1871")
+        .withPeriod("inaugurated","1871-03-29")
+        .withPeriod("renovated","1996","2004")
 );
 ```
 Produces this AS Entity message in JSON: 

@@ -99,7 +99,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return (String) get(ASConstants.FIELD_ADDRESS_2);
     }
 
-    public AddressAspect addAddress2(String address) {
+    public AddressAspect withAddress2(String address) {
         if (address != null && !address.isEmpty()) put(ASConstants.FIELD_ADDRESS_2, address);
         else remove(ASConstants.FIELD_ADDRESS_2);
         return this;

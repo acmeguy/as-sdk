@@ -14,15 +14,15 @@ The event-message is the basic structure for reporting these events and they rel
 ### Web Event (Generic)
 ```
 ASEvent webVisitStarts = new ASEvent()
-        .addType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
-        .addOrigin("wwww.mysite.domain")
-        .addOccurredAt("2017-01-01T00:00:00.000Z")
-        .addRelationIfValid(ASEventRelationTypes.ACTOR,"Customer","007")
-        .addAspect(classification()
-                .addType("virtual")
-                .addVariant("web"))
-        .addAspect(clientIP("127.0.0.1"))
-        .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
+        .withType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
+        .withOrigin("wwww.mysite.domain")
+        .withOccurredAt("2017-01-01T00:00:00.000Z")
+        .withRelationIfValid(ASEventRelationTypes.ACTOR,"Customer","007")
+        .withAspect(classification()
+                .withType("virtual")
+                .withVariant("web"))
+        .withAspect(clientIP("127.0.0.1"))
+        .withAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
 ```
 Produces this AS Event message in JSON:
 ```
@@ -52,21 +52,21 @@ Produces this AS Event message in JSON:
 Event messages can contain as much entity information as needed to create missing entities or to update them.
 ```
 ASEntity customer = new ASEntity("Customer","30893928")
-        .addAspect(presentation()
-                .addLabel("John Doe"))
-        .addRelationIfValid(ASEntityRelationTypes.AKA,"Email", "john.doe@gmail.com")
-        .addRelationIfValid(ASEntityRelationTypes.AKA,"Phone", "+150012348765");
+        .withAspect(presentation()
+                .withLabel("John Doe"))
+        .withRelationIfValid(ASEntityRelationTypes.AKA,"Email", "john.doe@gmail.com")
+        .withRelationIfValid(ASEntityRelationTypes.AKA,"Phone", "+150012348765");
 
 webVisitStarts = new ASEvent()
-        .addType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
-        .addOrigin("wwww.mysite.domain")
-        .addOccurredAt("2017-01-01T00:00:00.000Z")
-        .addRelation(ASEventRelationTypes.ACTOR,customer)
-        .addAspect(classification()
-                .addType("virtual")
-                .addVariant("web"))
-        .addAspect(clientIP("127.0.0.1"))
-        .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
+        .withType(ASEvent.PAST.AS_CRM_VISIT_STARTED)
+        .withOrigin("wwww.mysite.domain")
+        .withOccurredAt("2017-01-01T00:00:00.000Z")
+        .withRelation(ASEventRelationTypes.ACTOR,customer)
+        .withAspect(classification()
+                .withType("virtual")
+                .withVariant("web"))
+        .withAspect(clientIP("127.0.0.1"))
+        .withAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
 ```
 Produces this AS Event + AS Entity message in JSON:
 ```

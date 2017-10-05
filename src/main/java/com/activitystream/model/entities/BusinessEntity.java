@@ -217,11 +217,11 @@ public class BusinessEntity extends AbstractMapElement
         return this;
     }
 
-    public BusinessEntity addRelationIfValid(String type, String entityType, String entityId) {
-        return addRelationIfValid(type, entityType, entityId, null);
+    public BusinessEntity withRelationIfValid(String type, String entityType, String entityId) {
+        return withRelationIfValid(type, entityType, entityId, null);
     }
 
-    public BusinessEntity addRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
+    public BusinessEntity withRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
         if (!entityType.isEmpty() && entityId != null && !entityId.isEmpty()) {
             Relation newRelation = new Relation(type, new EntityReference(entityType, entityId, this), this);
             if (relationsProperties != null) {
@@ -232,7 +232,7 @@ public class BusinessEntity extends AbstractMapElement
         return this;
     }
 
-    public BusinessEntity addRelationIfValid(String type, EntityReference entityRef) {
+    public BusinessEntity withRelationIfValid(String type, EntityReference entityRef) {
         if (entityRef != null) {
             this.getRelationsManager(true).addRelation(new Relation(type, entityRef));
         }

@@ -162,28 +162,28 @@ public class ASEntity extends BusinessEntity {
     }
 
     @Override
-    public ASEntity addRelationIfValid(String type, String entityType, String entityId) {
-        super.addRelationIfValid(type, entityType, entityId);
+    public ASEntity withRelationIfValid(String type, String entityType, String entityId) {
+        super.withRelationIfValid(type, entityType, entityId);
         return this;
     }
 
     @Override
-    public ASEntity addRelationIfValid(String type, String entityType, String entityId, Map<String, Object> relationsProperties) {
-        super.addRelationIfValid(type, entityType, entityId, relationsProperties);
+    public ASEntity withRelationIfValid(String type, String entityType, String entityId, Map<String, Object> relationsProperties) {
+        super.withRelationIfValid(type, entityType, entityId, relationsProperties);
         return this;
     }
 
-    public ASEntity addRelationIfValid(String type, String entityType, String entityId, Object ... properties) {
+    public ASEntity withRelationIfValid(String type, String entityType, String entityId, Object ... properties) {
         Map<String,Object> propertiesMap = new LinkedHashMap<>();
         for (int i = 0; i < properties.length; i += 2) {
             propertiesMap.put(properties[i].toString(), properties[i + 1]);
         }
-        return addRelationIfValid(type, entityType, entityId, propertiesMap);
+        return withRelationIfValid(type, entityType, entityId, propertiesMap);
     }
 
     @Override
-    public ASEntity addRelationIfValid(String type, EntityReference entityRef) {
-        super.addRelationIfValid(type, entityRef);
+    public ASEntity withRelationIfValid(String type, EntityReference entityRef) {
+        super.withRelationIfValid(type, entityRef);
         return this;
     }
 
