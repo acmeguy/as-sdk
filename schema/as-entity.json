@@ -88,6 +88,7 @@
         },
         "required":["url"]
       },
+      "uniqueItems": true,
       "additionalProperties": false,
       "minItems": 1
     },
@@ -138,7 +139,7 @@
         "content":        { "type": "string", "minLength": 1, "description": "The content it self (HTML or Base64 encoded)" }
       },
       "additionalProperties": false,
-      "minItems": 1,
+      "minProperties":1,
       "required": ["title"]
     },
 
@@ -161,7 +162,7 @@
         "housing":        { "type": "string", "minLength": 1, "description": "Housing information" },
         "education":      { "type": "string", "minLength": 1, "description": "Education information" }
       },
-      "minItems": 1,
+      "minProperties":1,
       "additionalProperties": false
     },
 
@@ -258,6 +259,7 @@
         "$to": { "$ref": "#/definitions/as_timestamp" },
         "partition":    { "type": "string", "description": "A isolated data partition to store the data in. '_common' is the global partition." }
       },
+      "minProperties":2,
       "additionalProperties": false,
       "required": ["type"]
     },
@@ -280,6 +282,7 @@
         "$to": { "$ref": "#/definitions/as_timestamp" },
         "partition":    { "type": "string", "description": "A isolated data partition to store the data in. '_common' is the global partition." }
       },
+      "minProperties":1,
       "additionalProperties": false
     },
 
@@ -326,7 +329,7 @@
         "icon":         { "type": "string", "minLength": 1, "description": "A image or icon used to represent the entity in lists etc." }
       },
       "additionalProperties": false,
-      "minItems": 1
+      "minProperties":1
     },
 
     "resolvable": {
@@ -346,8 +349,7 @@
         "^[a-z_]{3,}$":{}
       },
       "minProperties":1,
-      "additionalProperties": false,
-      "minItems": 1
+      "additionalProperties": false
     },
 
     "tags": {
@@ -378,7 +380,7 @@
         "duration": { "type":"number", "description":"Duration (calculated if start/end provided but uses occurred_at as start time and occurrd_at+duration  as end time if only duration is reported" }
       },
       "additionalProperties": false,
-      "minItems": 1
+      "minProperties":1
     },
 
     "as_timestamp": {

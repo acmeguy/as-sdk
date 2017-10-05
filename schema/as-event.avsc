@@ -97,6 +97,7 @@
         "required":["url"]
       },
       "additionalProperties": false,
+      "uniqueItems": true,
       "minItems": 1
     },
 
@@ -224,7 +225,7 @@
         "content":        { "type": "string", "minLength": 1, "description": "The content it self (HTML or Base64 encoded)" }
       },
       "additionalProperties": false,
-      "minItems": 1,
+      "minProperties": 1,
       "required": ["title"]
     },
 
@@ -247,7 +248,7 @@
         "housing":        { "type": "string", "minLength": 1, "description": "Housing information" },
         "education":      { "type": "string", "minLength": 1, "description": "Education information" }
       },
-      "minItems": 1,
+      "minProperties": 1,
       "additionalProperties": false
     },
 
@@ -300,10 +301,12 @@
         "partition":  { "type": "string", "description": "A isolated data partition to store the data in. '_common' is the global partition." }
       },
       "additionalProperties": false,
-      "required": ["type"]
+      "minProperties": 2,
+      "required": ["type", "entity_ref"]
     },
 
     "entity_shorthand_relation": {
+      "type":"object",
       "patternProperties":{
         "^(IS|INTEGRAL_TO|CLOSE|KNOWS|KNOWS_OF|ALIAS|PART_OF|REL_VERSION_OF|LOCATED_AT|REL_LOCATED_IN|AKA|LOCATED_IN|PROXY_FOR|ON_BEHALF_OF|RELAYED_BY|ASSOCIATED_WITH|RELATED_TO|HAS_RELATIONS_TO|OF_TYPE|HOSTED_AT)([\\:[A-Z|_]{3,}]){0,3}$" : {
           "anyOf":[
@@ -319,6 +322,7 @@
         "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
         "$to":        { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationship has a  specific end date" }
       },
+      "minProperties": 2,
       "additionalProperties": false
     },
 
@@ -340,6 +344,7 @@
         "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
         "$to":        { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationship has a  specific end date" }
       },
+      "minProperties": 2,
       "additionalProperties": false
     },
 
@@ -353,6 +358,7 @@
         "properties": { "$ref": "#/definitions/properties", "description":"Additional properties for the Event->Entity relationship" }
       },
       "additionalProperties": false,
+      "minProperties": 2,
       "required": ["role"]
     },
 
@@ -428,6 +434,7 @@
               { "$ref":"#/definitions/item_relation" }
             ]
           },
+          "uniqueItems": true,
           "minItems":1
         },
         "price_type":             { "type": "string", "minLength": 1, "description":"What price type applied for these items (from Inventory)" },
@@ -438,8 +445,8 @@
         "variant":                { "type": "string", "minLength": 1, "description":"What product sub-type/variant was sold (from Invoentory)" },
         "payment_method":         { "type": "string", "minLength": 1, "description":"What payment method was used to pay for the item" },
         "card_token":             { "type": "string", "minLength": 1, "description":"Obfuscated Credid Card number/token for the transactions" },
-        "serial_numbers":         { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems":1, "description":"List of serial numbers of the products involved" },
-        "line_ids":               { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItem":1, "description":"Unique line-item IDs for the sale" },
+        "serial_numbers":         { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems":1, "uniqueItems": true, "description":"List of serial numbers of the products involved" },
+        "line_ids":               { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItem":1, "uniqueItems": true, "description":"Unique line-item IDs for the sale" },
         "item_count":             { "type":"number", "description":"How many items of this product+type+variant were bought." },
         "item_price":             { "type":"number", "description":"What was the price for individual item (before tax and discount)" },
         "commission_percentage":  { "type":"number", "description":"How many percentages of the sale should be considered commission" },
@@ -453,7 +460,7 @@
       },
       "additionalProperties": false,
       "required":["involves","item_count"],
-      "minPropeties": 2
+      "minProperties": 2
     },
 
     "item_shorthand_relation": {
@@ -494,6 +501,7 @@
           { "$ref": "#/definitions/event_relation" }
         ]
       },
+      "uniqueItems": true,
       "minItems": 1
     },
 
@@ -563,8 +571,7 @@
         "^[a-z_]{3,}$":{}
       },
       "minProperties":1,
-      "additionalProperties": false,
-      "minItems": 1
+      "additionalProperties": false
     },
 
     "tags": {
@@ -572,7 +579,7 @@
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
       "additionalProperties": false,
-      "minItems": 1,
+      "minProperties":1,
       "uniqueItems": true
     },
 
@@ -595,12 +602,13 @@
         "duration": { "type":"number", "description":"Duration (calculated if start/end provided but uses occurred_at as start time and occurrd_at+duration  as end time if only duration is reported" }
       },
       "additionalProperties": false,
-      "minItems": 1
+      "minProperties":1
     },
 
     "traffic_sources": {
       "type":"array",
       "items": { "$ref": "#/definitions/traffic_source" },
+      "uniqueItems": true,
       "minItems": 1
     },
 
@@ -616,7 +624,7 @@
         "content":    { "type":"object", "description":"Any additional content used to report the traffic_source for the event" }
       },
       "additionalProperties": false,
-      "minItems": 1
+      "minProperties":1
     },
 
     "as_timestamp": {
@@ -646,7 +654,7 @@
 
     "as_res_identifier": {
       "type": "string",
-      "pattern": "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$"
+      "pattern": "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
     },
 
     "as_entity_ref": {
