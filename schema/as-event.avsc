@@ -33,6 +33,7 @@
   "required": ["type", "origin","involves"],
   "definitions": {
     "ab_test": {
+      "type":"object",
       "description": "AB Test is to simplify tracking and and results for AB Tests",
       "properties":{
         "id":           { "type": "string", "minLength": 1, "description": "The ID of the AB test" },
@@ -47,6 +48,7 @@
     },
 
     "address": {
+      "type":"object",
       "description": "Addresses can be attached to any entity",
       "properties":{
         "address":      { "type": "string", "minLength": 1, "description": "The main street address"},
@@ -175,6 +177,7 @@
     },
 
     "classification": {
+      "type":"object",
       "description": "A generic classification structure for entities and events",
       "properties":{
         "type":         { "type": "string", "minLength": 1, "description": "Main classification category" },
@@ -187,6 +190,7 @@
     },
 
     "client_device": {
+      "type":"object",
       "properties":{
         "user_agent":   { "type": "string", "description": "The browsers 'User Agent' string" }
       },
@@ -195,6 +199,7 @@
     },
 
     "client_ip": {
+      "type":"object",
       "properties":{
         "client_ip":{
           "type": "string",
@@ -210,6 +215,7 @@
     },
 
     "content": {
+      "type":"object",
       "description": "A generic content storage aspect for article, emails or other typical content",
       "properties":{
         "title":          { "type": "string", "minLength": 1, "description": "The title of the content or a subject of an email" },
@@ -223,6 +229,7 @@
     },
 
     "demography": {
+      "type":"object",
       "description": "Demography information, usually attached to entities representing a person (Most values are free format)",
       "properties":{
         "gender":         { "type": "string", "minLength": 1, "description": "Gender information" },
@@ -278,6 +285,7 @@
     },
 
     "entity_relation": {
+      "type":"object",
       "description": "Used to define relationships/links between entities",
       "properties":{
         "type":       { "$ref": "#/definitions/as_entity_relation_type", "description": "The type of the Entity->Entity relationship"},
@@ -315,6 +323,7 @@
     },
 
     "event_relation_shorthand": {
+      "type":"object",
       "description": "A relationship between an event and a entity involved in that event using a short-hand format",
       "patternProperties":{
         "^(ACTOR|AFFECTS|INVOLVES|REFERENCES|OBSERVES|RELAYED_BY|CREATES|UPDATES|REMOVES)(\\:[A-Z|_]{3,}){0,3}$" : {
@@ -335,6 +344,7 @@
     },
 
     "event_relation": {
+      "type":"object",
       "description": "A relationship between an event and a entity involved in that event",
       "properties":{
         "role":       { "$ref": "#/definitions/as_event_relation_type", "description":"The role of the entity in the event (See Event role types in documentation)" },
@@ -347,6 +357,7 @@
     },
 
     "geo_location": {
+      "type":"object",
       "description": "A physical GEO location [Tracked Aspect]",
       "properties":{
         "latitude":   { "type":"number", "description":"Latitude as s Double number" },
@@ -357,6 +368,7 @@
     },
 
     "inventory": {
+      "type":"object",
       "description": "Inventory information",
       "properties":{
         "items_sold":       { "type":"number", "description":"Number of items sold to date." },
@@ -387,6 +399,7 @@
     },
 
     "inventory_line": {
+      "type":"object",
       "description": "Inventory information",
       "properties":{
         "items_sold":       { "type":"number", "description":"Number of items sold to date." },
@@ -444,6 +457,7 @@
     },
 
     "item_shorthand_relation": {
+      "type":"object",
       "patternProperties":{
         "^(PURCHASED|REPLACED|REPURCHASED|RESOLD|CANCELLED|RENTED|LEASED|GOT|WON|RETURNED|CARTED|RESERVED|UN_RESERVED|UNAVAILABLE|RATED_BY)([\\:[A-Z|_]+]){0,3}$" : {
           "anyOf":[
@@ -460,6 +474,7 @@
     },
 
     "item_relation": {
+      "type":"object",
       "properties":{
         "role":       { "$ref": "#/definitions/as_rel_item_type" },
         "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
@@ -500,23 +515,26 @@
         "^[a-z_]{3,}$":{}
       },
       "minProperties":1,
+      "additionalProperties": false,
       "uniqueItems": true
     },
 
     "presentation": {
+      "type":"object",
       "description": "Presentation aspect contains popular presentation information",
       "properties":{
-        "label":        { "type": "string", "pattern":"^(.){1,}$", "description": "A human readable string used to represent the entity (name etc.)" },
-        "details_url":  { "type": "string", "format":"uri", "description": "A URI containing detailed information about the entity" },
-        "thumbnail":    { "type": "string", "description": "A URI pointing to an image of the entity (profile picture)" },
-        "description":  { "type": "string", "description": "A short, general, description of the entity" },
-        "icon":         { "type": "string", "description": "A image or icon used to represent the entity in lists etc." }
+        "label":        { "type": "string", "minLength": 1, "description": "A human readable string used to represent the entity (name etc.)" },
+        "details_url":  { "type": "string", "minLength": 1, "format":"uri", "description": "A URI containing detailed information about the entity" },
+        "thumbnail":    { "type": "string", "minLength": 1, "format":"uri", "description": "A URI pointing to an image of the entity (profile picture)" },
+        "description":  { "type": "string", "minLength": 1, "description": "A short, general, description of the entity" },
+        "icon":         { "type": "string", "minLength": 1, "description": "A image or icon used to represent the entity in lists etc." }
       },
       "additionalProperties": false,
       "required": ["label"]
     },
 
     "productview": {
+      "type":"object",
       "description": "Product View aspect is used to track product exposure",
       "properties":{
         "product":  { "type": "string", "description":"What product was viewed" },
@@ -529,9 +547,10 @@
     },
 
     "resolvable": {
+      "type":"object",
       "properties":{
-        "external_id":  { "type": "string", "description": "A unique external ID used to look up the event or the entity" },
-        "batch_id":     { "type": "string", "description": "A external Batch number used to identify a group of events" }
+        "external_id":  { "type": "string", "minLength": 1, "description": "A unique external ID used to look up the event or the entity" },
+        "batch_id":     { "type": "string", "minLength": 1, "description": "A external Batch number used to identify a group of events" }
       },
       "additionalProperties": false,
       "required":["external_id"]
@@ -540,6 +559,10 @@
     "settings": {
       "type": "object",
       "description":"A list of settings where the active settings are compiled based on all reported settings (as in Event sourcing)",
+      "patternProperties":{
+        "^[a-z_]{3,}$":{}
+      },
+      "minProperties":1,
       "additionalProperties": false,
       "minItems": 1
     },
@@ -560,10 +583,12 @@
         "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "$ref": "#/definitions/timed_entry" }
       },
       "minProperties":1,
+      "additionalProperties": false,
       "uniqueItems": true
     },
 
     "timed_entry": {
+      "type":"object",
       "properties":{
         "begins":   { "$ref": "#/definitions/as_timestamp", "description":"Explicit start time" },
         "ends":     { "$ref": "#/definitions/as_timestamp", "description":"Explicit end time" },
@@ -580,6 +605,7 @@
     },
 
     "traffic_source": {
+      "type":"object",
       "properties":{
         "type":       { "type":"string", "description":"What type of traffic source was this ('campaign' for example)"},
         "referrer":   { "type":"string", "description":"Where did the traffic come from (usually a URL/Web Domain)" },
