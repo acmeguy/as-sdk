@@ -33,6 +33,8 @@ public class AddressAspectTests {
                         .withLatitude(51.5009088)
                         .withLongitude(-0.177366));
 
+        //logger.warn("smu " + venue.toJSON());
+
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"presentation\":{\"label\":\"The Royal Albert Hall\"},\"address\":{\"address\":\"Kensington Gore\",\"city\":\"Kensington\",\"state\":\"Greater London\",\"zip_code\":\"SW7 2AP\",\"country_code\":\"UK\",\"country\":\"United Kingdom\"},\"geo_location\":{\"latitude\":51.50090789794922,\"longitude\":-0.1773660033941269}}}"),true);
     }
 

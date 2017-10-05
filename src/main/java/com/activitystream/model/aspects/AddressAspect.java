@@ -31,7 +31,6 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     }}; //todo - replace with real lookup
 
     public AddressAspect() {
-        put(ASConstants.FIELD_COUNTRY_CODE, ASConfig.getDefaultCountryCode());
     }
 
     //todo - Remove this silly/custom cleanup stuff

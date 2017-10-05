@@ -40,6 +40,7 @@ public class ASConfigTest {
         ASEvent event = new ASEvent();
         ItemsManager itemsManager = new ItemsManager();
         ASLineItem lineItem = new ASLineItem();
+        lineItem.withDefaults();
         lineItem.withRelationIfValid(ASConstants.REL_TRADE, "Show", "123");
         itemsManager.mergeItemLine(lineItem);
         event.withAspect(itemsManager);

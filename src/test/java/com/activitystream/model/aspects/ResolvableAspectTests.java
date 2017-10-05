@@ -29,7 +29,7 @@ public class ResolvableAspectTests {
                 .withRelationIfValid(ASConstants.REL_ACTOR,"Customer/983938")
                 .withAspect(resolvable("3983"));
 
-        Assert.assertEquals(miniEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.marketing.ad.interaction\",\"origin\":\"www.web\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/983938\"}}],\"importance\":3,\"aspects\":{\"resolvable\":{\"external_id\":\"3983\"}}}"),true);
+        Assert.assertEquals(miniEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.marketing.ad.interaction\",\"origin\":\"www.web\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/983938\"}}],\"aspects\":{\"resolvable\":{\"external_id\":\"3983\"}}}"),true);
     }
 
 }

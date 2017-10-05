@@ -78,7 +78,7 @@ public class ASEvent extends CustomerEvent {
         relationsManager.addAll(allRelations);
 
         if (importance != null) put(ASConstants.FIELD_IMPORTANCE, importance.ordinal());
-        else put(ASConstants.FIELD_IMPORTANCE, ImportanceLevel.NOT_IMPORTANT);
+        else remove(ASConstants.FIELD_IMPORTANCE);
 
         HashMap<String, Object> aspects = new LinkedHashMap<>();
         if (!aspects.isEmpty()) put(ASConstants.FIELD_ASPECTS, aspects);

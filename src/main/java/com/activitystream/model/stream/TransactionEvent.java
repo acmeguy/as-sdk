@@ -49,17 +49,14 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     private Relation buyerRelation;
 
     public TransactionEvent() {
-        setCurrency(ASConfig.getDefaultCurrency());
     }
 
     public TransactionEvent(Map map, BaseStreamElement root) {
         super(map, root);
-        setCurrency(ASConfig.getDefaultCurrency());
     }
 
     public TransactionEvent(Map map) {
         super(map, null);
-        setCurrency(ASConfig.getDefaultCurrency());
     }
 
     @Override
