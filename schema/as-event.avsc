@@ -5,10 +5,10 @@
   "description":"Event Message. Also known as Business Activity Monitoring Message (BAMM)",
   "type": "object",
   "properties": {
-    "occurred_at":  { "$ref": "#/definitions/as_timestamp", "description": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},
+    "occurred_at":  { "$ref": "#/definitions/as_timestamp", "format":"date-time", "description": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},
     "type":         { "$ref": "#/definitions/as_res_identifier", "description": "Event Type Identifier (lower cased and dot separated)" },
     "origin":       { "$ref": "#/definitions/as_res_identifier", "description": "Origin Identifier (lower cased and dot separated)" },
-    "importance":   { "type": "number", "minimum": -1, "maximum": 5, "description": "The importance level of the event (See imp. levels)." },
+    "importance":   { "type": "number", "minimum": 0, "maximum": 5, "description": "The importance level of the event (See imp. levels)." },
     "description":  { "type": "string", "description": "A short, human readable, description of what happened." },
     "involves":     {
       "description": "A list of entities involved in the event",
@@ -23,8 +23,8 @@
     },
     "aspects":      { "$ref": "#/definitions/event-aspects", "description": "A map of aspects used to report the event." },
     "properties":   { "$ref": "#/definitions/properties", "description": "Free format JSON structure with additional information regarding the Event." },
-    "partition":    { "type": "string", "description": "A isolated data partition to store the data in. '_common' is the global partition." },
-    "token":        { "$ref": "#/definitions/as_min_len_string", "description": "A token used for templated/fill-inn when retporting the event." }
+    "partition":    { "type": "string", "minLength": 3, "description": "A isolated data partition to store the data in. '_common' is the global partition." },
+    "token":        { "type": "string", "minLength": 3, "description": "A token used for templated/fill-inn when retporting the event." }
   },
   "patternProperties": {
     "^_([a-z_]){2,}$": {}
@@ -35,9 +35,9 @@
     "ab_test": {
       "description": "AB Test is to simplify tracking and and results for AB Tests",
       "properties":{
-        "id":           { "$ref": "#/definitions/as_min_len_string", "description": "The ID of the AB test" },
-        "variant":      { "$ref": "#/definitions/as_min_len_string", "description": "What variant of the AB test is active" },
-        "outcome":      { "$ref": "#/definitions/as_min_len_string", "description": "What is the outcome of the AB test" },
+        "id":           { "type": "string", "minLength": 1, "description": "The ID of the AB test" },
+        "variant":      { "type": "string", "minLength": 1, "description": "What variant of the AB test is active" },
+        "outcome":      { "type": "string", "minLength": 1, "description": "What is the outcome of the AB test" },
         "metric":       { "type": "number", "description": "Key metric outcome (Added with things in the metrics aspect)" },
         "amount":       { "type": "number", "description": "Key metric, monitory, outcome (Added with things in the metrics aspect)" },
         "properties":   { "$ref": "#/definitions/properties", "description": "Free format properties to add to the AB test results" }
@@ -49,19 +49,19 @@
     "address": {
       "description": "Addresses can be attached to any entity",
       "properties":{
-        "address":      { "$ref": "#/definitions/as_min_len_string", "description": "The main street address"},
-        "address2":     { "$ref": "#/definitions/as_min_len_string", "description": "The secondary street address / floor" },
-        "postal_code":  { "$ref": "#/definitions/as_min_len_string", "description": "Postal code" },
-        "city":         { "$ref": "#/definitions/as_min_len_string", "description": "Name of the City" },
-        "region":       { "$ref": "#/definitions/as_min_len_string", "description": "Region or county name" },
-        "sub_region":   { "$ref": "#/definitions/as_min_len_string", "description": "Locality" },
-        "state":        { "$ref": "#/definitions/as_min_len_string", "description": "The main street address" },
-        "state_code":   { "$ref": "#/definitions/as_min_len_string", "description": "Abbreviation of id of the State" },
-        "country_code": { "$ref": "#/definitions/as_min_len_string", "description": "The two letter ISO code for the country" },
-        "country":      { "$ref": "#/definitions/as_min_len_string", "description": "The name of the country" },
-        "hasc":         { "$ref": "#/definitions/as_min_len_string", "description": "The HASC code used for this are (if available)" },
-        "zip_latlong":  { "$ref": "#/definitions/as_min_len_string", "description": "The Latitude,Longitude pair for the postal code" },
-        "latlong":      { "$ref": "#/definitions/as_min_len_string", "description": "The Latitude,Longitude pair for the address it self" },
+        "address":      { "type": "string", "minLength": 1, "description": "The main street address"},
+        "address2":     { "type": "string", "minLength": 1, "description": "The secondary street address / floor" },
+        "postal_code":  { "type": "string", "minLength": 3, "description": "Postal code" },
+        "city":         { "type": "string", "minLength": 1, "description": "Name of the City" },
+        "region":       { "type": "string", "minLength": 1, "description": "Region or county name" },
+        "sub_region":   { "type": "string", "minLength": 1, "description": "Locality" },
+        "state":        { "type": "string", "minLength": 1, "description": "The main street address" },
+        "state_code":   { "type": "string", "minLength": 2, "description": "Abbreviation of id of the State" },
+        "country_code": { "type": "string", "minLength": 2, "description": "The two letter ISO code for the country" },
+        "country":      { "type": "string", "minLength": 1, "description": "The name of the country" },
+        "hasc":         { "type": "string", "minLength": 5, "description": "The HASC code used for this are (if available)" },
+        "zip_latlong":  { "type": "string", "minLength": 10, "description": "The Latitude,Longitude pair for the postal code" },
+        "latlong":      { "type": "string", "minLength": 10, "description": "The Latitude,Longitude pair for the address it self" },
         "_verified":    { "type": "boolean", "description": "Has the address been verified (Internal)" },
         "_altered":     { "type": "boolean", "description": "Has the addredd been altered (Internal)" }
       },
@@ -76,17 +76,17 @@
         "type":"object",
         "properties":{
           "url" :         { "type": "string", "format":"uri", "description": "a fully qualified URL pointing to the attached file" },
-          "use" :         { "$ref": "#/definitions/as_min_len_string", "description": "Has the addredd been altered (Internal)" },
-          "filename":     { "$ref": "#/definitions/as_min_len_string", "description": "The filename to use for the attachment regardless of URL" },
-          "fingerprint":  { "$ref": "#/definitions/as_min_len_string", "description": "HASH for the file to find duplicates and verify content" },
-          "description":  { "$ref": "#/definitions/as_min_len_string", "description": "A general description of what is in the file" },
+          "use" :         { "type": "string", "minLength": 1, "description": "Has the addredd been altered (Internal)" },
+          "filename":     { "type": "string", "minLength": 1, "description": "The filename to use for the attachment regardless of URL" },
+          "fingerprint":  { "type": "string", "minLength": 1, "description": "HASH for the file to find duplicates and verify content" },
+          "description":  { "type": "string", "minLength": 1, "description": "A general description of what is in the file" },
           "size":         { "type": "integer", "description": "Size of the file in Bytes" },
           "created":      { "$ref": "#/definitions/as_timestamp", "description": "Timestamp with the creation date-time of the file" },
           "properties":   { "$ref": "#/definitions/properties", "description": "Free format properties to add to the attachment" },
           "metadata":     {
             "type":"object",
             "patternProperties":{
-              "^.{3,}":{ "$ref": "#/definitions/as_min_len_string" }
+              "^.{3,}":{ "type": "string", "minLength": 1 }
             },
             "uniqueItems": true,
             "description": "Metadata properties used to describe the file content"
@@ -177,10 +177,10 @@
     "classification": {
       "description": "A generic classification structure for entities and events",
       "properties":{
-        "type":         { "$ref": "#/definitions/as_min_len_string", "description": "Main classification category" },
-        "variant":      { "$ref": "#/definitions/as_min_len_string", "description": "Main classification sub-category" },
-        "categories":   { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "description": "Addition sub-categories" },
-        "tags":         { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "description": "Additional tags (Behavioral tags for example)" }
+        "type":         { "type": "string", "minLength": 1, "description": "Main classification category" },
+        "variant":      { "type": "string", "minLength": 1, "description": "Main classification sub-category" },
+        "categories":   { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true, "description": "Addition sub-categories" },
+        "tags":         { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true, "description": "Additional tags (Behavioral tags for example)" }
       },
       "additionalProperties": false,
       "required":["type"]
@@ -212,10 +212,10 @@
     "content": {
       "description": "A generic content storage aspect for article, emails or other typical content",
       "properties":{
-        "title":          { "$ref": "#/definitions/as_min_len_string", "description": "The title of the content or a subject of an email" },
-        "subtitle":       { "$ref": "#/definitions/as_min_len_string", "description": "The ubtitle of the content" },
-        "byline":         { "$ref": "#/definitions/as_min_len_string", "description": "Additional title for the content" },
-        "content":        { "$ref": "#/definitions/as_min_len_string", "description": "The content it self (HTML or Base64 encoded)" }
+        "title":          { "type": "string", "minLength": 1, "description": "The title of the content or a subject of an email" },
+        "subtitle":       { "type": "string", "minLength": 1, "description": "The ubtitle of the content" },
+        "byline":         { "type": "string", "minLength": 1, "description": "Additional title for the content" },
+        "content":        { "type": "string", "minLength": 1, "description": "The content it self (HTML or Base64 encoded)" }
       },
       "additionalProperties": false,
       "minItems": 1,
@@ -225,20 +225,20 @@
     "demography": {
       "description": "Demography information, usually attached to entities representing a person (Most values are free format)",
       "properties":{
-        "gender":         { "$ref": "#/definitions/as_min_len_string", "description": "Gender information" },
+        "gender":         { "type": "string", "minLength": 1, "description": "Gender information" },
         "gender_guessed": { "type":"boolean", "description": "True if the gender was guessed by some algorithm."},
         "birth_year":     { "type":"integer", "description": "The birth year for less-than-full birth information"},
         "birth_month":    { "type":"integer", "description": "The birth month for less-than-full birth information"},
         "birth_day":      { "type":"integer", "description": "The birth day for less-than-full birth information"},
         "birth_date":     { "type":"string","format":"date-time", "description": "The full birthday"},
         "family_size":    { "type":"integer", "description": "Family size information"},
-        "ethnicity":      { "$ref": "#/definitions/as_min_len_string", "description": "Ethnicity information" },
-        "marital_status": { "$ref": "#/definitions/as_min_len_string", "description": "Marital status information" },
-        "mosaic_group":   { "$ref": "#/definitions/as_min_len_string", "description": "Mosiac group information" },
-        "employment":     { "$ref": "#/definitions/as_min_len_string", "description": "Employment or profession information" },
-        "income":         { "$ref": "#/definitions/as_min_len_string", "description": "Income information" },
-        "housing":        { "$ref": "#/definitions/as_min_len_string", "description": "Housing information" },
-        "education":      { "$ref": "#/definitions/as_min_len_string", "description": "Education information" }
+        "ethnicity":      { "type": "string", "minLength": 1, "description": "Ethnicity information" },
+        "marital_status": { "type": "string", "minLength": 1, "description": "Marital status information" },
+        "mosaic_group":   { "type": "string", "minLength": 1, "description": "Mosiac group information" },
+        "employment":     { "type": "string", "minLength": 1, "description": "Employment or profession information" },
+        "income":         { "type": "string", "minLength": 1, "description": "Income information" },
+        "housing":        { "type": "string", "minLength": 1, "description": "Housing information" },
+        "education":      { "type": "string", "minLength": 1, "description": "Education information" }
       },
       "minItems": 1,
       "additionalProperties": false
@@ -248,7 +248,7 @@
       "description": "Any dimension to be included in the event/entity analytics entry [Tracked Aspect]",
       "type":"object",
       "patternProperties":{
-        "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "$ref": "#/definitions/as_min_len_string" }
+        "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "type": "string", "minLength": 1 }
       },
       "minProperties":1,
       "uniqueItems": true
@@ -283,7 +283,7 @@
         "type":       { "$ref": "#/definitions/as_entity_relation_type", "description": "The type of the Entity->Entity relationship"},
         "entity_ref": { "$ref": "#/definitions/as_entity_ref", "description": "The ID reference of the remote entity" },
         "entity":     { "$ref": "#/definitions/entity", "description": "The remote entity for embedded entity information" },
-        "label":      { "$ref": "#/definitions/as_min_len_string", "description": "The human readable label of the remote entity (for simple registration of embedded entities)" },
+        "label":      { "type": "string", "minLength": 1, "description": "The human readable label of the remote entity (for simple registration of embedded entities)" },
         "weight":     { "type": "number", "description":"Indicates the streangth of the releationship or 'trust in it'" },
         "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
         "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
@@ -417,16 +417,16 @@
           },
           "minItems":1
         },
-        "price_type":             { "$ref": "#/definitions/as_min_len_string", "description":"What price type applied for these items (from Inventory)" },
-        "price_category":         { "$ref": "#/definitions/as_min_len_string", "description":"What price category applied for these items (from Inventory)" },
-        "accounting_key":         { "$ref": "#/definitions/as_min_len_string", "description":"Should this revenue be assigned to a specific accounting key" },
-        "description":            { "$ref": "#/definitions/as_min_len_string", "description":"Does this line item have a specific description (prefer templates)" },
-        "currency":               { "$ref": "#/definitions/as_min_len_string", "description":"What currency was used to pay for the item" },
-        "variant":                { "$ref": "#/definitions/as_min_len_string", "description":"What product sub-type/variant was sold (from Invoentory)" },
-        "payment_method":         { "$ref": "#/definitions/as_min_len_string", "description":"What payment method was used to pay for the item" },
-        "card_token":             { "$ref": "#/definitions/as_min_len_string", "description":"Obfuscated Credid Card number/token for the transactions" },
-        "serial_numbers":         { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems":1, "description":"List of serial numbers of the products involved" },
-        "line_ids":               { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItem":1, "description":"Unique line-item IDs for the sale" },
+        "price_type":             { "type": "string", "minLength": 1, "description":"What price type applied for these items (from Inventory)" },
+        "price_category":         { "type": "string", "minLength": 1, "description":"What price category applied for these items (from Inventory)" },
+        "accounting_key":         { "type": "string", "minLength": 1, "description":"Should this revenue be assigned to a specific accounting key" },
+        "description":            { "type": "string", "minLength": 1, "description":"Does this line item have a specific description (prefer templates)" },
+        "currency":               { "type": "string", "minLength": 1, "description":"What currency was used to pay for the item" },
+        "variant":                { "type": "string", "minLength": 1, "description":"What product sub-type/variant was sold (from Invoentory)" },
+        "payment_method":         { "type": "string", "minLength": 1, "description":"What payment method was used to pay for the item" },
+        "card_token":             { "type": "string", "minLength": 1, "description":"Obfuscated Credid Card number/token for the transactions" },
+        "serial_numbers":         { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems":1, "description":"List of serial numbers of the products involved" },
+        "line_ids":               { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItem":1, "description":"Unique line-item IDs for the sale" },
         "item_count":             { "type":"number", "description":"How many items of this product+type+variant were bought." },
         "item_price":             { "type":"number", "description":"What was the price for individual item (before tax and discount)" },
         "commission_percentage":  { "type":"number", "description":"How many percentages of the sale should be considered commission" },
@@ -547,7 +547,7 @@
     "tags": {
       "description": "List of tags attached to an entity or an event",
       "type": "array",
-      "items": { "$ref": "#/definitions/as_min_len_string" },
+      "items": { "type": "string", "minLength": 1 },
       "additionalProperties": false,
       "minItems": 1,
       "uniqueItems": true
