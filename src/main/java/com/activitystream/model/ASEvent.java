@@ -28,7 +28,7 @@ public class ASEvent extends CustomerEvent {
     }
 
     public ASEvent(PRE type, String origin) {
-        this(type.toString().replaceAll("_",".").toLowerCase(), origin, null, ImportanceLevel.IMPORTANT, (Object) null);
+        this(type.toString().replaceAll("_",".").toLowerCase(), origin, null, null, (Object) null);
     }
 
     public ASEvent(String type, String origin, String description, ImportanceLevel importance, Object... involves) {
