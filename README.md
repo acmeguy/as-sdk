@@ -14,8 +14,8 @@ quick start.
 We want to grow our message examples directory, included in the examples, considerably and with your help. Please respect those messages as a guideline
 for you messages but keep in mind that you can extend or alter them at will.
 
-### The Activity Stream Schema
-The [AS Schema](/schema) directory will contain the AS schema in different formats.
+### The Activity Stream Message Schema
+The [JSON Schema](/schema) directory will contain a JSON schema for AS messages.
 
 ### Importing the SDK into your project
 
