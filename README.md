@@ -15,7 +15,11 @@ We want to grow our message examples directory, included in the examples, consid
 for you messages but keep in mind that you can extend or alter them at will.
 
 ### The Activity Stream Message Schema
-The [JSON Schema](/schema) directory will contain a JSON schema for AS messages.
+The [Schema](/schema) directory contains the schema for AS event and entity messages.
+
+* **[JSON Schema](/schema)** 
+* **[AVRO](/schema)** 
+
 
 ### Importing the SDK into your project
 
