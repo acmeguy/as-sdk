@@ -135,7 +135,7 @@ public class ClientIpAspect extends AbstractMapAspect implements CompactableElem
         return (String) get(ASConstants.FIELD_IP);
     }
 
-    public ClientIpAspect addIp(String ip) {
+    public ClientIpAspect withIp(String ip) {
         if (ip != null && !ip.isEmpty()) put(ASConstants.FIELD_IP, ip);
         else remove(ASConstants.FIELD_IP);
         return this;

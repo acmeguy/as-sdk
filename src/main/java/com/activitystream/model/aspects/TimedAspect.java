@@ -1,10 +1,8 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.utils.Slugify;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
-import com.activitystream.model.validation.InvalidPropertyContentError;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -119,8 +117,8 @@ public class TimedAspect extends AbstractMapAspect {
      * @param begins the date time when the period begins
      * @return the timed aspect for chaining
      */
-    public TimedAspect addPeriod(String type, String begins) {
-        return addPeriod(type, begins, null, null);
+    public TimedAspect withPeriod(String type, String begins) {
+        return withPeriod(type, begins, null, null);
     }
 
     /**
@@ -131,8 +129,8 @@ public class TimedAspect extends AbstractMapAspect {
      * @param duration the duration of the event in seconds
      * @return the timed aspect for chaining
      */
-    public TimedAspect addPeriod(String type, String begins, Long duration) {
-        return addPeriod(type, begins, null, duration);
+    public TimedAspect withPeriod(String type, String begins, Long duration) {
+        return withPeriod(type, begins, null, duration);
     }
 
     /**
@@ -143,8 +141,8 @@ public class TimedAspect extends AbstractMapAspect {
      * @param ends the date time when the period ends in a ISO format
      * @return the timed aspect for chaining
      */
-    public TimedAspect addPeriod(String type, String begins, String ends) {
-        return addPeriod(type, begins, ends, null);
+    public TimedAspect withPeriod(String type, String begins, String ends) {
+        return withPeriod(type, begins, ends, null);
     }
 
     /**
@@ -156,7 +154,7 @@ public class TimedAspect extends AbstractMapAspect {
      * @param duration the duration of the event in seconds
      * @return the timed aspect for chaining
      */
-    public TimedAspect addPeriod(String type, String begins, String ends, Long duration) {
+    public TimedAspect withPeriod(String type, String begins, String ends, Long duration) {
         LinkedHashMap<String,Object> tComponent = new LinkedHashMap();
         if (begins != null && !begins.isEmpty()) tComponent.put("begins",begins);
         if (ends != null && !ends.isEmpty()) tComponent.put("ends",ends);

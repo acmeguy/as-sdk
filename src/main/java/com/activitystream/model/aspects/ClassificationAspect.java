@@ -116,7 +116,7 @@ public class ClassificationAspect extends AbstractMapAspect {
      * Classification type should not be the same as the Entity Type as that would be completely redundant
      * @param type
      */
-    public ClassificationAspect addType(String type) {
+    public ClassificationAspect withType(String type) {
         setType(type);
         return this;
     }
@@ -149,7 +149,7 @@ public class ClassificationAspect extends AbstractMapAspect {
      * @param variant
      * @return
      */
-    public ClassificationAspect addVariant(String variant) {
+    public ClassificationAspect withVariant(String variant) {
         setVariant(variant);
         return this;
     }
@@ -180,13 +180,13 @@ public class ClassificationAspect extends AbstractMapAspect {
      * Use Type and Variant to specify the main classification groups and put additional categorization into categories
      * @param categories
      */
-    public ClassificationAspect addCategories(List<String> categories) {
+    public ClassificationAspect withCategories(List<String> categories) {
         setCategories(categories);
         return this;
     }
 
-    public ClassificationAspect addCategories(String ... categories) {
-        return addCategories(Arrays.asList(categories));
+    public ClassificationAspect withCategories(String ... categories) {
+        return withCategories(Arrays.asList(categories));
     }
 
     /**
@@ -212,7 +212,7 @@ public class ClassificationAspect extends AbstractMapAspect {
      * Set the behavioral tags set for an entity
      * @param tags a list of behavioral tags
      */
-    public ClassificationAspect addTags(List<String> tags) {
+    public ClassificationAspect withTags(List<String> tags) {
         setTags(tags);
         return this;
     }
@@ -221,8 +221,8 @@ public class ClassificationAspect extends AbstractMapAspect {
      * Set the behavioral tags set for an entity
      * @param tags a list of behavioral tags
      */
-    public ClassificationAspect addTags(String ... tags) {
-        return addTags(Arrays.asList(tags));
+    public ClassificationAspect withTags(String ... tags) {
+        return withTags(Arrays.asList(tags));
     }
 
     /************ Assignment & Validation ************/

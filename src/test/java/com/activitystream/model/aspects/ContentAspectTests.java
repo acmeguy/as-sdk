@@ -24,11 +24,11 @@ public class ContentAspectTests {
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEntity entity = new ASEntity("Venue", "983983")
-                .addAspect(content()
-                        .addTitle("Some Title")
-                        .addSubtitle("Some Subtitle")
-                        .addByline("this is the byline for the content")
-                        .addContent("<br>Massive content")
+                .withAspect(content()
+                        .withTitle("Some Title")
+                        .withSubtitle("Some Subtitle")
+                        .withByline("this is the byline for the content")
+                        .withContent("<br>Massive content")
                 );
 
         Assert.assertEquals(entity.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"content\":{\"title\":\"Some Title\",\"subtitle\":\"Some Subtitle\",\"byline\":\"this is the byline for the content\",\"content\":\"<br>Massive content\"}}}"),true);

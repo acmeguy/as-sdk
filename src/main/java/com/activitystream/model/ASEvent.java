@@ -94,125 +94,125 @@ public class ASEvent extends CustomerEvent {
 
     /************  UtilityFunctions ************/
 
-    public ASEvent addType(PRE type) {
+    public ASEvent withType(PRE type) {
         put(ASConstants.FIELD_TYPE, type.toString().replaceAll("_",".").toLowerCase());
         return this;
     }
 
-    public ASEvent addType(String type) {
+    public ASEvent withType(String type) {
         put(ASConstants.FIELD_TYPE, type);
         return this;
     }
 
-    public ASEvent addOccurredAt(DateTime occurredAt) {
+    public ASEvent withOccurredAt(DateTime occurredAt) {
         put(ASConstants.FIELD_OCCURRED_AT, occurredAt);
         return this;
     }
 
-    public ASEvent addOccurredAt(String occurredAt) {
+    public ASEvent withOccurredAt(String occurredAt) {
         put(ASConstants.FIELD_OCCURRED_AT, occurredAt);
         return this;
     }
 
-    public ASEvent addOrigin(String origin) {
+    public ASEvent withOrigin(String origin) {
         put(ASConstants.FIELD_ORIGIN, origin);
         return this;
     }
 
-    public ASEvent addPartition(String partition) {
+    public ASEvent withPartition(String partition) {
         put(ASConstants.FIELD_PARTITION, partition);
         return this;
     }
 
-    public ASEvent addImportance(ImportanceLevel importance) {
+    public ASEvent withImportance(ImportanceLevel importance) {
         put(ASConstants.FIELD_IMPORTANCE, importance.ordinal());
         return this;
     }
 
-    public ASEvent addImportance(Integer importance) {
+    public ASEvent withImportance(Integer importance) {
         put(ASConstants.FIELD_IMPORTANCE, importance);
         return this;
     }
 
-    public ASEvent addAspect(AspectInterface aspect) {
+    public ASEvent withAspect(AspectInterface aspect) {
         if (!aspect.isEmpty()) super.addAspect(aspect, this);
         return this;
     }
 
-    public ASEvent addRelation(String type, Object value) {
+    public ASEvent withRelation(String type, Object value) {
         this.getRelationsManager(true).addRelation(new Relation(type, value));
         return this;
     }
 
-    public ASEvent addRelation(Relation relation) {
+    public ASEvent withRelation(Relation relation) {
         this.getRelationsManager(true).addRelation(relation);
         return this;
     }
 
-    public ASEvent addRelation(Relation relation, ASEntity entity) {
+    public ASEvent withRelation(Relation relation, ASEntity entity) {
         if (entity != null) this.getRelationsManager(true).addRelation(relation);
         return this;
     }
 
-    public ASEvent addDimensions(Map dimensionsMap) {
+    public ASEvent withDimensions(Map dimensionsMap) {
         super.addDimensions(dimensionsMap, this);
         return this;
     }
 
-    public ASEvent addDimensions(String... dimensions) {
+    public ASEvent withDimensions(String... dimensions) {
         super.addDimensions(this, dimensions);
         return this;
     }
 
-    public ASEvent addDimension(String dimension, String value) {
+    public ASEvent withDimension(String dimension, String value) {
         if (value != null && !value.isEmpty()) super.addDimension(dimension, value, this);
         return this;
     }
 
     @Override
-    public ASEvent addMetrics(Map<String, Double> metricsMap, AbstractMapElement root) {
-        super.addMetrics(metricsMap, root);
+    public ASEvent withMetrics(Map<String, Double> metricsMap, AbstractMapElement root) {
+        super.withMetrics(metricsMap, root);
         return this;
     }
 
     @Override
-    public ASEvent addMetric(AbstractMapElement root, Object... metrics) {
-        super.addMetric(root, metrics);
+    public ASEvent withMetrics(AbstractMapElement root, Object... metrics) {
+        super.withMetrics(root, metrics);
         return this;
     }
 
-    public ASEvent addMetric(String metric, double value) {
-        super.addMetric(metric, value, this);
+    public ASEvent withMetrics(String metric, double value) {
+        super.withMetric(metric, value, this);
         return this;
     }
 
     @Override
-    public ASEvent addMetric(String metric, double value, AbstractMapElement root) {
-        super.addMetric(metric, value, root);
+    public ASEvent withMetric(String metric, double value, AbstractMapElement root) {
+        super.withMetric(metric, value, root);
         return this;
     }
 
-    public ASEvent addRelationIfValid(String type, String entityType, String entityId) {
-        return addRelationIfValid(type, entityType, entityId, (Map) null, "Some");
+    public ASEvent withRelationIfValid(String type, String entityType, String entityId) {
+        return withRelationIfValid(type, entityType, entityId, (Map) null, "Some");
     }
 
-    public ASEvent addRelationIfValid(String type, String entityReference) {
+    public ASEvent withRelationIfValid(String type, String entityReference) {
         if (entityReference != null) {
             EntityReference entReference = new EntityReference(entityReference);
-            if (entReference.isValid()) addRelationIfValid(type, entReference);
+            if (entReference.isValid()) withRelationIfValid(type, entReference);
         }
         return this;
     }
 
-    public ASEvent addRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
-        return addRelationIfValid(type, entityType, entityId, relationsProperties, "Some");
+    public ASEvent withRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
+        return withRelationIfValid(type, entityType, entityId, relationsProperties, "Some");
     }
 
-    public ASEvent addRelationIfValid(String type, String entityType, String entityId, String mustBeValue) {
-        return addRelationIfValid(type, entityType, entityId, (Map) null, "Some");
+    public ASEvent withRelationIfValid(String type, String entityType, String entityId, String mustBeValue) {
+        return withRelationIfValid(type, entityType, entityId, (Map) null, "Some");
     }
 
-    public ASEvent addRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties, String mustBeValue) {
+    public ASEvent withRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties, String mustBeValue) {
         //todo - mustBeValue should be better implemented
         if (!entityType.isEmpty() && entityId != null && !entityId.isEmpty() && mustBeValue != null && !mustBeValue.isEmpty()) {
             Relation newRelation = new Relation(type, new EntityReference(entityType, entityId, this), this);
@@ -224,7 +224,7 @@ public class ASEvent extends CustomerEvent {
         return this;
     }
 
-    public ASEvent addRelationIfValid(String type, EntityReference entityRef) {
+    public ASEvent withRelationIfValid(String type, EntityReference entityRef) {
         if (entityRef != null) {
             this.getRelationsManager(true).addRelation(new Relation(type, entityRef));
         }
@@ -232,14 +232,14 @@ public class ASEvent extends CustomerEvent {
     }
 
     @Override
-    public ASEvent addProperties(Object... properties) {
-        super.addProperties(properties);
+    public ASEvent withProperties(Object... properties) {
+        super.withProperties(properties);
         return this;
     }
 
     @Override
-    public ASEvent addProperties(String property, Object value) {
-        super.addProperties(property, value);
+    public ASEvent withProperties(String property, Object value) {
+        super.withProperties(property, value);
         return this;
     }
 

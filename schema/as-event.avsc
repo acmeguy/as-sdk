@@ -2,7 +2,7 @@
   "id": "http://api.activitystream.com/v1/schema#",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "AS Business Activity Monitoring Message",
-  "description":"Event Message. Also known as Business Activity Monitoring Message (BAMM)",
+  "description":"AS Event Message. Also known as Business Activity Monitoring Message (BAMM) (Used to send business activity information to Activity Stream",
   "type": "object",
   "properties": {
     "occurred_at":  { "$ref": "#/definitions/as_timestamp", "format":"date-time", "description": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},

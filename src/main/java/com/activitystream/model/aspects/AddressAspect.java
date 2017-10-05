@@ -89,7 +89,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return (String) get(ASConstants.FIELD_ADDRESS);
     }
 
-    public AddressAspect addAddress(String address) {
+    public AddressAspect withAddress(String address) {
         if (address != null && !address.isEmpty()) put(ASConstants.FIELD_ADDRESS, address);
         else remove(ASConstants.FIELD_ADDRESS);
         return this;
@@ -113,7 +113,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return getZipCode();
     } //todo - rename these to match postcode data
 
-    public AddressAspect addPostCode(String postalCode) {
+    public AddressAspect withPostCode(String postalCode) {
         if (postalCode != null && !postalCode.isEmpty()) put(ASConstants.FIELD_ZIP_CODE, postalCode);
         else remove(ASConstants.FIELD_ZIP_CODE);
         return this;
@@ -130,7 +130,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return (String) get(ASConstants.FIELD_CITY);
     }
 
-    public AddressAspect addCity(String city) {
+    public AddressAspect withCity(String city) {
         if (city != null && !city.isEmpty()) put(ASConstants.FIELD_CITY, city);
         else remove(ASConstants.FIELD_CITY);
         return this;
@@ -150,13 +150,13 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return null;
     }
 
-    public AddressAspect addCountry(String country) {
+    public AddressAspect withCountry(String country) {
         if (country != null && !country.isEmpty()) put(ASConstants.FIELD_COUNTRY, country);
         else remove(ASConstants.FIELD_COUNTRY);
         return this;
     }
 
-    public AddressAspect addFuzzyCountry(String countryOrCountryCode) {
+    public AddressAspect withFuzzyCountry(String countryOrCountryCode) {
 
         if (countryOrCountryCode == null || countryOrCountryCode.isEmpty()) return this;
 
@@ -190,7 +190,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         else remove(ASConstants.FIELD_STATE);
     }
 
-    public AddressAspect addState(String state) {
+    public AddressAspect withState(String state) {
         setState(state);
         return this;
     }
@@ -201,7 +201,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
      * @param stateCode
      * @return
      */
-    public AddressAspect addStateCode(String stateCode) {
+    public AddressAspect withStateCode(String stateCode) {
         if (getCountryCode() !=null && stateCode != null && stateCode.trim().length() == 2 && getCountryCode().length()==2) {
             if (getHascCode() == null || getHascCode().length() < 5) put(ASConstants.FIELD_HASC_CODE, (getCountryCode() + "." + stateCode).toUpperCase() );
         }
@@ -217,7 +217,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         else remove(ASConstants.FIELD_REGION);
     }
 
-    public AddressAspect addRegion(String region) {
+    public AddressAspect withRegion(String region) {
         setRegion (region);
         return this;
     }
@@ -254,7 +254,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return null;
     }
 
-    public AddressAspect addLatLong(String latLong) {
+    public AddressAspect withLatLong(String latLong) {
         if (latLong != null && !latLong.isEmpty()) put(ASConstants.FIELD_LATLONG, latLong);
         else remove(ASConstants.FIELD_LATLONG);
         return this;
@@ -297,7 +297,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return countryCode;
     }
 
-    public AddressAspect addCountryCode(String countryCode) {
+    public AddressAspect withCountryCode(String countryCode) {
         //todo - validate country code (against ISO 2 and 3)
         if (countryCode != null && !countryCode.isEmpty()) put(ASConstants.FIELD_COUNTRY_CODE, countryCode.toUpperCase());
         else remove(ASConstants.FIELD_COUNTRY_CODE);

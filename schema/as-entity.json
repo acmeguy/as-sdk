@@ -1,8 +1,8 @@
 {
   "id": "http://api.activitystream.com/v1/schema#",
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "AS Entity Message",
-  "description":"AS Entity Message",
+  "title": "AS Business Entity Message",
+  "description":"AS Entity Message (Used to send entity information to Activity Stream)",
   "type": "object",
   "properties": {
     "entity_ref": { "$ref": "#/definitions/as_entity_ref" },

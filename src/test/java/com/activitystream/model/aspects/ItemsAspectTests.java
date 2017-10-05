@@ -30,17 +30,17 @@ public class ItemsAspectTests {
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEvent purchaseEvent = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
-        purchaseEvent.addOccurredAt("2017-01-01T12:00:00")
-                .addRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
-                .addAspect(items()
+        purchaseEvent.withOccurredAt("2017-01-01T12:00:00")
+                .withRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
+                .withAspect(items()
                         .addLine(lineItem()
-                                .addProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
-                                .addItemCount(1)
-                                .addItemPrice(32.5)
-                                .addPriceCategory("Section A")
-                                .addPriceType("Seniors")
-                                .addVariant("VIP")
-                                .markAsComplimentary()
+                                .withProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
+                                .withItemCount(1)
+                                .withItemPrice(32.5)
+                                .withPriceCategory("Section A")
+                                .withPriceType("Seniors")
+                                .withVariant("VIP")
+                                .withAsComplimentary()
                         )
                 );
 
@@ -89,18 +89,18 @@ public class ItemsAspectTests {
 
         event.addLineItem(
                 lineItem()
-                        .addProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
-                        .addItemCount(1)
-                        .addItemPrice(30.2)
+                        .withProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
+                        .withItemCount(1)
+                        .withItemPrice(30.2)
         );
         org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":1.0,\"item_price\":30.2}]}}"),true);
 
         //add the same product again item count go up
         event.mergeLineItem(
                 lineItem()
-                        .addProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
-                        .addItemCount(1)
-                        .addItemPrice(30.2)
+                        .withProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
+                        .withItemCount(1)
+                        .withItemPrice(30.2)
         );
 
         org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"currency\":\"USD\",\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":2.0,\"item_price\":30.2}]}}"),true);

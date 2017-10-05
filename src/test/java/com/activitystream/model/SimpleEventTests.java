@@ -25,34 +25,34 @@ public class SimpleEventTests {
 
         //Minimum valid Message
         ASEvent webVisitStarts = new ASEvent()
-                .addType(ASEvent.PRE.AS_CRM_VISIT_STARTED)
-                .addOrigin("wwww.mysite.domain")
-                .addOccurredAt("2017-01-01T00:00:00.000Z")
-                .addRelationIfValid(ASEventRelationTypes.ACTOR,"Customer","007")
-                .addAspect(classification()
-                        .addType("virtual")
-                        .addVariant("web"))
-                .addAspect(clientIP("127.0.0.1"))
-                .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
+                .withType(ASEvent.PRE.AS_CRM_VISIT_STARTED)
+                .withOrigin("wwww.mysite.domain")
+                .withOccurredAt("2017-01-01T00:00:00.000Z")
+                .withRelationIfValid(ASEventRelationTypes.ACTOR,"Customer","007")
+                .withAspect(classification()
+                        .withType("virtual")
+                        .withVariant("web"))
+                .withAspect(clientIP("127.0.0.1"))
+                .withAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
 
         Assert.assertEquals(webVisitStarts.toJSON().equals("{\"type\":\"as.crm.visit.started\",\"origin\":\"wwww.mysite.domain\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/007\"}}],\"aspects\":{\"classification\":{\"type\":\"virtual\",\"variant\":\"web\"},\"client_ip\":{\"ip\":\"127.0.0.1\"},\"client_device\":{\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36\"}}}"),true);
 
         ASEntity customer = new ASEntity("Customer","30893928")
-                .addAspect(presentation()
-                        .addLabel("John Doe"))
+                .withAspect(presentation()
+                        .withLabel("John Doe"))
                 .addRelationIfValid(ASEntityRelationTypes.AKA,"Email", "john.doe@gmail.com")
                 .addRelationIfValid(ASEntityRelationTypes.AKA,"Phone", "+150012348765");
 
         webVisitStarts = new ASEvent()
-                .addType(ASEvent.PRE.AS_CRM_VISIT_STARTED)
-                .addOrigin("wwww.mysite.domain")
-                .addOccurredAt("2017-01-01T00:00:00.000Z")
-                .addRelation(ASEventRelationTypes.ACTOR,customer)
-                .addAspect(classification()
-                        .addType("virtual")
-                        .addVariant("web"))
-                .addAspect(clientIP("127.0.0.1"))
-                .addAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
+                .withType(ASEvent.PRE.AS_CRM_VISIT_STARTED)
+                .withOrigin("wwww.mysite.domain")
+                .withOccurredAt("2017-01-01T00:00:00.000Z")
+                .withRelation(ASEventRelationTypes.ACTOR,customer)
+                .withAspect(classification()
+                        .withType("virtual")
+                        .withVariant("web"))
+                .withAspect(clientIP("127.0.0.1"))
+                .withAspect(clientDevice("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36"));
 
         Assert.assertEquals(webVisitStarts.toJSON().equals("{\"type\":\"as.crm.visit.started\",\"origin\":\"wwww.mysite.domain\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/30893928\",\"aspects\":{\"presentation\":{\"label\":\"John Doe\"}},\"relations\":[{\"AKA\":{\"entity_ref\":\"Email/john.doe@gmail.com\"}},{\"AKA\":{\"entity_ref\":\"Phone/+150012348765\"}}]}}],\"aspects\":{\"classification\":{\"type\":\"virtual\",\"variant\":\"web\"},\"client_ip\":{\"ip\":\"127.0.0.1\"},\"client_device\":{\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36\"}}}"),true);
     }
@@ -62,11 +62,11 @@ public class SimpleEventTests {
 
         //Minimum valid Message
         ASEvent asEvent = new ASEvent()
-                .addType("as.application.authentication.login")
-                .addOrigin("your.web.application")
-                .addOccurredAt("2017-01-01T00:00:00.000Z")
-                .addImportance(ImportanceLevel.NOT_IMPORTANT)
-                .addRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314");
+                .withType("as.application.authentication.login")
+                .withOrigin("your.web.application")
+                .withOccurredAt("2017-01-01T00:00:00.000Z")
+                .withImportance(ImportanceLevel.NOT_IMPORTANT)
+                .withRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314");
 
         Assert.assertEquals(asEvent.isValid(), true);
         Assert.assertEquals(asEvent.validator().hasErrors(), 0);
@@ -124,7 +124,7 @@ public class SimpleEventTests {
         //Create the smallest possible event the long way
         ASEvent asNewEvent = new ASEvent();
         Assert.assertEquals(asNewEvent.isValid(),false);
-        asNewEvent.addRelation(new Relation(ASEventRelationTypes.ACTOR,"Customer/314"));
+        asNewEvent.withRelation(new Relation(ASEventRelationTypes.ACTOR,"Customer/314"));
         Assert.assertEquals(asNewEvent.isValid(),false);
         asNewEvent.setType("as.commerce.purchase.completed");
         Assert.assertEquals(asNewEvent.isValid(true),true);

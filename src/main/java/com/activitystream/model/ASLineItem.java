@@ -101,21 +101,21 @@ public class ASLineItem extends TransactionEvent {
     }
 
     public ASLineItem(LINE_TYPES type, ASEntity product, double itemCount, double itemPrice) {
-        addItemCount(itemCount);
-        addItemPrice(itemPrice);
-        addProduct(type, product);
+        withItemCount(itemCount);
+        withItemPrice(itemPrice);
+        withProduct(type, product);
     }
 
     public ASLineItem(LINE_TYPES type, ASEntity product, String itemCount, String itemPrice) {
-        addProduct(type, product);
-        addItemCount(itemCount);
-        addItemPrice(itemPrice);
+        withProduct(type, product);
+        withItemCount(itemCount);
+        withItemPrice(itemPrice);
     }
 
     public ASLineItem(LINE_TYPES type, ASEntity product, Number itemCount, String itemPrice) {
-        addProduct(type, product);
-        addItemCount(itemCount.doubleValue());
-        addItemPrice(itemPrice);
+        withProduct(type, product);
+        withItemCount(itemCount.doubleValue());
+        withItemPrice(itemPrice);
     }
 
     public ASLineItem() {
@@ -137,7 +137,7 @@ public class ASLineItem extends TransactionEvent {
      * @return this ASLineItem for chaining
      */
     @Deprecated
-    public ASLineItem addTransactionType(String transactionType) {
+    public ASLineItem withTransactionType(String transactionType) {
         super.setTransactionType(transactionType);
         return this;
     }
@@ -147,7 +147,7 @@ public class ASLineItem extends TransactionEvent {
      * @param type Relationship type
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addTransactionType(LINE_TYPES type) {
+    public ASLineItem withTransactionType(LINE_TYPES type) {
         super.setTransactionType(type.toString());
         return this;
     }
@@ -157,13 +157,13 @@ public class ASLineItem extends TransactionEvent {
      * @param purchaseRelation the main relationship for the line item
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addProduct(Relation purchaseRelation) {
+    public ASLineItem withProduct(Relation purchaseRelation) {
         super.setPurchaseRelation(purchaseRelation);
         return this;
     }
 
-    public ASLineItem addProduct(String entityRef) {
-        addProduct(getTransactionType(),new ASEntity(entityRef));
+    public ASLineItem withProduct(String entityRef) {
+        withProduct(getTransactionType(),new ASEntity(entityRef));
         return this;
     }
 
@@ -175,12 +175,12 @@ public class ASLineItem extends TransactionEvent {
      * @return this ASLineItem for chaining
      */
     @Deprecated
-    public ASLineItem addProduct(String transactionType, ASEntity product) {
+    public ASLineItem withProduct(String transactionType, ASEntity product) {
         super.setPurchaseRelation(new Relation(transactionType, product));
         return this;
     }
 
-    public ASLineItem addProduct(LINE_TYPES type, ASEntity product) {
+    public ASLineItem withProduct(LINE_TYPES type, ASEntity product) {
         getRelationsManager(true).add(new Relation(type.toString(), product));
         return this;
     }
@@ -192,7 +192,7 @@ public class ASLineItem extends TransactionEvent {
      * @param variant
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addVariant(String variant) {
+    public ASLineItem withVariant(String variant) {
         super.setVariant(variant);
         return this;
     }
@@ -202,7 +202,7 @@ public class ASLineItem extends TransactionEvent {
      * @param count
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addItemCount(Number count) {
+    public ASLineItem withItemCount(Number count) {
         if (count != null) super.setItemCount(count.doubleValue());
         else super.setItemCount(null);
         return this;
@@ -213,8 +213,8 @@ public class ASLineItem extends TransactionEvent {
      * @param count
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addItemCount(String count) {
-        if (count != null) addItemCount(Double.parseDouble(count));
+    public ASLineItem withItemCount(String count) {
+        if (count != null) withItemCount(Double.parseDouble(count));
         return this;
     }
 
@@ -224,7 +224,7 @@ public class ASLineItem extends TransactionEvent {
      * @param price
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addItemPrice(Number price) {
+    public ASLineItem withItemPrice(Number price) {
         super.setItemPrice(price);
         return this;
     }
@@ -235,7 +235,7 @@ public class ASLineItem extends TransactionEvent {
      * @param price
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addItemPrice(String price) {
+    public ASLineItem withItemPrice(String price) {
         super.setItemPrice(price);
         return this;
     }
@@ -245,7 +245,7 @@ public class ASLineItem extends TransactionEvent {
      * @param currency
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addCurrency(String currency) {
+    public ASLineItem withCurrency(String currency) {
         super.setCurrency(currency);
         return this;
     }
@@ -256,7 +256,7 @@ public class ASLineItem extends TransactionEvent {
      *                  pricing (Zone or Treatment)
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addPriceType(String priceType) {
+    public ASLineItem withPriceType(String priceType) {
         super.setPriceType(priceType);
         return this;
     }
@@ -267,7 +267,7 @@ public class ASLineItem extends TransactionEvent {
      * @param priceCategory
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addPriceCategory(String priceCategory) {
+    public ASLineItem withPriceCategory(String priceCategory) {
         super.setPriceCategory(priceCategory);
         return this;
     }
@@ -277,7 +277,7 @@ public class ASLineItem extends TransactionEvent {
      * @param accountingKey
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addAccountingKey(String accountingKey) {
+    public ASLineItem withAccountingKey(String accountingKey) {
         super.setAccountingKey(accountingKey);
         return this;
     }
@@ -288,7 +288,7 @@ public class ASLineItem extends TransactionEvent {
      * @param complimentary
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addComplimentary(Boolean complimentary) {
+    public ASLineItem withComplimentary(Boolean complimentary) {
         super.setComplimentary(complimentary);
         return this;
     }
@@ -298,7 +298,7 @@ public class ASLineItem extends TransactionEvent {
      * This usually means that the price of the line item is 0 but that is not enforced here
      * @return this ASLineItem for chaining
      */
-    public ASLineItem markAsComplimentary() {
+    public ASLineItem withAsComplimentary() {
         super.setComplimentary(true);
         return this;
     }
@@ -308,7 +308,7 @@ public class ASLineItem extends TransactionEvent {
      * @param commission
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addCommissionFixed(Double commission) {
+    public ASLineItem withFixedCommission(Double commission) {
         super.setCommissionFixed(commission);
         return this;
     }
@@ -318,7 +318,7 @@ public class ASLineItem extends TransactionEvent {
      * @param commission
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addCommissionFixed(String commission) {
+    public ASLineItem withFixedCommission(String commission) {
         super.setCommissionFixed(commission);
         return this;
     }
@@ -329,7 +329,7 @@ public class ASLineItem extends TransactionEvent {
      * @param commission
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addCommissionPercentage(Double commission) {
+    public ASLineItem withCommission(Double commission) {
         super.setCommissionPercentage(commission);
         return this;
     }
@@ -340,7 +340,7 @@ public class ASLineItem extends TransactionEvent {
      * @param description
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addDescription(String description) {
+    public ASLineItem withDescription(String description) {
         super.setDescription(description);
         return this;
     }
@@ -351,7 +351,7 @@ public class ASLineItem extends TransactionEvent {
      * @param taxPercentage
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addTaxPercentage(Double taxPercentage) {
+    public ASLineItem withTax(Double taxPercentage) {
         super.setTaxPercentage(taxPercentage);
         return this;
     }
@@ -362,7 +362,7 @@ public class ASLineItem extends TransactionEvent {
      * @param validFrom
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addValidFrom(DateTime validFrom) {
+    public ASLineItem withValidFrom(DateTime validFrom) {
         super.setValidFrom(validFrom);
         return this;
     }
@@ -373,7 +373,7 @@ public class ASLineItem extends TransactionEvent {
      * @param validUntil
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addValidUntil(DateTime validUntil) {
+    public ASLineItem withValidUntil(DateTime validUntil) {
         super.setValidUntil(validUntil);
         return this;
     }
@@ -385,12 +385,12 @@ public class ASLineItem extends TransactionEvent {
      * @param ids
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addLineIds(Set<String> ids) {
+    public ASLineItem withLineIds(Set<String> ids) {
         super.addToLineIds(ids);
         return this;
     }
 
-    public ASLineItem addLineId(String id) {
+    public ASLineItem withLineId(String id) {
         super.appendLineId(id);
         return this;
     }
@@ -401,7 +401,7 @@ public class ASLineItem extends TransactionEvent {
      * @param paymentMethod
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addPaymentMethod(String paymentMethod) {
+    public ASLineItem withPaymentMethod(String paymentMethod) {
         super.setPaymentMethod(paymentMethod);
         return this;
     }
@@ -412,7 +412,7 @@ public class ASLineItem extends TransactionEvent {
      * @param cardToken
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addCardToken(String cardToken) {
+    public ASLineItem withCardToken(String cardToken) {
         super.setCardToken(cardToken);
         return this;
     }
@@ -425,8 +425,8 @@ public class ASLineItem extends TransactionEvent {
      * @param soldByEntityRef
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addSoldBy(EntityReference soldByEntityRef) {
-        addRelationIfValid(REL_TYPES.SOLD_BY.toString(), soldByEntityRef);
+    public ASLineItem withSoldBy(EntityReference soldByEntityRef) {
+        withRelationIfValid(REL_TYPES.SOLD_BY.toString(), soldByEntityRef);
         return this;
     }
 
@@ -435,38 +435,38 @@ public class ASLineItem extends TransactionEvent {
      * @param offerEntityRef
      * @return this ASLineItem for chaining
      */
-    public ASLineItem addOffer(EntityReference offerEntityRef) {
-        addRelationIfValid(REL_TYPES.RATED_BY.toString(), offerEntityRef);
+    public ASLineItem withOffer(EntityReference offerEntityRef) {
+        withRelationIfValid(REL_TYPES.RATED_BY.toString(), offerEntityRef);
         return this;
     }
 
     //Relations and aspects
 
-    public ASLineItem addRelationIfValid(String type, String entityType, String entityId) {
-        return addRelationIfValid(type, entityType, entityId, (Map) null);
+    public ASLineItem withRelationIfValid(String type, String entityType, String entityId) {
+        return withRelationIfValid(type, entityType, entityId, (Map) null);
     }
 
-    public ASLineItem addRelationIfValid(String type, String entityType, String entityId, String mustBeValue) {
-        if (mustBeValue != null && !mustBeValue.isEmpty()) addRelationIfValid(type, entityType, entityId, (Map) null);
+    public ASLineItem withRelationIfValid(String type, String entityType, String entityId, String mustBeValue) {
+        if (mustBeValue != null && !mustBeValue.isEmpty()) withRelationIfValid(type, entityType, entityId, (Map) null);
         return this;
     }
 
-    public ASLineItem addDimensions(Map dimensionsMap) {
+    public ASLineItem withDimensions(Map dimensionsMap) {
         super.addDimensions(dimensionsMap, this);
         return this;
     }
 
-    public ASLineItem addDimensions(String... dimensions) {
+    public ASLineItem withDimensions(String... dimensions) {
         super.addDimensions(this, dimensions);
         return this;
     }
 
-    public ASLineItem addDimension(String dimension, String value) {
+    public ASLineItem withDimension(String dimension, String value) {
         if (value != null && !value.isEmpty()) super.addDimension(dimension, value, this);
         return this;
     }
 
-    public ASLineItem addRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
+    public ASLineItem withRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
         if (!entityType.isEmpty() && entityId != null && !entityId.isEmpty()) {
             Relation newRelation = new Relation(type, new EntityReference(entityType, entityId, this), this);
             if (relationsProperties != null) {
@@ -477,7 +477,7 @@ public class ASLineItem extends TransactionEvent {
         return this;
     }
 
-    public ASLineItem addRelationIfValid(String type, EntityReference entityRef) {
+    public ASLineItem withRelationIfValid(String type, EntityReference entityRef) {
         if (entityRef != null) {
             this.getRelationsManager(true).addRelation(new Relation(type, entityRef));
         }

@@ -207,19 +207,19 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
         return getAspectManager(false, null);
     }
 
-    protected Object addMetrics(Map<String, Double> metricsMap, AbstractMapElement root) {
-        metricsMap.forEach((metric, value) -> addMetric(metric, value, root));
+    protected Object withMetrics(Map<String, Double> metricsMap, AbstractMapElement root) {
+        metricsMap.forEach((metric, value) -> withMetric(metric, value, root));
         return this;
     }
 
-    protected Object addMetric(AbstractMapElement root, Object... metrics) {
+    protected Object withMetrics(AbstractMapElement root, Object... metrics) {
         for (int i = 0; i < metrics.length; i = i + 2) {
-            addMetric((String) metrics[i], ((Number) metrics[i + 1]).doubleValue(), root);
+            withMetric((String) metrics[i], ((Number) metrics[i + 1]).doubleValue(), root);
         }
         return this;
     }
 
-    protected Object addMetric(String metric, double value, AbstractMapElement root) {
+    protected Object withMetric(String metric, double value, AbstractMapElement root) {
         MetricsAspect metricAspect = getAspectManager(true, root).getMetrics();
         if (metricAspect == null) {
             metricAspect = new MetricsAspect() {{
@@ -283,12 +283,12 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
         return this;
     }
 
-    public Object addProperties(Object... properties) {
-        for (int i = 0; i < properties.length; i = i + 2) addProperties((String) properties[i], properties[i + 1]);
+    public Object withProperties(Object... properties) {
+        for (int i = 0; i < properties.length; i = i + 2) withProperties((String) properties[i], properties[i + 1]);
         return this;
     }
 
-    public Object addProperties(String property, Object value) {
+    public Object withProperties(String property, Object value) {
         if (value != null) {
             Map<String, Object> properties = getProperties();
             if (properties == null) {

@@ -20,18 +20,18 @@ public class AddressAspectTests {
 
         ASEntity venue = new ASEntity("Venue", "983983");
         venue
-                .addAspect(presentation()
-                        .addLabel("The Royal Albert Hall"))
-                .addAspect(address()
-                        .addAddress("Kensington Gore")
-                        .addCity("Kensington")
-                        .addState("Greater London")
-                        .addPostCode("SW7 2AP")
-                        .addCountryCode("UK")
-                        .addCountry("United Kingdom"))
-                .addAspect(geoLocation()
-                        .addLatitude(51.5009088)
-                        .addLongitude(-0.177366));
+                .withAspect(presentation()
+                        .withLabel("The Royal Albert Hall"))
+                .withAspect(address()
+                        .withAddress("Kensington Gore")
+                        .withCity("Kensington")
+                        .withState("Greater London")
+                        .withPostCode("SW7 2AP")
+                        .withCountryCode("UK")
+                        .withCountry("United Kingdom"))
+                .withAspect(geoLocation()
+                        .withLatitude(51.5009088)
+                        .withLongitude(-0.177366));
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"presentation\":{\"label\":\"The Royal Albert Hall\"},\"address\":{\"address\":\"Kensington Gore\",\"city\":\"Kensington\",\"state\":\"Greater London\",\"zip_code\":\"SW7 2AP\",\"country_code\":\"UK\",\"country\":\"United Kingdom\"},\"geo_location\":{\"latitude\":51.50090789794922,\"longitude\":-0.1773660033941269}}}"),true);
     }

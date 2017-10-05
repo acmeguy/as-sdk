@@ -44,7 +44,7 @@ public class ContentAspect extends AbstractMapAspect implements EnrichableElemen
         else remove(ASConstants.FIELD_TITLE);
     }
 
-    public ContentAspect addTitle(String title) {
+    public ContentAspect withTitle(String title) {
         setTitle(title);
         return this;
     }
@@ -58,7 +58,7 @@ public class ContentAspect extends AbstractMapAspect implements EnrichableElemen
         else remove(ASConstants.FIELD_SUBTITLE);
     }
 
-    public ContentAspect addSubtitle(String subtitle) {
+    public ContentAspect withSubtitle(String subtitle) {
         setSubtitle(subtitle);
         return this;
     }
@@ -72,7 +72,7 @@ public class ContentAspect extends AbstractMapAspect implements EnrichableElemen
         else remove(ASConstants.FIELD_BYLINE);
     }
 
-    public ContentAspect addByline(String byline) {
+    public ContentAspect withByline(String byline) {
         setByline(byline);
         return this;
     }
@@ -86,7 +86,7 @@ public class ContentAspect extends AbstractMapAspect implements EnrichableElemen
         else remove(ASConstants.FIELD_CONTENT);
     }
 
-    public ContentAspect addContent(String content) {
+    public ContentAspect withContent(String content) {
         setContent(content);
         return this;
     }

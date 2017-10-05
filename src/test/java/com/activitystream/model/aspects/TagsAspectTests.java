@@ -24,7 +24,7 @@ public class TagsAspectTests {
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEntity venue = new ASEntity("Venue", "983983");
-        venue.addAspect(tags().addTags("National"));
+        venue.withAspect(tags().withTags("National"));
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"tags\":[\"National\"]}}"),true);
     }

@@ -26,20 +26,20 @@ public class CeiAspectTests {
 
         //Minimum valid Message
         ASEvent asEvent = new ASEvent()
-                .addType("as.something.good")
-                .addOrigin("your.business")
-                .addOccurredAt("2017-01-01T00:00:00.000Z")
-                .addRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314")
-                .addRelationIfValid(ASEventRelationTypes.AFFECTS, "Product","plu3983")
-                .addAspect(cei()
-                        .addCare(0)
-                        .addIntent(2)
-                        .addEngagement(2)
-                        .addRating(2)
-                        .addHappiness(2)
+                .withType("as.something.good")
+                .withOrigin("your.business")
+                .withOccurredAt("2017-01-01T00:00:00.000Z")
+                .withRelationIfValid(ASEventRelationTypes.ACTOR, "Customer","314")
+                .withRelationIfValid(ASEventRelationTypes.AFFECTS, "Product","plu3983")
+                .withAspect(cei()
+                        .withCare(0)
+                        .withIntent(2)
+                        .withEngagement(2)
+                        .withRating(2)
+                        .withHappiness(2)
                 );
 
-        logger.warn("asEvent " + asEvent.toJSON());
+        //logger.warn("asEvent " + asEvent.toJSON());
 
         Assert.assertEquals(asEvent.toJSON().equals("{\"type\":\"as.something.good\",\"origin\":\"your.business\",\"occurred_at\":\"2017-01-01T00:00:00.000Z\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/314\"}},{\"AFFECTS\":{\"entity_ref\":\"Product/plu3983\"}}],\"aspects\":{\"cei\":{\"care\":0.0,\"intent\":2.0,\"engagement\":2.0,\"rating\":2.0,\"happiness\":2.0}}}"),true);
 

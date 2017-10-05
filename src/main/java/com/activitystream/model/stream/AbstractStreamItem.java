@@ -68,7 +68,7 @@ public abstract class AbstractStreamItem extends AbstractMapElement
         return items;
     }
 
-    public Object addRelation(Relation relation) {
+    public Object withRelation(Relation relation) {
         this.getRelationsManager(true).addRelation(relation);
         return this;
     }

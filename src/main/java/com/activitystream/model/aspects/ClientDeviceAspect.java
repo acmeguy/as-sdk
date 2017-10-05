@@ -56,7 +56,7 @@ public class ClientDeviceAspect extends AbstractMapAspect implements Compactable
         return (String) get(ASConstants.FIELD_USER_AGENT);
     }
 
-    public ClientDeviceAspect addUserAgent(String userAgent) {
+    public ClientDeviceAspect withUserAgent(String userAgent) {
         if (userAgent != null && !userAgent.isEmpty()) put(ASConstants.FIELD_USER_AGENT,userAgent);
         else remove(ASConstants.FIELD_USER_AGENT);
         return this;

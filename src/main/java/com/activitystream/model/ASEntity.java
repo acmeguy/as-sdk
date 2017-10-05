@@ -9,7 +9,6 @@ import com.activitystream.model.interfaces.BaseStreamElement;
 import com.activitystream.model.interfaces.BaseStreamItem;
 import com.activitystream.model.relations.Relation;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.common.base.Strings;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class ASEntity extends BusinessEntity {
      */
     public ASEntity(EntityReference enttiyReference, String label) {
         put(ASConstants.FIELD_ENTITY_REF, enttiyReference);
-        if (label != null) addAspect(new PresentationAspect(label));
+        if (label != null) withAspect(new PresentationAspect(label));
     }
 
     /**
@@ -56,7 +55,7 @@ public class ASEntity extends BusinessEntity {
      */
     public ASEntity(EntityReference enttiyReference, String label, String description) {
         put(ASConstants.FIELD_ENTITY_REF, enttiyReference);
-        if (label != null) addAspect(new PresentationAspect(label, null, null, description, null, null));
+        if (label != null) withAspect(new PresentationAspect(label, null, null, description, null, null));
     }
 
     public ASEntity(Map map) {
@@ -82,83 +81,83 @@ public class ASEntity extends BusinessEntity {
     /************  Access ************/
 
     public void setAddress(AddressAspect address) {
-        addAspect(address);
+        withAspect(address);
     }
 
     public void setClassification(ClassificationAspect classification) {
-        addAspect(classification);
+        withAspect(classification);
     }
 
     public void setDemography(DemographyAspect demography) {
-        addAspect(demography);
+        withAspect(demography);
     }
 
     public void setDimensions(DimensionsAspect dimensions) {
-        addAspect(dimensions);
+        withAspect(dimensions);
     }
 
     public void setGeoLocation(GeoLocationAspect geoLocation) {
-       addAspect(geoLocation);
+       withAspect(geoLocation);
     }
 
     public void setMetrics(MetricsAspect metrics) {
-        addAspect(metrics);
+        withAspect(metrics);
     }
 
     public void setPresentation(PresentationAspect presentation) {
-        addAspect(presentation);
+        withAspect(presentation);
     }
 
     public void setTimed(TimedAspect timed) {
-       addAspect(timed);
+       withAspect(timed);
     }
 
     public void setInventory(InventoryAspect inventory) {
-       addAspect(inventory);
+       withAspect(inventory);
     }
 
 
-    public ASEntity addRelation(Relation relation) {
-        return addRelation(relation, (BaseStreamItem) root);
+    public ASEntity withRelation(Relation relation) {
+        return withRelation(relation, (BaseStreamItem) root);
     }
 
-    public ASEntity addEntityReference(String entityType, String uniqueId) {
+    public ASEntity withEntityReference(String entityType, String uniqueId) {
         put(ASConstants.FIELD_ENTITY_REF, new EntityReference(entityType, uniqueId));
         return this;
     }
 
-    public ASEntity addEntityReference(EntityReference entityReference) {
+    public ASEntity withEntityReference(EntityReference entityReference) {
         put(ASConstants.FIELD_ENTITY_REF, entityReference);
         return this;
     }
 
     @Override
-    public ASEntity addRelation(Relation relation, BaseStreamItem root) {
-        super.addRelation(relation, root);
+    public ASEntity withRelation(Relation relation, BaseStreamItem root) {
+        super.withRelation(relation, root);
         return this;
     }
 
     @Override
-    public ASEntity addRelation(String type, Object value) {
-        super.addRelation(type, value);
+    public ASEntity withRelation(String type, Object value) {
+        super.withRelation(type, value);
         return this;
     }
 
     @Override
-    public ASEntity addRelations(String type, Object value) {
-        super.addRelations(type, value);
+    public ASEntity withRelations(String type, Object value) {
+        super.withRelations(type, value);
         return this;
     }
 
     @Override
-    public ASEntity addProperties(Object... properties) {
-        super.addProperties(properties);
+    public ASEntity withProperties(Object... properties) {
+        super.withProperties(properties);
         return this;
     }
 
     @Override
-    public ASEntity addProperties(String property, Object value) {
-        super.addProperties(property, value);
+    public ASEntity withProperties(String property, Object value) {
+        super.withProperties(property, value);
         return this;
     }
 
@@ -194,7 +193,7 @@ public class ASEntity extends BusinessEntity {
      * @param aspect the Entity Aspect to add
      * @return this ASEntity for chaining purposes
      */
-    public ASEntity addAspect(AspectInterface aspect) {
+    public ASEntity withAspect(AspectInterface aspect) {
         if (aspect != null && !aspect.isEmpty()) {
             aspect.setRoot(this);
             super.addAspect(aspect, this);
@@ -208,13 +207,13 @@ public class ASEntity extends BusinessEntity {
         return this;
     }
 
-    public ASEntity addOccurredAt(DateTime timestamp) {
+    public ASEntity withOccurredAt(DateTime timestamp) {
         if (timestamp != null) put(ASConstants.FIELD_OCCURRED_AT, timestamp);
         else remove(ASConstants.FIELD_OCCURRED_AT);
         return this;
     }
 
-    public ASEntity addOccurredAt(String timestamp) {
+    public ASEntity withOccurredAt(String timestamp) {
         if (timestamp != null) put(ASConstants.FIELD_OCCURRED_AT, DateTime.parse(timestamp));
         else remove(ASConstants.FIELD_OCCURRED_AT);
         return this;
@@ -222,8 +221,8 @@ public class ASEntity extends BusinessEntity {
 
     @Override
     @Deprecated
-    public ASEntity addPresentation(String label, String thumbnail, String icon, String description, String detailsUrl) {
-        super.addPresentation(label, thumbnail, icon, description, detailsUrl);
+    public ASEntity withPresentation(String label, String thumbnail, String icon, String description, String detailsUrl) {
+        super.withPresentation(label, thumbnail, icon, description, detailsUrl);
         return this;
     }
 
@@ -237,29 +236,29 @@ public class ASEntity extends BusinessEntity {
      * @param partition the partition that the entity should be stored in
      * @return this ASEntity for chaining purposes
      */
-    public ASEntity addPartition(String partition) {
+    public ASEntity withPartition(String partition) {
         put(ASConstants.FIELD_PARTITION, partition);
         return this;
     }
 
-    public ASEntity addDimension(String dimension, String value) {
+    public ASEntity withDimension(String dimension, String value) {
         super.addDimension(dimension, value, this);
         return this;
     }
 
     @Override
-    public ASEntity addMetric(String metric, double value) {
-        super.addMetric(metric, value);
+    public ASEntity withMetric(String metric, double value) {
+        super.withMetric(metric, value);
         return this;
     }
 
     @Override
-    public ASEntity addMetric(Object... metrics) {
-        super.addMetric(this, metrics);
+    public ASEntity withMetrics(Object... metrics) {
+        super.withMetrics(this, metrics);
         return this;
     }
 
-    public ASEntity addDeletedFlag(boolean deleted) {
+    public ASEntity withDeletedFlag(boolean deleted) {
         directPut(ASConstants.FIELD_DELETE, deleted);
         return this;
     }

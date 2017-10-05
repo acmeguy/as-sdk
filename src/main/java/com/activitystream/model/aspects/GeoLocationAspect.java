@@ -61,7 +61,7 @@ public class GeoLocationAspect extends AbstractMapAspect implements EnrichableEl
         return (Double) value;
     }
 
-    public GeoLocationAspect addLatitude(Number latitude) {
+    public GeoLocationAspect withLatitude(Number latitude) {
         if (latitude != null) put(ASConstants.FIELD_LATITUDE, latitude.floatValue());
         else remove(ASConstants.FIELD_LATITUDE);
         return this;
@@ -73,13 +73,13 @@ public class GeoLocationAspect extends AbstractMapAspect implements EnrichableEl
         return (Double) value;
     }
 
-    public GeoLocationAspect addLongitude(Number longitude) {
+    public GeoLocationAspect withLongitude(Number longitude) {
         if (longitude != null) put(ASConstants.FIELD_LONGITUDE, longitude.floatValue());
         else remove(ASConstants.FIELD_LONGITUDE);
         return this;
     }
 
-    public GeoLocationAspect addLatLong(String latLong) {
+    public GeoLocationAspect withLatLong(String latLong) {
         if (latLong != null && !latLong.isEmpty() && latLong.contains(",")) {
             String laLo[] = latLong.split(",");
             put(ASConstants.FIELD_LATITUDE, validator().processDouble("latlong", laLo[0], false, null, null));

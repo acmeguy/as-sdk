@@ -38,7 +38,7 @@ public class CeiAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_ENGAGEMENT);
     }
 
-    public CeiAspect addEngagement(Number engagement) {
+    public CeiAspect withEngagement(Number engagement) {
         setEngagement((engagement != null) ? engagement.floatValue() : null);
         return this;
     }
@@ -52,7 +52,7 @@ public class CeiAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_HAPPINESS);
     }
 
-    public CeiAspect addHappiness(Number happiness) {
+    public CeiAspect withHappiness(Number happiness) {
         setHappiness((happiness != null) ? happiness.floatValue() : null);
         return this;
     }
@@ -66,7 +66,7 @@ public class CeiAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_CARE);
     }
 
-    public CeiAspect addCare(Number care) {
+    public CeiAspect withCare(Number care) {
         setCare((care != null) ? care.floatValue() : null);
         return this;
     }
@@ -80,7 +80,7 @@ public class CeiAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_INTENT);
     }
 
-    public CeiAspect addIntent(Number intent) {
+    public CeiAspect withIntent(Number intent) {
         setIntent((intent != null) ? intent.floatValue() : null);
         return this;
     }
@@ -94,7 +94,7 @@ public class CeiAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_RATING);
     }
 
-    public CeiAspect addRating(Number rating) {
+    public CeiAspect withRating(Number rating) {
         setRating((rating != null) ? rating.floatValue() : null);
         return this;
     }
@@ -108,7 +108,7 @@ public class CeiAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_DURATION);
     }
 
-    public CeiAspect addDuration(Float duration) {
+    public CeiAspect withDuration(Float duration) {
         setDuration(duration);
         return this;
     }

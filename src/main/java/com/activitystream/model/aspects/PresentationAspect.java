@@ -55,7 +55,7 @@ public class PresentationAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_LABEL);
     }
 
-    public PresentationAspect addLabel(String label) {
+    public PresentationAspect withLabel(String label) {
         setLabel(label);
         return this;
     }
@@ -69,7 +69,7 @@ public class PresentationAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_DESCRIPTION);
     }
 
-    public PresentationAspect addDescription(String description) {
+    public PresentationAspect withDescription(String description) {
         setDescription(description);
         return this;
     }
@@ -83,7 +83,7 @@ public class PresentationAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_THUMBNAIL);
     }
 
-    public PresentationAspect addThumbnail(String thumbnail) {
+    public PresentationAspect withThumbnail(String thumbnail) {
         setThumbnail(thumbnail);
         return this;
     }
@@ -97,7 +97,7 @@ public class PresentationAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_DETAILS_URL);
     }
 
-    public PresentationAspect addDetailsUrl(String detailsUrl) {
+    public PresentationAspect withDetailsUrl(String detailsUrl) {
         setDetailsUrl(detailsUrl);
         return this;
     }
@@ -111,7 +111,7 @@ public class PresentationAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_ICON);
     }
 
-    public PresentationAspect addIcon(String icon) {
+    public PresentationAspect withIcon(String icon) {
         setIcon(icon);
         return this;
     }

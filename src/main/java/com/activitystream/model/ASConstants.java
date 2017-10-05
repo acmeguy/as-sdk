@@ -25,6 +25,7 @@ public class ASConstants {
     public static final String FIELD_ENTITY_TYPE = "entity_type";
     public static final String FIELD_ENTITY_REF = "entity_ref";
     public static final String FIELD_ENTITY_ID = "entity_id";
+    public static final String FIELD_ID = "id";
     public static final String FIELD_TYPE_REF = "type_ref";
     public static final String FIELD_EXTERNAL_ID = "external_id";
     public static final String FIELD_BATCH_ID = "batch_id";

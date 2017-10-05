@@ -9,8 +9,6 @@ import org.testng.Assert;
 
 import java.util.TimeZone;
 
-import static com.activitystream.model.aspects.PresentationAspect.presentation;
-
 
 public class MetricsAspectTest {
 
@@ -20,7 +18,7 @@ public class MetricsAspectTest {
     public void testMetricsTest() throws Exception {
 
         ASEntity venue = new ASEntity("Venue", "983983");
-        venue.addMetric("built",1941, "capacity", 5272);
+        venue.withMetrics("built",1941, "capacity", 5272);
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"metrics\":{\"built\":1941.0,\"capacity\":5272.0}}}"),true);
     }
@@ -30,8 +28,8 @@ public class MetricsAspectTest {
 
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
         ASEntity venue = new ASEntity("Venue", "983983")
-                .addMetric("built",1941, "capacity", 5272)
-                .addOccurredAt("2017-10-31T12:00:00-01:00");
+                .withMetrics("built",1941, "capacity", 5272)
+                .withOccurredAt("2017-10-31T12:00:00-01:00");
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"metrics\":{\"built\":1941.0,\"capacity\":5272.0}},\"occurred_at\":\"2017-10-31T12:00:00.000-01:00\"}"),true);
     }

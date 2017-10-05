@@ -44,7 +44,7 @@ public class ResolvableAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_EXTERNAL_ID);
     }
 
-    public ResolvableAspect addExternalId(String externalId) {
+    public ResolvableAspect withExternalId(String externalId) {
         setExternalId(externalId);
         return this;
     }
@@ -58,7 +58,7 @@ public class ResolvableAspect extends AbstractMapAspect {
         else remove(ASConstants.FIELD_BATCH_ID);
     }
 
-    public ResolvableAspect addBatchId(String batchId) {
+    public ResolvableAspect withBatchId(String batchId) {
         setBatchId(batchId);
         return this;
     }

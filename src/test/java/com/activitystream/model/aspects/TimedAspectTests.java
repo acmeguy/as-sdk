@@ -30,10 +30,10 @@ public class TimedAspectTests {
         ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEntity venue = new ASEntity("Venue", "983983");
-        venue.addAspect(timed()
-                .addPeriod("Construction","1867","1871")
-                .addPeriod("Inaugurated","1871-03-29")
-                .addPeriod("Renovated","1996","2004")
+        venue.withAspect(timed()
+                .withPeriod("Construction","1867","1871")
+                .withPeriod("Inaugurated","1871-03-29")
+                .withPeriod("Renovated","1996","2004")
         );
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"timed\":{\"construction\":{\"begins\":\"1867-01-01T00:00:00.000Z\",\"ends\":\"1871-01-01T00:00:00.000Z\",\"duration\":126230400000},\"inaugurated\":{\"begins\":\"1871-03-29T00:00:00.000Z\"},\"renovated\":{\"begins\":\"1996-01-01T00:00:00.000Z\",\"ends\":\"2004-01-01T00:00:00.000Z\",\"duration\":252460800000}}}}"),true);

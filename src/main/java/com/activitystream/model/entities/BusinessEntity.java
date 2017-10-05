@@ -212,7 +212,7 @@ public class BusinessEntity extends AbstractMapElement
         return patch;
     }
 
-    public BusinessEntity addRelation(String type, Object value) {
+    public BusinessEntity withRelation(String type, Object value) {
         this.getRelationsManager(true).addRelation(new Relation(type, value));
         return this;
     }
@@ -239,7 +239,7 @@ public class BusinessEntity extends AbstractMapElement
         return this;
     }
 
-    public Object addRelations(String type, Object value) {
+    public Object withRelations(String type, Object value) {
         RelationsManager relationsManager = (RelationsManager) get("relations");
         if (relationsManager == null) relationsManager = new RelationsManager(ASConstants.ENTITY_RELATIONS, this);
         if (value instanceof List) {
@@ -544,17 +544,17 @@ public class BusinessEntity extends AbstractMapElement
     /************  UtilityFunctions ************/
 
     public BusinessEntity addMetrics(Map metricsMap) {
-        super.addMetrics(metricsMap, this);
+        super.withMetrics(metricsMap, this);
         return this;
     }
 
-    public BusinessEntity addMetric(Object... metrics) {
-        super.addMetric(this, metrics);
+    public BusinessEntity withMetrics(Object... metrics) {
+        super.withMetrics(this, metrics);
         return this;
     }
 
-    public BusinessEntity addMetric(String metric, double value) {
-        super.addMetric(metric, value, this);
+    public BusinessEntity withMetric(String metric, double value) {
+        super.withMetric(metric, value, this);
         return this;
     }
 
@@ -563,7 +563,7 @@ public class BusinessEntity extends AbstractMapElement
         return this;
     }
 
-    public BusinessEntity addRelation(Relation relation, BaseStreamItem root) {
+    public BusinessEntity withRelation(Relation relation, BaseStreamItem root) {
         this.getRelationsManager(true).addRelation(relation);
         return this;
     }
@@ -578,17 +578,17 @@ public class BusinessEntity extends AbstractMapElement
         return this;
     }
 
-    public BusinessEntity addDimension(String dimension, String value) {
+    public BusinessEntity withDimension(String dimension, String value) {
         super.addDimension(dimension, value, this);
         return this;
     }
 
-    public BusinessEntity addAspect(AspectInterface aspect) {
+    public BusinessEntity withAspect(AspectInterface aspect) {
         if (!aspect.isEmpty()) super.addAspect(aspect, this);
         return this;
     }
 
-    public BusinessEntity addPresentation(String label, String thumbnail, String icon, String description, String detailsUrl) {
+    public BusinessEntity withPresentation(String label, String thumbnail, String icon, String description, String detailsUrl) {
         super.addPresentation(label, thumbnail, icon, description, detailsUrl, this);
         return this;
     }
@@ -607,14 +607,14 @@ public class BusinessEntity extends AbstractMapElement
     }
 
     @Override
-    public BusinessEntity addProperties(Object... properties) {
-        super.addProperties(properties);
+    public BusinessEntity withProperties(Object... properties) {
+        super.withProperties(properties);
         return this;
     }
 
     @Override
-    public BusinessEntity addProperties(String property, Object value) {
-        super.addProperties(property, value);
+    public BusinessEntity withProperties(String property, Object value) {
+        super.withProperties(property, value);
         return this;
     }
 

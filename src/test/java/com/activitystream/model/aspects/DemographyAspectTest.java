@@ -17,16 +17,16 @@ public class DemographyAspectTest {
     public void simpleDimensionsTest() throws Exception {
 
         ASEntity secretAgent = new ASEntity("Agent", "007");
-        secretAgent.addAspect(demography()
-                .addGender("male")
-                .addBirthDate("1968-04-13")
-                .addEmployment("Governmental Employee")
-                .addEthnicity("Caucasian")
-                .addMaritalStatus("Very Single")
-                .addHousing("Lives alone")
-                .addMosaicGroup("Wealthy World Traveller")
-                .addEducation("Like to have a degree")
-                .addIncome("400k$ - 800k$"));
+        secretAgent.withAspect(demography()
+                .withGender("male")
+                .withBirthDate("1968-04-13")
+                .withEmployment("Governmental Employee")
+                .withEthnicity("Caucasian")
+                .withMaritalStatus("Very Single")
+                .withHousing("Lives alone")
+                .withMosaicGroup("Wealthy World Traveller")
+                .withEducation("Like to have a degree")
+                .withIncome("400k$ - 800k$"));
 
         Assert.assertEquals(secretAgent.toJSON().equals("{\"entity_ref\":\"Agent/007\",\"aspects\":{\"demography\":{\"gender\":\"male\",\"gender_guessed\":false,\"birth_day\":13,\"birth_year\":1968,\"birth_month\":4,\"employment\":\"Governmental Employee\",\"ethnicity\":\"Caucasian\",\"marital_status\":\"Very Single\",\"income\":\"400k$ - 800k$\",\"mosaic_group\":\"Wealthy World Traveller\",\"education\":\"Like to have a degree\"}}}"),true);
     }

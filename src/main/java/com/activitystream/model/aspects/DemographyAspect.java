@@ -87,18 +87,18 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         }
     }
 
-    public DemographyAspect addBirthDate(String birthDate) {
+    public DemographyAspect withBirthDate(String birthDate) {
         setBirthDate(birthDate);
         return this;
     }
 
-    public DemographyAspect addBirthMonth(String birthYear, String birthMonth) {
+    public DemographyAspect withBirthMonth(String birthYear, String birthMonth) {
         setBirthYear(Integer.parseInt(birthYear));
         setBirthYear(Integer.parseInt(birthMonth));
         return this;
     }
 
-    public DemographyAspect addBirthMonth(Integer birthYear, Integer birthMonth) {
+    public DemographyAspect withBirthMonth(Integer birthYear, Integer birthMonth) {
         setBirthYear(birthYear);
         setBirthMonth(birthMonth);
         return this;
@@ -115,7 +115,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         return this;
     }
 
-    public DemographyAspect addGender(String gender) {
+    public DemographyAspect withGender(String gender) {
         setGender(gender, false);
         return this;
     }
@@ -175,7 +175,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_ETHNICITY, ethnicity);
     }
 
-    public DemographyAspect addEthnicity(String ethnicity) {
+    public DemographyAspect withEthnicity(String ethnicity) {
         setEthnicity(ethnicity);
         return this;
     }
@@ -189,7 +189,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_MARITAL_STATUS, maritalStatus);
     }
 
-    public DemographyAspect addMaritalStatus(String maritalStatus) {
+    public DemographyAspect withMaritalStatus(String maritalStatus) {
         setMaritalStatus(maritalStatus);
         return this;
     }
@@ -203,7 +203,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_EMPLOYMENT);
     }
 
-    public DemographyAspect addEmployment(String employment) {
+    public DemographyAspect withEmployment(String employment) {
         setEmployment(employment);
         return this;
     }
@@ -217,7 +217,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_INCOME);
     }
 
-    public DemographyAspect addIncome(String income) {
+    public DemographyAspect withIncome(String income) {
         setIncome(income);
         return this;
     }
@@ -231,7 +231,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_INCOME);
     }
 
-    public DemographyAspect addHousing(String housing) {
+    public DemographyAspect withHousing(String housing) {
         setHousing(housing);
         return this;
     }
@@ -246,7 +246,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_EDUCATION);
     }
 
-    public DemographyAspect addEducation(String education) {
+    public DemographyAspect withEducation(String education) {
         setEducation(education);
         return this;
     }
@@ -260,7 +260,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_MOSAIC_GROUP);
     }
 
-    public DemographyAspect addMosaicGroup(String mosaicGroup) {
+    public DemographyAspect withMosaicGroup(String mosaicGroup) {
         setMosaicGroup(mosaicGroup);
         return this;
     }
@@ -289,7 +289,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_BIRTH_YEAR);
     }
 
-    public DemographyAspect addBirthYear(Integer birthYear) {
+    public DemographyAspect withBirthYear(Integer birthYear) {
         setBirthYear(birthYear);
         return this;
     }
@@ -303,7 +303,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_BIRTH_MONTH);
     }
 
-    public DemographyAspect addBirthMonth(Integer birthMonth) {
+    public DemographyAspect withBirthMonth(Integer birthMonth) {
         setBirthMonth(birthMonth);
         return this;
     }
@@ -317,7 +317,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         else remove(ASConstants.FIELD_BIRTH_DAY);
     }
 
-    public DemographyAspect addBirthDay(Integer birthday) {
+    public DemographyAspect withBirthDay(Integer birthday) {
         setBirthDay(birthday);
         return this;
     }

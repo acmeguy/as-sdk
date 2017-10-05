@@ -8,7 +8,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.TimeZone;
 
 /**
@@ -21,7 +20,7 @@ public class ASConfigTest {
         ASConfig.setDefaults(null, null, TimeZone.getTimeZone("GMT+6:00"));
 
         ASEvent event = new ASEvent();
-        event.addOccurredAt("2017-08-29T05:46:53+03:00");
+        event.withOccurredAt("2017-08-29T05:46:53+03:00");
         Assert.assertTrue(event.toJSON().contains("2017-08-29T05:46:53.000+03:00"));
     }
 
@@ -30,7 +29,7 @@ public class ASConfigTest {
         ASConfig.setDefaults(null, null, TimeZone.getTimeZone("GMT+6:00"));
 
         ASEvent event = new ASEvent();
-        event.addOccurredAt("2017-08-29T05:46:53");
+        event.withOccurredAt("2017-08-29T05:46:53");
         Assert.assertTrue(event.toJSON().contains("2017-08-29T05:46:53.000+06:00"));
     }
 
@@ -41,9 +40,9 @@ public class ASConfigTest {
         ASEvent event = new ASEvent();
         ItemsManager itemsManager = new ItemsManager();
         ASLineItem lineItem = new ASLineItem();
-        lineItem.addRelationIfValid(ASConstants.REL_TRADE, "Show", "123");
+        lineItem.withRelationIfValid(ASConstants.REL_TRADE, "Show", "123");
         itemsManager.mergeItemLine(lineItem);
-        event.addAspect(itemsManager);
+        event.withAspect(itemsManager);
 
         Assert.assertTrue(event.toJSON().contains("USD"));
         Assert.assertFalse(event.toJSON().contains("EUR"));
@@ -57,9 +56,9 @@ public class ASConfigTest {
         ItemsManager itemsManager = new ItemsManager();
         ASLineItem lineItem = new ASLineItem();
         lineItem.setCurrency("EUR");
-        lineItem.addRelationIfValid(ASConstants.REL_TRADE, "Show", "123");
+        lineItem.withRelationIfValid(ASConstants.REL_TRADE, "Show", "123");
         itemsManager.mergeItemLine(lineItem);
-        event.addAspect(itemsManager);
+        event.withAspect(itemsManager);
 
         Assert.assertTrue(event.toJSON().contains("EUR"));
         Assert.assertFalse(event.toJSON().contains("USD"));

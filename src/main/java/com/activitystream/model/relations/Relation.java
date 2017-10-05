@@ -1,7 +1,6 @@
 package com.activitystream.model.relations;
 
 import com.activitystream.model.*;
-import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.core.AbstractMapElement;
 import com.activitystream.model.entities.BusinessEntity;
 import com.activitystream.model.entities.EntityReference;
@@ -265,7 +264,7 @@ public class Relation extends AbstractMapElement implements EmbeddedStreamElemen
                         BusinessEntity relEntity = entityForValue(entry.getValue(), this);
                         if (!instEntity.getEntityReference().getEntityReference().equals(relEntity.getEntityReference().getEntityReference())) {
                             //foundKeys.add(key);
-                            //instEntity.addRelations(key, relEntity);
+                            //instEntity.withRelations(key, relEntity);
                         }
                     }
                 }
@@ -377,7 +376,7 @@ public class Relation extends AbstractMapElement implements EmbeddedStreamElemen
                 return null;
             } else if (root instanceof AbstractStreamItem && RelationsType.isEntityRelationsKey(theKey) && value != relatedEntity) {
                 //todo - fix incorrect assignment
-                return relatedEntity.addRelations(theKey, value);
+                return relatedEntity.withRelations(theKey, value);
             }
             //else this is a normal property and we should just store it
         }

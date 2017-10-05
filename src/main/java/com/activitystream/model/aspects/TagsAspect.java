@@ -42,7 +42,7 @@ public class TagsAspect extends AbstractListAspect<String> {
      * Utility functions
      ************/
 
-    public TagsAspect addTags(String ... tags) {
+    public TagsAspect withTags(String ... tags) {
         addAll(Arrays.asList(tags));
         return this;
     }
