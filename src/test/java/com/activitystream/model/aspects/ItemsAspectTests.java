@@ -31,8 +31,9 @@ public class ItemsAspectTests {
 
         ASEvent purchaseEvent = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
         purchaseEvent.withOccurredAt("2017-01-01T12:00:00")
-                .withRelationIfValid(ASConstants.REL_BUYER,"Customer/983938")
-                .withAspect(items()
+                .withRelationIfValid(ASConstants.REL_BUYER,"Customer/983938");
+        purchaseEvent
+                .withAspect(items(purchaseEvent)
                         .addLine(lineItem()
                                 .withProduct(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event/398928"))
                                 .withItemCount(1)
@@ -45,21 +46,14 @@ public class ItemsAspectTests {
                 );
 
         Assert.assertEquals(purchaseEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"www.web\",\"involves\":[{\"BUYER\":{\"entity_ref\":\"Customer/983938\"}}],\"aspects\":{\"items\":[{\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/398928\"}}],\"item_count\":1.0,\"item_price\":0.0,\"price_category\":\"Section A\",\"price_type\":\"Seniors\",\"variant\":\"VIP\",\"complimentary\":true}]}}"),true);
-
         ASEvent parsedEvent = ASEvent.fromJSON(purchaseEvent.toJSON());
+
         //Round-trip test
-        logger.warn("purchaseEvent.toJSON(): " + purchaseEvent.toJSON());
-        logger.warn("parsedEvent.toJSON()  : " + parsedEvent.toJSON());
         Assert.assertEquals(purchaseEvent.toJSON().equals(parsedEvent.toJSON()),true);
-
-        logger.warn("purchaseEvent.getStreamId() " + purchaseEvent.getStreamId());
-        logger.warn("parsedEvent.getStreamId() " + parsedEvent.getStreamId());
-
-        //todo - Pétur, please help me figure out why this test fails
-        //Assert.assertEquals(purchaseEvent.getStreamId().equals(parsedEvent.getStreamId()),true);
+        Assert.assertEquals(purchaseEvent.getStreamId().equals(parsedEvent.getStreamId()),true);
 
         //Stream IDs are always calculated the same way so they are deterministic.
-        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("1854e4a6-e4af-3696-bb93-dbbacdd19cb3"),true);
+        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("6dedc893-fc58-3b22-92ab-4f843d4b5c0e"),true);
 
     }
 

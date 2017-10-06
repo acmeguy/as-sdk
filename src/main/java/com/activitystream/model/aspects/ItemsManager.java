@@ -56,6 +56,7 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
     /************ Enrichment & Analytics ************/
 
     public ItemsManager addLine(TransactionEvent event) {
+        event.setRoot(getRoot());
         add(event);
         return this;
     }
@@ -91,7 +92,20 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
         //for (TransactionEvent item : (List<TransactionEvent>) this) item.verify();
     }
 
+    /*
     public static ItemsManager items() {
         return new ItemsManager();
+    }
+    */
+
+    /**
+     * A reference to the parent event is temporarily required
+     * @param root
+     * @return
+     */
+    public static ItemsManager items(BaseStreamItem root) {
+        ItemsManager itemsManager = new ItemsManager();
+        itemsManager.setRoot(root);
+        return itemsManager;
     }
 }
