@@ -38,9 +38,25 @@
         "id":           { "type": "string", "description": "The ID of the AB test" },
         "variant":      { "type": "string", "description": "What variant of the AB test is active" },
         "outcome":      { "type": "string", "description": "What is the outcome of the AB test" },
-        "metric":       { "type": "number", "description": "Key metric outcome (Added with things in the metrics aspect)" },
-        "amount":       { "type": "number", "description": "Key metric, monitory, outcome (Added with things in the metrics aspect)" },
-        "properties":   { "$ref": "#/definitions/properties", "description": "Free format properties to add to the AB test results" }
+        "dimensions": {
+          "description": "Any dimension to be included in the event/entity analytics entry fro the AB Test",
+          "type":"object",
+          "patternProperties":{
+            "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "$ref": "#/definitions/as_min_len_string" }
+          },
+          "minProperties":1,
+          "uniqueItems": true
+        },
+        "metrics": {
+          "description": "Any metric to be included in the event/entity analytics entry for the AB Test",
+          "type":"object",
+          "patternProperties":{
+            "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "type":"number" }
+          },
+          "minProperties":1,
+          "additionalProperties": false,
+          "uniqueItems": true
+        }
       },
       "additionalProperties": false,
       "required": ["id"]
@@ -169,6 +185,7 @@
         "engagement":   { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the engagement score for the entities involved." },
         "happiness":    { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the happiness score for the entities involved." },
         "care":         { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the ecare score for the entities involved." },
+        "rating":       { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the rating score for the entities involved." },
         "intent":       { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the intent score for the entities involved." },
         "duration":     { "type":"integer", "description": "The duration in minutes that this rating should affect the customer score." }
       },
@@ -181,7 +198,7 @@
       "properties":{
         "type":       { "$ref": "#/definitions/as_min_len_string", "doc": "Main classification type" },
         "variant":    { "$ref": "#/definitions/as_min_len_string", "doc": "Main classification sub-type" },
-        "categories": { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "doc":"Additional classification categories" }
+        "categories": { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "doc":"Additional classification categories" },
         "tags":       { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems": 1, "uniqueItems": true, "doc":"" }
       },
       "additionalProperties": false,
@@ -201,7 +218,7 @@
 
     "client_ip": {
       "properties":{
-        "client_ip":{
+        "ip":{
           "type": "string",
           "description": "The source IP address of the computer used to generate the event",
           "oneOf": [
@@ -218,30 +235,39 @@
     },
 
     "content": {
-      "properties":{},
+      "type":"object",
+      "description": "A generic content storage aspect for article, emails or other typical content",
+      "properties":{
+        "title":          { "type": "string", "minLength": 1, "description": "The title of the content or a subject of an email" },
+        "subtitle":       { "type": "string", "minLength": 1, "description": "The ubtitle of the content" },
+        "byline":         { "type": "string", "minLength": 1, "description": "Additional title for the content" },
+        "content":        { "type": "string", "minLength": 1, "description": "The content it self (HTML or Base64 encoded)" }
+      },
       "additionalProperties": false,
-      "minItems": 1
+      "minProperties":1,
+      "required": ["title"]
     },
 
     "demography": {
-      "description": "Demography information, usually attached to entitites representing a person",
+      "type":"object",
+      "description": "Demography information, usually attached to entities representing a person (Most values are free format)",
       "properties":{
-        "gender":         { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "gender_guessed": { "type":"boolean", "documentation":""},
-        "birth_year":     { "type":"integer", "documentation":""},
-        "birth_month":    { "type":"integer", "documentation":""},
-        "birth_day":      { "type":"integer", "documentation":""},
-        "birth_date":     { "type":"string","format":"date-time", "documentation":""},
-        "family_size":    { "type":"integer", "documentation":""},
-        "ethnicity":      { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "marital_status": { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "mosaic_group":   { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "employment":     { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "income":         { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "housing":        { "$ref": "#/definitions/as_min_len_string", "documentation":"" },
-        "education":      { "$ref": "#/definitions/as_min_len_string", "documentation":"" }
+        "gender":         { "type": "string", "minLength": 1, "description": "Gender information" },
+        "gender_guessed": { "type":"boolean", "description": "True if the gender was guessed by some algorithm."},
+        "birth_year":     { "type":"integer", "description": "The birth year for less-than-full birth information"},
+        "birth_month":    { "type":"integer", "description": "The birth month for less-than-full birth information"},
+        "birth_day":      { "type":"integer", "description": "The birth day for less-than-full birth information"},
+        "birth_date":     { "$rel":"string", "description": "The full birthday"},
+        "family_size":    { "type":"integer", "description": "Family size information"},
+        "ethnicity":      { "type": "string", "minLength": 1, "description": "Ethnicity information" },
+        "marital_status": { "type": "string", "minLength": 1, "description": "Marital status information" },
+        "mosaic_group":   { "type": "string", "minLength": 1, "description": "Mosiac group information" },
+        "employment":     { "type": "string", "minLength": 1, "description": "Employment or profession information" },
+        "income":         { "type": "string", "minLength": 1, "description": "Income information" },
+        "housing":        { "type": "string", "minLength": 1, "description": "Housing information" },
+        "education":      { "type": "string", "minLength": 1, "description": "Education information" }
       },
-      "minItems": 1,
+      "minProperties":1,
       "additionalProperties": false
     },
 
@@ -421,22 +447,23 @@
           },
           "minItems":1
         },
+        "variant":                { "$ref": "#/definitions/as_min_len_string", "description":"What product sub-type/variant was sold (from Invoentory)" },
+        "item_count":             { "type":"number", "description":"How many items of this product+type+variant were bought." },
+        "item_price":             { "type":"number", "description":"What was the price for individual item (before tax and discount)" },
+        "currency":               { "$ref": "#/definitions/as_min_len_string", "description":"What currency was used to pay for the item" },
         "price_type":             { "$ref": "#/definitions/as_min_len_string", "description":"What price type applied for these items (from Inventory)" },
         "price_category":         { "$ref": "#/definitions/as_min_len_string", "description":"What price category applied for these items (from Inventory)" },
-        "accounting_key":         { "$ref": "#/definitions/as_min_len_string", "description":"Should this revenue be assigned to a specific accounting key" },
+        "complimentary":          { "type":"boolean", "description":"Is this a complimentary item (not sold)" },
         "description":            { "$ref": "#/definitions/as_min_len_string", "description":"Does this line item have a specific description (prefer templates)" },
-        "currency":               { "$ref": "#/definitions/as_min_len_string", "description":"What currency was used to pay for the item" },
-        "variant":                { "$ref": "#/definitions/as_min_len_string", "description":"What product sub-type/variant was sold (from Invoentory)" },
+        "discount_percentage":    { "type":"number", "description":"How much discount should be deducted from the item price." },
+        "tax_percentage":         { "type":"number", "description":"How much tax should be added on top of the item price."},
+        "commission_percentage":  { "type":"number", "description":"How many percentages of the sale should be considered commission" },
+
         "payment_method":         { "$ref": "#/definitions/as_min_len_string", "description":"What payment method was used to pay for the item" },
         "card_token":             { "$ref": "#/definitions/as_min_len_string", "description":"Obfuscated Credid Card number/token for the transactions" },
         "serial_numbers":         { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItems":1, "description":"List of serial numbers of the products involved" },
         "line_ids":               { "type":"array", "items": { "$ref": "#/definitions/as_min_len_string" }, "minItem":1, "description":"Unique line-item IDs for the sale" },
-        "item_count":             { "type":"number", "description":"How many items of this product+type+variant were bought." },
-        "item_price":             { "type":"number", "description":"What was the price for individual item (before tax and discount)" },
-        "commission_percentage":  { "type":"number", "description":"How many percentages of the sale should be considered commission" },
-        "complimentary":          { "type":"boolean", "description":"Is this a complimentary item (not sold)" },
-        "discount_percentage":    { "type":"number", "description":"How much discount should be deducted from the item price." },
-        "tax_percentage":         { "type":"number", "description":"How much tax should be added on top of the item price."},
+        "accounting_key":         { "$ref": "#/definitions/as_min_len_string", "description":"Should this revenue be assigned to a specific accounting key" },
         "aspects":                { "$ref": "#/definitions/item-aspects", "description":"Aspects that can be added to item line" },
         "valid_from":             { "$ref": "#/definitions/as_timestamp", "description":"Does the product bought have a validation period. This is the start of that period." },
         "valid_until":            { "$ref": "#/definitions/as_timestamp", "description":"Does the product bought have a validation period. This is the end of that period." },
@@ -511,13 +538,13 @@
       "description": "Presentation aspect contains popular presentation information",
       "properties":{
         "label":        { "type": "string", "pattern":"^(.){1,}$", "description": "A human readable string used to represent the entity (name etc.)" },
-        "details_url":  { "type": "string", "format":"uri", "description": "A URI containing detailed information about the entity" },
         "thumbnail":    { "type": "string", "description": "A URI pointing to an image of the entity (profile picture)" },
+        "icon":         { "type": "string", "description": "A image or icon used to represent the entity in lists etc." },
         "description":  { "type": "string", "description": "A short, general, description of the entity" },
-        "icon":         { "type": "string", "description": "A image or icon used to represent the entity in lists etc." }
+        "details_url":  { "type": "string", "format":"uri", "description": "A URI containing detailed information about the entity" }
       },
       "additionalProperties": false,
-      "required": ["label"]
+      "minProperties":1
     },
 
     "product_view": {
@@ -580,11 +607,11 @@
     "traffic_sources": {
       "type":"array",
       "description":"A list of traffic sources that were involved in the event or the transaction line (For atttributions and assisted sales)",
-      "items": { "$ref": "#/definitions/traffic_source" },
+      "items": { "$ref": "#/definitions/traffic_source_entry" },
       "minItems": 1
     },
 
-    "traffic_source": {
+    "traffic_source_entry": {
       "properties":{
         "type":       { "type":"string", "description":"What type of traffic source was this ('campaign' for example)"},
         "referrer":   { "type":"string", "description":"Where did the traffic come from (usually a URL/Web Domain)" },
@@ -595,6 +622,7 @@
         "content":    { "type":"object", "description":"Any additional content used to report the traffic_source for the event" }
       },
       "additionalProperties": false,
+      "required": ["type"],
       "minItems": 1
     },
 

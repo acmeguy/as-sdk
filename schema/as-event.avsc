@@ -1,666 +1,240 @@
 {
-  "id": "http://api.activitystream.com/v1/schema#",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "AS Business Activity Monitoring Message",
-  "description":"AS Event Message. Also known as Business Activity Monitoring Message (BAMM) (Used to send business activity information to Activity Stream",
-  "type": "object",
-  "properties": {
-    "occurred_at":  { "$ref": "#/definitions/as_timestamp", "description": "A fully qualified ISO timestamp of when the event took place. (If ommitted then server time will be used)."},
-    "type":         { "$ref": "#/definitions/as_res_identifier", "description": "Event Type Identifier (lower cased and dot separated)" },
-    "origin":       { "$ref": "#/definitions/as_res_identifier", "description": "Origin Identifier (lower cased and dot separated)" },
-    "importance":   { "type": "number", "minimum": 0, "maximum": 5, "description": "The importance level of the event (See imp. levels)." },
-    "description":  { "type": "string", "description": "A short, human readable, description of what happened." },
-    "involves":     {
-      "description": "A list of entities involved in the event",
-      "type": "array",
-      "minItems":1,
-      "items": {
-        "anyOf": [
-          { "$ref": "#/definitions/event_relation" },
-          { "$ref": "#/definitions/event_relation_shorthand" }
-        ]
-      }
-    },
-    "aspects":      { "$ref": "#/definitions/event-aspects", "description": "A map of aspects used to report the event." },
-    "properties":   { "$ref": "#/definitions/properties", "description": "Free format JSON structure with additional information regarding the Event." },
-    "partition":    { "type": "string", "minLength": 3, "description": "A isolated data partition to store the data in. '_common' is the global partition." },
-    "token":        { "type": "string", "minLength": 3, "description": "A token used for templated/fill-inn when retporting the event." }
-  },
-  "patternProperties": {
-    "^_([a-z_]){2,}$": {}
-  },
-  "additionalProperties": false,
-  "required": ["type", "origin","involves"],
-  "definitions": {
-    "ab_test": {
-      "type":"object",
-      "description": "AB Test is to simplify tracking and and results for AB Tests",
-      "properties":{
-        "id":           { "type": "string", "minLength": 1, "description": "The ID of the AB test" },
-        "variant":      { "type": "string", "minLength": 1, "description": "What variant of the AB test is active" },
-        "outcome":      { "type": "string", "minLength": 1, "description": "What is the outcome of the AB test" },
-        "metric":       { "type": "number", "description": "Key metric outcome (Added with things in the metrics aspect)" },
-        "amount":       { "type": "number", "description": "Key metric, monitory, outcome (Added with things in the metrics aspect)" },
-        "properties":   { "$ref": "#/definitions/properties", "description": "Free format properties to add to the AB test results" }
-      },
-      "additionalProperties": false,
-      "required": ["id"]
-    },
+  "namespace": "com.activitystream.historical.model.avro",
+  "type": "record",
+  "name": "ASEvent",
+  "fields": [
+    {"name": "occurred_at", "type": "long", "logicalType":"timestamp-millis"},
+    {"name": "timezone", "type": ["null","string"]},
+    {"name": "type", "type": "string"},
+    {"name": "origin", "type": "string"},
+    {"name": "importance", "type": "int"},
+    {"name": "description", "type": "string"},
 
-    "address": {
-      "type":"object",
-      "description": "Addresses can be attached to any entity",
-      "properties":{
-        "address":      { "type": "string", "minLength": 1, "description": "The main street address"},
-        "address2":     { "type": "string", "minLength": 1, "description": "The secondary street address / floor" },
-        "postal_code":  { "type": "string", "minLength": 3, "description": "Postal code" },
-        "city":         { "type": "string", "minLength": 1, "description": "Name of the City" },
-        "region":       { "type": "string", "minLength": 1, "description": "Region or county name" },
-        "sub_region":   { "type": "string", "minLength": 1, "description": "Locality" },
-        "state":        { "type": "string", "minLength": 1, "description": "The main street address" },
-        "state_code":   { "type": "string", "minLength": 2, "description": "Abbreviation of id of the State" },
-        "country_code": { "type": "string", "minLength": 2, "description": "The two letter ISO code for the country" },
-        "country":      { "type": "string", "minLength": 1, "description": "The name of the country" },
-        "hasc":         { "type": "string", "minLength": 5, "description": "The HASC code used for this are (if available)" },
-        "zip_latlong":  { "type": "string", "minLength": 10, "description": "The Latitude,Longitude pair for the postal code" },
-        "latlong":      { "type": "string", "minLength": 10, "description": "The Latitude,Longitude pair for the address it self" },
-        "_verified":    { "type": "boolean", "description": "Has the address been verified (Internal)" },
-        "_altered":     { "type": "boolean", "description": "Has the addredd been altered (Internal)" }
-      },
-      "additionalProperties": false,
-      "minProperties": 1
-    },
-
-    "attachments": {
-      "description": "Attachment information can be included for both event and entity messages",
-      "type":"array",
-      "items":{
-        "type":"object",
-        "properties":{
-          "url" :         { "type": "string", "format":"uri", "description": "a fully qualified URL pointing to the attached file" },
-          "use" :         { "type": "string", "minLength": 1, "description": "Has the addredd been altered (Internal)" },
-          "filename":     { "type": "string", "minLength": 1, "description": "The filename to use for the attachment regardless of URL" },
-          "fingerprint":  { "type": "string", "minLength": 1, "description": "HASH for the file to find duplicates and verify content" },
-          "description":  { "type": "string", "minLength": 1, "description": "A general description of what is in the file" },
-          "size":         { "type": "integer", "description": "Size of the file in Bytes" },
-          "created":      { "$ref": "#/definitions/as_timestamp", "description": "Timestamp with the creation date-time of the file" },
-          "properties":   { "$ref": "#/definitions/properties", "description": "Free format properties to add to the attachment" },
-          "metadata":     {
-            "type":"object",
-            "patternProperties":{
-              "^.{3,}":{ "type": "string", "minLength": 1 }
-            },
-            "uniqueItems": true,
-            "description": "Metadata properties used to describe the file content"
-          }
-        },
-        "required":["url"]
-      },
-      "additionalProperties": false,
-      "uniqueItems": true,
-      "minItems": 1
-    },
-
-    "event-aspects": {
-      "type": "object",
-      "description": "Aspects are also known AS Schema Snippets (Aspects are commonly used in Document Management systems)",
-      "properties":{
-        "ab_test":          { "$ref":"#/definitions/ab_test", "description": "Stores AB test results" },
-        "address":          { "$ref":"#/definitions/address", "description": "Stores an Address reference" },
-        "attachments":      { "$ref":"#/definitions/attachments", "description": "Allows attachments to be attached to events and entities" },
-        "classification":   { "$ref":"#/definitions/classification", "description": "Stores classification information for the Entity" },
-        "cei":              { "$ref":"#/definitions/cei", "description": "Customer Experience Index values can be used to further classify any event" },
-        "client_device":    { "$ref":"#/definitions/client_device", "description": "Used to declare the client device used when an event is triggered" },
-        "client_ip":        { "$ref":"#/definitions/client_ip", "description": "Used to declare the IP address in use whe an event is triggered" },
-        "content":          { "$ref":"#/definitions/content", "description": "Can contain any semi-structured content in an event" },
-        "dimensions":       { "$ref":"#/definitions/dimensions", "description": "Dimensions are key-value pairs that are automatically added to the analytics store" },
-        "geo_location":     { "$ref":"#/definitions/geo_location", "description": "Used to specify a pin-point location whene an event takes place" },
-        "items":            { "$ref":"#/definitions/items", "description": "Used for e-commerce like activity and represents transaction lines" },
-        "metrics":          { "$ref":"#/definitions/metrics", "description": "Metrics are key-value pairs that are automatically added to the analytics store" },
-        "presentation":     { "$ref":"#/definitions/presentation", "description": "Generic presentation information" },
-        "product_view":     { "$ref":"#/definitions/productview", "description": "Product View information (Web or otherwise)" },
-        "resolvable":       { "$ref":"#/definitions/resolvable", "description": "External ID information" },
-        "settings":         { "$ref":"#/definitions/settings", "description": "Used to account for settings and settings changes" },
-        "tags":             { "$ref":"#/definitions/tags", "description": "A list of tags assigned to the event" },
-        "timed":            { "$ref":"#/definitions/timed", "description": "Any times or durations associated with the event" },
-        "traffic_sources":  { "$ref":"#/definitions/traffic_sources", "description": "Traffic source information" }
-      },
-      "minProperties":1,
-      "additionalProperties": false
-    },
-
-    "entity-aspects": {
-      "type": "object",
-      "description": "Aspects are known AS Schema Snippets",
-      "properties":{
-        "address":          { "$ref":"#/definitions/address", "description": "Stores an Address reference"},
-        "attachments":      { "$ref":"#/definitions/attachments", "description": "Allows attachments to be attached to events and entities" },
-        "classification":   { "$ref":"#/definitions/classification","description": "Stores classification information for the Entity" },
-        "content":          { "$ref":"#/definitions/content", "description": "Can contain any semi-structured content in an event" },
-        "demography":       { "$ref":"#/definitions/demography", "description": "Used to provide additiona information regarding a person or persons involved in an event" },
-        "dimensions":       { "$ref":"#/definitions/dimensions", "description": "Dimensions are key-value pairs that are automatically added to the analytics store" },
-        "geo_location":     { "$ref":"#/definitions/geo_location", "description": "Used to specify a pin-point location whene an event takes place [Tracked Aspect]" },
-        "metrics":          { "$ref":"#/definitions/metrics", "description": "Metrics are key-value pairs that are automatically added to the analytics store [Tracked Aspect]" },
-        "presentation":     { "$ref":"#/definitions/presentation", "description": "Generic presentation information" },
-        "resolvable":       { "$ref":"#/definitions/resolvable", "description": "External ID information" },
-        "settings":         { "$ref":"#/definitions/settings", "description": "Used to account for settings and settings changes" },
-        "tags":             { "$ref":"#/definitions/tags", "description": "A list of tags assigned to the event" },
-        "timed":            { "$ref":"#/definitions/timed", "description": "Any times or durations associated with the event" },
-        "inventory":        { "$ref":"#/definitions/inventory", "description": "Inventory level information for the entity [Tracked Aspect]" }
-      },
-      "minProperties":1,
-      "additionalProperties": false
-    },
-
-    "item-aspects": {
-      "type": "object",
-      "description": "Item Aspects are the Schema Snippets that can be attached to a line item",
-      "properties":{
-        "dimensions":       { "$ref":"#/definitions/dimensions", "description": "Metrics are key-value pairs that are automatically added to the analytics store [Tracked Aspect]" },
-        "metrics":          { "$ref":"#/definitions/metrics", "description": "Metrics are key-value pairs that are automatically added to the analytics store [Tracked Aspect]" },
-        "traffic_sources":  { "$ref":"#/definitions/traffic_sources", "description": "Traffic source information" }
-      },
-      "minProperties":1,
-      "additionalProperties": false
-    },
-
-    "cei": {
-      "type":"object",
-      "properties":{
-        "engagement":   { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the engagement score for the entities involved." },
-        "happiness":    { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the happiness score for the entities involved." },
-        "care":         { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the ecare score for the entities involved." },
-        "intent":       { "type":"number", "description": "-5 to +5 value indicating how strongly the event should affect the intent score for the entities involved." },
-        "duration":     { "type":"integer", "description": "The duration in minutes that this rating should affect the customer score." }
-      },
-      "additionalProperties": false,
-      "minProperties": 1
-    },
-
-    "classification": {
-      "type":"object",
-      "description": "A generic classification structure for entities and events",
-      "properties":{
-        "type":         { "type": "string", "minLength": 1, "description": "Main classification category" },
-        "variant":      { "type": "string", "minLength": 1, "description": "Main classification sub-category" },
-        "categories":   { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true, "description": "Addition sub-categories" },
-        "tags":         { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true, "description": "Additional tags (Behavioral tags for example)" }
-      },
-      "additionalProperties": false,
-      "required":["type"]
-    },
-
-    "client_device": {
-      "type":"object",
-      "properties":{
-        "user_agent":   { "type": "string", "description": "The browsers 'User Agent' string" }
-      },
-      "additionalProperties": false,
-      "required": ["user_agent"]
-    },
-
-    "client_ip": {
-      "type":"object",
-      "properties":{
-        "client_ip":{
-          "type": "string",
-          "description": "The source IP address of the computer used to generate the event",
-          "oneOf": [
-            { "format": "ipv4" },
-            { "format": "ipv6" }
+    {"name": "involves", "type":["null",
+      {
+        "type":"array",
+        "items": {
+          "type":"record",
+          "name":"Involves",
+          "fields": [
+            {"name": "role", "type": "string"},
+            {"name": "entity_ref", "type": "string"},
+            {"name": "properties", "type": ["null", {"type":"map", "values": "string"}]}
           ]
         }
-      },
-      "additionalProperties": false,
-      "required": ["client_ip"]
+      }]
     },
 
-    "content": {
-      "type":"object",
-      "description": "A generic content storage aspect for article, emails or other typical content",
-      "properties":{
-        "title":          { "type": "string", "minLength": 1, "description": "The title of the content or a subject of an email" },
-        "subtitle":       { "type": "string", "minLength": 1, "description": "The ubtitle of the content" },
-        "byline":         { "type": "string", "minLength": 1, "description": "Additional title for the content" },
-        "content":        { "type": "string", "minLength": 1, "description": "The content it self (HTML or Base64 encoded)" }
-      },
-      "additionalProperties": false,
-      "minProperties": 1,
-      "required": ["title"]
-    },
-
-    "demography": {
-      "type":"object",
-      "description": "Demography information, usually attached to entities representing a person (Most values are free format)",
-      "properties":{
-        "gender":         { "type": "string", "minLength": 1, "description": "Gender information" },
-        "gender_guessed": { "type":"boolean", "description": "True if the gender was guessed by some algorithm."},
-        "birth_year":     { "type":"integer", "description": "The birth year for less-than-full birth information"},
-        "birth_month":    { "type":"integer", "description": "The birth month for less-than-full birth information"},
-        "birth_day":      { "type":"integer", "description": "The birth day for less-than-full birth information"},
-        "birth_date":     { "type":"string", "description": "The full birthday"},
-        "family_size":    { "type":"integer", "description": "Family size information"},
-        "ethnicity":      { "type": "string", "minLength": 1, "description": "Ethnicity information" },
-        "marital_status": { "type": "string", "minLength": 1, "description": "Marital status information" },
-        "mosaic_group":   { "type": "string", "minLength": 1, "description": "Mosiac group information" },
-        "employment":     { "type": "string", "minLength": 1, "description": "Employment or profession information" },
-        "income":         { "type": "string", "minLength": 1, "description": "Income information" },
-        "housing":        { "type": "string", "minLength": 1, "description": "Housing information" },
-        "education":      { "type": "string", "minLength": 1, "description": "Education information" }
-      },
-      "minProperties": 1,
-      "additionalProperties": false
-    },
-
-    "dimensions": {
-      "description": "Any dimension to be included in the event/entity analytics entry [Tracked Aspect]",
-      "type":"object",
-      "patternProperties":{
-        "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "type": "string", "minLength": 1 }
-      },
-      "minProperties":1,
-      "uniqueItems": true
-    },
-
-    "entity": {
-      "type": "object",
-      "properties": {
-        "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
-        "relations":  {
-          "type": "array", "items": {
-            "anyOf": [
-              { "$ref": "#/definitions/entity_relation" },
-              { "$ref": "#/definitions/entity_shorthand_relation" }
+    {"name": "aspects", "type": ["null",
+      {
+        "type":"record",
+        "name":"Aspects",
+        "fields": [
+          {"name": "abtest", "type": ["null", {
+            "type":"record",
+            "name":"ABTest",
+            "fields": [
+              {"name": "id", "type": ["string"]},
+              {"name": "variant", "type": ["null","string"]},
+              {"name": "outcome", "type": ["null","string"]},
+              {"name": "metrics", "type": ["null", {"type":"map", "values": "double"}]},
+              {"name": "dimensions", "type": ["null", {"type":"map", "values": "string"}]}
             ]
+          }]
+          },
+          {"name": "attachments", "type":["null",
+            {
+              "type":"array",
+              "items": {
+                "type":"record",
+                "name":"Attachment",
+                "fields": [
+                  {"name": "url", "type": ["string"]},
+                  {"name": "user", "type": ["null","string"]},
+                  {"name": "filename", "type": ["null","string"]},
+                  {"name": "fingerprint", "type": ["null","string"]},
+                  {"name": "description", "type": ["null","string"]},
+                  {"name": "size", "type": ["null","long"]},
+                  {"name": "created", "type": ["null", "long"], "logicalType":"timestamp-millis"},
+                  {"name": "updated", "type": ["null", "long"], "logicalType":"timestamp-millis"},
+                  {"name": "metadata", "type": ["null", {"type":"map", "values": "string"}]},
+                  {"name": "properties", "type": ["null", {"type":"map", "values": "string"}]}
+                ]
+              }
+            }]
+          },
+          {"name": "cei", "type":["null",
+            {
+              "type":"record",
+              "name":"Cei",
+              "fields": [
+                {"name": "engagement", "type": ["null","double"]},
+                {"name": "happiness", "type": ["null","double"]},
+                {"name": "care", "type": ["null","double"]},
+                {"name": "rating", "type": ["null","double"]},
+                {"name": "intent", "type": ["null","double"]},
+                {"name": "duration", "type": ["null","long"]}
+              ]
+            }]
+          },
+          {"name": "classification", "type": ["null", {
+              "type":"record",
+              "name":"Classification",
+              "fields": [
+                {"name": "type", "type": "string"},
+                {"name": "variant", "type": ["null","string"]},
+                {"name": "categories", "type": ["null", {"type":"array", "items": "string"}]},
+                {"name": "tags", "type": ["null", {"type":"array", "items": "string"}]}
+              ]
+            }]
+          },
+
+          {"name": "client_device", "type": ["null",
+            {
+              "type":"record",
+              "name":"ClientDevice",
+              "fields": [
+                {"name": "user_agent", "type": "string"}
+              ]
+            }]
+          },
+
+          {"name": "client_ip", "type": ["null",
+            {
+              "type":"record",
+              "name":"ClientIp",
+              "fields": [
+                {"name": "ip", "type": "string"},
+                {"name": "isp", "type": ["null","string"]},
+                {"name": "location", "type": ["null","GeoLocation"]}
+              ]
+            }]
+          },
+
+          {"name": "content", "type": ["null",
+            {
+              "type":"record",
+              "name":"Content",
+              "fields": [
+                {"name": "title", "type": "string"},
+                {"name": "subtitle", "type": ["null","string"]},
+                {"name": "byline", "type": ["null","string"]},
+                {"name": "content", "type": ["null","string"]}
+              ]
+            }]
+          },
+          {"name": "dimensions", "type": ["null",{"type": "map", "values": "string"}]},
+          {"name": "geo_location", "type": ["null",
+            {
+              "type":"record",
+              "name":"GeoLocation",
+              "fields": [
+                {"name": "latitude", "type": "double"},
+                {"name": "longitude", "type": "double"}
+              ]
+            }]
+          },
+          {"name": "items", "type":["null",
+            {
+              "type":"array",
+              "items": {
+                "type":"record",
+                "name":"LineItem",
+                "fields": [
+                  {"name": "involves", "type": ["null",{"type":"map", "values": "string"}]},
+                  {"name": "variant", "type": ["null","string"]},
+                  {"name": "item_count", "type": "double"},
+                  {"name": "item_price", "type": "double"},
+                  {"name": "currency", "type": ["null","string"]},
+                  {"name": "price_type", "type": ["null","string"]},
+                  {"name": "price_category", "type": ["null","string"]},
+                  {"name": "complementary", "type": "boolean"},
+                  {"name": "description", "type": ["null","string"]},
+                  {"name": "discount_percentage", "type": ["null","double"]},
+                  {"name": "tax_percentage", "type": ["null","double"]},
+                  {"name": "commission_percentage", "type": ["null","double"]},
+                  {"name": "payment_method", "type": ["null","string"]},
+                  {"name": "card_token", "type": ["null","string"]},
+                  {"name": "serial_numbers", "type": ["null", {"type":"array", "items": "string"}]},
+                  {"name": "line_ids", "type": ["null", {"type":"array", "items": "string"}]},
+                  {"name": "accounting_key", "type": ["null","string"]},
+                  {"name": "dimensions", "type": ["null",{"type": "map", "values": "string"}]},
+                  {"name": "metrics", "type": ["null",{"type": "map", "values": "double"}]}
+                ]
+              }
+            }]
+          },
+          {"name": "metrics", "type": ["null",{"type": "map", "values": "double"}]},
+          {"name": "presentation", "type": ["null",
+            {
+              "type":"record",
+              "name":"Presentation",
+              "fields": [
+                {"name": "label", "type": "string"},
+                {"name": "thumbnail", "type": ["null","string"]},
+                {"name": "icon", "type": ["null","string"]},
+                {"name": "description", "type": ["null","string"]},
+                {"name": "details_url", "type": ["null","string"]}
+              ]
+            }]
+          },
+          {"name": "product_view", "type": ["null",
+            {
+              "type":"record",
+              "name": "ProductView",
+              "fields": [
+                {"name": "product", "type": ["null","string"]},
+                {"name": "version", "type": ["null","string"]},
+                {"name": "context", "type": ["null","string"]},
+                {"name": "referrer", "type": ["null","string"]}
+              ]
+            }]
+          },
+          {"name": "resolvable", "type": ["null",
+            {
+              "type":"record",
+              "name":"Resolvable",
+              "fields": [
+                {"name": "external_id", "type": "string"},
+                {"name": "batch_id", "type": ["null","string"]}
+              ]
+            }]
+          },
+          {"name": "tags", "type": ["null",{"type":"array", "items": "string"}]},
+          {"name": "timed", "type": ["null", {"type":"map", "values":
+            {
+              "type":"record",
+              "name":"TimedEntry",
+              "fields": [
+                {"name": "begins", "type": ["null","long"]},
+                {"name": "ends", "type": ["null","long"]},
+                {"name": "duration", "type": ["null","long"]},
+                {"name": "timezone", "type": ["null","string"]}
+              ]
+            }}]
+          },
+          {"name": "traffic_sources", "type":["null",
+            {
+              "type":"record",
+              "name":"TrafficSource",
+              "fields": [
+                {"name": "type", "type": "string"},
+                {"name": "referrer", "type": ["null","string"]},
+                {"name": "campaign", "type": ["null","string"]},
+                {"name": "source", "type": ["null","string"]},
+                {"name": "medium", "type": ["null","string"]},
+                {"name": "term", "type": ["null","string"]},
+                {"name": "content", "type": ["null","string"]}
+              ]
+            }]
           }
-        },
-        "aspects":    { "$ref": "#/definitions/entity-aspects" },
-        "properties": { "$ref": "#/definitions/properties" },
-        "partition":  { "type": "string", "description": "A isolated data partition to store the data in. '_common' is the global partition." }
-      },
-      "patternProperties": {
-        "^_([a-z_]){2,}$": {}
-      },
-      "additionalProperties": false,
-      "required": ["entity_ref"]
-    },
-
-    "entity_relation": {
-      "type":"object",
-      "description": "Used to define relationships/links between entities",
-      "properties":{
-        "type":       { "$ref": "#/definitions/as_entity_relation_type", "description": "The type of the Entity->Entity relationship"},
-        "entity_ref": { "$ref": "#/definitions/as_entity_ref", "description": "The ID reference of the remote entity" },
-        "entity":     { "$ref": "#/definitions/entity", "description": "The remote entity for embedded entity information" },
-        "label":      { "type": "string", "minLength": 1, "description": "The human readable label of the remote entity (for simple registration of embedded entities)" },
-        "weight":     { "type": "number", "minimum": -5, "maximum": 5, "description":"Indicates the streangth of the releationship or 'trust in it'" },
-        "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
-        "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
-        "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
-        "$to":        { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationship has a  specific end date" },
-        "partition":  { "type": "string", "description": "A isolated data partition to store the data in. '_common' is the global partition." }
-      },
-      "additionalProperties": false,
-      "minProperties": 2,
-      "required": ["type", "entity_ref"]
-    },
-
-    "entity_shorthand_relation": {
-      "type":"object",
-      "patternProperties":{
-        "^(IS|INTEGRAL_TO|CLOSE|KNOWS|KNOWS_OF|ALIAS|PART_OF|REL_VERSION_OF|LOCATED_AT|REL_LOCATED_IN|AKA|LOCATED_IN|PROXY_FOR|ON_BEHALF_OF|RELAYED_BY|ASSOCIATED_WITH|RELATED_TO|HAS_RELATIONS_TO|OF_TYPE|HOSTED_AT)([\\:[A-Z|_]{3,}]){0,3}$" : {
-          "anyOf":[
-            {"$ref": "#/definitions/as_entity_ref" },
-            {"$ref": "#/definitions/entity" }
-          ]
-        }
-      },
-      "properties":{
-        "weight":     { "type": "number", "minimum": -5, "maximum": 5, "description":"Indicates the streangth of the releationship or 'trust in it'" },
-        "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
-        "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
-        "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
-        "$to":        { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationship has a  specific end date" }
-      },
-      "minProperties": 2,
-      "additionalProperties": false
-    },
-
-    "event_relation_shorthand": {
-      "type":"object",
-      "description": "A relationship between an event and a entity involved in that event using a short-hand format",
-      "patternProperties":{
-        "^(ACTOR|AFFECTS|INVOLVES|REFERENCES|OBSERVES|RELAYED_BY|CREATES|UPDATES|REMOVES)(\\:[A-Z|_]{3,}){0,3}$" : {
-          "anyOf":[
-            {"$ref": "#/definitions/as_entity_ref" },
-            {"$ref": "#/definitions/entity" }
-          ]
-        }
-      },
-      "properties":{
-        "weight":     { "type": "number", "minimum": -5, "maximum": 5, "description":"Indicates the streangth of the releationship or 'trust in it'" },
-        "properties": { "$ref": "#/definitions/properties", "description":"Any custom properties stored for this relationship" },
-        "$direction": { "$ref": "#/definitions/as_rel_direction", "description":"Ability to change the default direction of the relationship from out to in" },
-        "$from":      { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationshop has a specific start date" },
-        "$to":        { "$ref": "#/definitions/as_timestamp", "description":"Indicates that this relationship has a  specific end date" }
-      },
-      "minProperties": 2,
-      "additionalProperties": false
-    },
-
-    "event_relation": {
-      "type":"object",
-      "description": "A relationship between an event and a entity involved in that event",
-      "properties":{
-        "role":       { "$ref": "#/definitions/as_event_relation_type", "description":"The role of the entity in the event (See Event role types in documentation)" },
-        "entity_ref": { "$ref": "#/definitions/as_entity_ref", "description":"The ID reference of the entity" },
-        "entity":     { "$ref": "#/definitions/entity", "description":"The Entity defenition for an entity embedded in the event" },
-        "properties": { "$ref": "#/definitions/properties", "description":"Additional properties for the Event->Entity relationship" }
-      },
-      "additionalProperties": false,
-      "minProperties": 2,
-      "required": ["role"]
-    },
-
-    "geo_location": {
-      "type":"object",
-      "description": "A physical GEO location [Tracked Aspect]",
-      "properties":{
-        "latitude":   { "type":"number", "description":"Latitude as s Double number" },
-        "longitude":  { "type":"number", "description":"Longitude as a Double number" }
-      },
-      "additionalProperties": false,
-      "required":["latitude","longitude"]
-    },
-
-    "inventory": {
-      "type":"object",
-      "description": "Inventory information",
-      "properties":{
-        "items_sold":       { "type":"number", "description":"Number of items sold to date." },
-        "items_returned":   { "type":"number", "description":"Number of items returned to date." },
-        "items_reserved":   { "type":"number", "description":"Number of items currently reserved." },
-        "items_on_hold":    { "type":"number", "description":"Number of items being held-back from sales." },
-        "items_unsellable": { "type":"number", "description":"Number of items that can not be sold." },
-        "items_in_stock":   { "type":"number", "description":"Number of items currently available to be sold" },
-        "items_for_sale":   { "type":"number", "description":"Total number of items that have been available to be sold" },
-        "price_categories": {
-          "type": "object",
-          "patternProperties":{
-            "^[a-z_]{3,}$":{ "$ref": "#/definitions/inventory_line" }
-          },
-          "additionalProperties": false,
-          "minItems":1
-        },
-        "variants":   {
-          "type": "object",
-          "patternProperties":{
-            "^[a-z_]{3,}$":{ "$ref": "#/definitions/inventory_line" }
-          },
-          "additionalProperties": false,
-          "minItems":1
-        }
-      },
-      "additionalProperties": false
-    },
-
-    "inventory_line": {
-      "type":"object",
-      "description": "Inventory information",
-      "properties":{
-        "items_sold":       { "type":"number", "description":"Number of items sold to date." },
-        "items_returned":   { "type":"number", "description":"Number of items returned to date." },
-        "items_reserved":   { "type":"number", "description":"Number of items currently reserved." },
-        "items_on_hold":    { "type":"number", "description":"Number of items being held-back from sales." },
-        "items_unsellable": { "type":"number", "description":"Number of items that can not be sold." },
-        "items_in_stock":   { "type":"number", "description":"Number of items currently available to be sold" },
-        "items_for_sale":   { "type":"number", "description":"Total number of items that have been available to be sold" }
-      },
-      "additionalProperties": false
-    },
-
-    "item_line": {
-      "type":"object",
-      "patternProperties":{
-        "^(PURCHASED|REPLACED|REPURCHASED|RESOLD|CANCELLED|RENTED|LEASED|GOT|WON|RETURNED|CARTED|RESERVED|UN_RESERVED|UNAVAILABLE)([\\:[A-Z|_]+]){0,3}$" : {
-          "anyOf":[ {"$ref": "#/definitions/as_entity_ref" }, {"$ref": "#/definitions/entity" } ] }
-      },
-      "properties":{
-        "involves":               {
-          "type":"array",
-          "items":{
-            "anyOf":[
-              { "$ref":"#/definitions/item_shorthand_relation"},
-              { "$ref":"#/definitions/item_relation" }
-            ]
-          },
-          "uniqueItems": true,
-          "minItems":1
-        },
-        "price_type":             { "type": "string", "minLength": 1, "description":"What price type applied for these items (from Inventory)" },
-        "price_category":         { "type": "string", "minLength": 1, "description":"What price category applied for these items (from Inventory)" },
-        "accounting_key":         { "type": "string", "minLength": 1, "description":"Should this revenue be assigned to a specific accounting key" },
-        "description":            { "type": "string", "minLength": 1, "description":"Does this line item have a specific description (prefer templates)" },
-        "currency":               { "type": "string", "minLength": 1, "description":"What currency was used to pay for the item" },
-        "variant":                { "type": "string", "minLength": 1, "description":"What product sub-type/variant was sold (from Invoentory)" },
-        "payment_method":         { "type": "string", "minLength": 1, "description":"What payment method was used to pay for the item" },
-        "card_token":             { "type": "string", "minLength": 1, "description":"Obfuscated Credid Card number/token for the transactions" },
-        "serial_numbers":         { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItems":1, "uniqueItems": true, "description":"List of serial numbers of the products involved" },
-        "line_ids":               { "type":"array", "items": { "type": "string", "minLength": 1 }, "minItem":1, "uniqueItems": true, "description":"Unique line-item IDs for the sale" },
-        "item_count":             { "type":"number", "description":"How many items of this product+type+variant were bought." },
-        "item_price":             { "type":"number", "description":"What was the price for individual item (before tax and discount)" },
-        "commission_percentage":  { "type":"number", "description":"How many percentages of the sale should be considered commission" },
-        "complementary":          { "type":"boolean", "description":"Is this a complimentary item (not sold)" },
-        "discount_percentage":    { "type":"number", "description":"How much discount should be deducted from the item price." },
-        "tax_percentage":         { "type":"number", "description":"How much tax should be added on top of the item price."},
-        "aspects":                { "$ref": "#/definitions/item-aspects", "description":"Aspects that can be added to item line" },
-        "valid_from":             { "$ref": "#/definitions/as_timestamp", "description":"Does the product bought have a validation period. This is the start of that period." },
-        "valid_until":            { "$ref": "#/definitions/as_timestamp", "description":"Does the product bought have a validation period. This is the end of that period." },
-        "properties":             { "$ref": "#/definitions/properties", "description":"Any additional/propriatary properties for the line item" }
-      },
-      "additionalProperties": false,
-      "required":["involves","item_count"],
-      "minProperties": 2
-    },
-
-    "item_shorthand_relation": {
-      "type":"object",
-      "patternProperties":{
-        "^(PURCHASED|REPLACED|REPURCHASED|RESOLD|CANCELLED|RENTED|LEASED|GOT|WON|RETURNED|CARTED|RESERVED|UN_RESERVED|UNAVAILABLE|RATED_BY)([\\:[A-Z|_]+]){0,3}$" : {
-          "anyOf":[
-            {"$ref": "#/definitions/as_entity_ref" },
-            {"$ref": "#/definitions/entity" }
-          ]
-        }
-      },
-      "properties":{
-        "weight":     { "type": "number", "minimum": -5, "maximum": 5 },
-        "properties": { "$ref": "#/definitions/properties" }
-      },
-      "additionalProperties": false
-    },
-
-    "item_relation": {
-      "type":"object",
-      "properties":{
-        "role":       { "$ref": "#/definitions/as_rel_item_type" },
-        "entity_ref": { "$ref": "#/definitions/as_entity_ref" },
-        "entity":     { "$ref": "#/definitions/entity" },
-        "weight":     { "type": "number", "minimum": -5, "maximum": 5 },
-        "properties": { "$ref": "#/definitions/properties" }
-      },
-      "additionalProperties": false,
-      "required": ["role"]
-    },
-
-    "items": {
-      "type":"array",
-      "items": {
-        "anyOf":[
-          { "$ref": "#/definitions/item_line" },
-          { "$ref": "#/definitions/event_relation" }
         ]
-      },
-      "uniqueItems": true,
-      "minItems": 1
+      }]
     },
-
-    "metrics": {
-      "description": "Any metric to be included in the event/entity analytics entry [Tracked Aspect]",
-      "type":"object",
-      "patternProperties":{
-        "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "type":"number" }
-      },
-      "minProperties":1,
-      "additionalProperties": false,
-      "uniqueItems": true
-    },
-
-    "properties": {
-      "type":"object",
-      "description":"Any additional/custom properties. Properties are stored natively as JSON but they are not processed automatically by AS in any way.",
-      "patternProperties":{
-        "^[a-z_]{3,}$":{}
-      },
-      "minProperties":1,
-      "additionalProperties": false,
-      "uniqueItems": true
-    },
-
-    "presentation": {
-      "type":"object",
-      "description": "Presentation aspect contains popular presentation information",
-      "properties":{
-        "label":        { "type": "string", "minLength": 1, "description": "A human readable string used to represent the entity (name etc.)" },
-        "details_url":  { "type": "string", "minLength": 1, "format":"uri", "description": "A URI containing detailed information about the entity" },
-        "thumbnail":    { "type": "string", "minLength": 1, "format":"uri", "description": "A URI pointing to an image of the entity (profile picture)" },
-        "description":  { "type": "string", "minLength": 1, "description": "A short, general, description of the entity" },
-        "icon":         { "type": "string", "minLength": 1, "description": "A image or icon used to represent the entity in lists etc." }
-      },
-      "additionalProperties": false,
-      "required": ["label"]
-    },
-
-    "productview": {
-      "type":"object",
-      "description": "Product View aspect is used to track product exposure",
-      "properties":{
-        "product":  { "type": "string", "description":"What product was viewed" },
-        "variant":  { "type": "string", "description":"What product variant was viewed." },
-        "context":  { "type": "string", "description":"In what context was the product viewed/seen" },
-        "referrer": { "type": "string", "description":"From where did the customer come when viewing the product." }
-      },
-      "additionalProperties": false,
-      "required": ["product"]
-    },
-
-    "resolvable": {
-      "type":"object",
-      "properties":{
-        "external_id":  { "type": "string", "minLength": 1, "description": "A unique external ID used to look up the event or the entity" },
-        "batch_id":     { "type": "string", "minLength": 1, "description": "A external Batch number used to identify a group of events" }
-      },
-      "additionalProperties": false,
-      "required":["external_id"]
-    },
-
-    "settings": {
-      "type": "object",
-      "description":"A list of settings where the active settings are compiled based on all reported settings (as in Event sourcing)",
-      "patternProperties":{
-        "^[a-z_]{3,}$":{}
-      },
-      "minProperties":1,
-      "additionalProperties": false
-    },
-
-    "tags": {
-      "description": "List of tags attached to an entity or an event",
-      "type": "array",
-      "items": { "type": "string", "minLength": 1 },
-      "additionalProperties": false,
-      "minProperties":1,
-      "uniqueItems": true
-    },
-
-    "timed": {
-      "type":"object",
-      "description":"A list of times or periods relevant for the entity or the event. (use 'begins' for events or shows that have fixed start time)",
-      "patternProperties":{
-        "^([a-z]{2,})(_[a-z]{2,}){0,3}$":{ "$ref": "#/definitions/timed_entry" }
-      },
-      "minProperties":1,
-      "additionalProperties": false,
-      "uniqueItems": true
-    },
-
-    "timed_entry": {
-      "type":"object",
-      "properties":{
-        "begins":   { "$ref": "#/definitions/as_timestamp", "description":"Explicit start time" },
-        "ends":     { "$ref": "#/definitions/as_timestamp", "description":"Explicit end time" },
-        "duration": { "type":"number", "description":"Duration (calculated if start/end provided but uses occurred_at as start time and occurrd_at+duration  as end time if only duration is reported" }
-      },
-      "additionalProperties": false,
-      "minProperties":1
-    },
-
-    "traffic_sources": {
-      "type":"array",
-      "items": { "$ref": "#/definitions/traffic_source" },
-      "uniqueItems": true,
-      "minItems": 1
-    },
-
-    "traffic_source": {
-      "type":"object",
-      "properties":{
-        "type":       { "type":"string", "description":"What type of traffic source was this ('campaign' for example)"},
-        "referrer":   { "type":"string", "description":"Where did the traffic come from (usually a URL/Web Domain)" },
-        "campaign":   { "type":"string", "description":"What was the ID of the campaign" },
-        "source":     { "type":"string", "description":"What was the source for the traffic" },
-        "medium":     { "type":"string", "description":"What was the medium for the traffic" },
-        "term":       { "type":"string", "description":"Primary term(s) used (should be a list)" },
-        "content":    { "type":"object", "description":"Any additional content used to report the traffic_source for the event" }
-      },
-      "additionalProperties": false,
-      "minProperties":1
-    },
-
-    "as_timestamp": {
-      "type":"string",
-      "format":"date-time"
-    },
-
-    "as_rel_direction": {
-      "type":"string",
-      "pattern": "^(IN|OUT)$"
-    },
-
-    "as_entity_relation_type": {
-      "type": "string",
-      "pattern": "^(IS|ALIAS|SOCIAL_ID|AKA|CLOSE|KNOWS|PART_OF|PROXY_FOR|ON_BEHALF_OF|RELAYED_BY|ASSOCIATED_WITH|RELATED_TO|HAS_RELATIONS_TO|OF_TYPE|HOSTED_AT|MEMBER_OF|STARS_IN|INSTRUMENTAL_IN|APPEARS_IN|ASSISTS_IN|VERSION_OF|KNOWS_OF|PAIRED_WITH|RATED_BY|POWERED_BY|BELONGS_TO|LOCATED_AT|LOCATED_IN|MEASURES|RESIDES_AT|INTEGRAL_TO|)([\\:(A-Z|_)+]){0,3}$"
-    },
-
-    "as_event_relation_type": {
-      "type": "string",
-      "pattern": "^(ACTOR|AFFECTS|INVOLVES|REFERENCES|OBSERVES|CREATES|REMOVES|UPDATES)([\\:(A-Z|_){3,}]){0,3}$"
-    },
-
-    "as_rel_item_type": {
-      "type": "string",
-      "pattern": "^(TRADE\\:)?(PURCHASED|REPLACED|REPURCHASED|RESOLD|CANCELLED|RENTED|LEASED|GOT|WON|RETURNED|CARTED|RESERVED|UN_RESERVED|UNAVAILABLE|CREATES|REMOVES|UPDATES|RATED_BY)([\\:(A-Z|_){3,}]){0,3}$"
-    },
-
-    "as_res_identifier": {
-      "type": "string",
-      "pattern": "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$"
-    },
-
-    "as_entity_ref": {
-      "type": "string",
-      "pattern": "^([a-zA-Z]{3,}:)*[a-zA-Z]{3,}/[A-Za-z0-9-_\\.@\\+\\:\\-]{1,}$"
-    }
-
-  }
+    {"name": "properties", "type": ["null",{"type":"map", "values": "string"}]},
+    {"name": "partition", "type": "string", "default":"_common"},
+    {"name": "token", "type": "string"},
+    {"name": "_stream_id", "type": "string"},
+    {"name": "_received_at", "type": "long", "logicalType":"timestamp-millis"}
+  ]
 }
