@@ -19,6 +19,8 @@ public class ResolvableAspect extends AbstractMapAspect {
     public void loadFromValue(Object value) {
         if (value instanceof String) {
             put("external_id", value);
+        } else {
+            super.loadFromValue(value);
         }
     }
 

@@ -27,6 +27,8 @@ public class ClassificationAspect extends AbstractMapAspect {
      * The Classification Aspects is used to categorise/classify entities
      * It provides a 3 level structure beneath the Entity Type (EntityType -> Classification.type -> Classification.variant -> Classification.categories)
      * The classification properties should be filled out in this order: type, variant, categories
+     * Event example 1:  type: music, variant: pop  [optional: categories["Indy", "contemporary", "european")
+     * Event example 2: type: sports, variant: soccer
      * Behavioral tags can be added using the tags property
      * @param type The classification Type (1st level)
      * @param variant  The classification Variant (2nd level)

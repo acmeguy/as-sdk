@@ -3,11 +3,17 @@ package com.activitystream.model.aspects;
 import com.activitystream.model.ASConstants;
 import com.activitystream.model.analytics.TimeSeriesEntry;
 import com.activitystream.model.interfaces.AspectInterface;
+import com.activitystream.model.interfaces.NoEventType;
+import com.activitystream.model.relations.RelationsManager;
 import com.activitystream.model.validation.AdjustedPropertyWarning;
+import com.activitystream.model.validation.InvalidPropertyContentError;
+import com.activitystream.model.validation.MissingPropertyError;
 import com.activitystream.model.validation.UnsupportedAspectError;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 
 public class ABTestingAspect extends AbstractMapAspect implements AspectInterface {
@@ -22,6 +28,7 @@ public class ABTestingAspect extends AbstractMapAspect implements AspectInterfac
 
     @Override
     public void loadFromValue(Object value) {
+        super.loadFromValue(value);
     }
 
     /************
@@ -121,16 +128,17 @@ public class ABTestingAspect extends AbstractMapAspect implements AspectInterfac
             theKey = theLCKey;
         }
 
+        //Todo implement aspects for dimensions and metrics
         switch (theKey) {
-            case "id":
+            case ASConstants.FIELD_ID:
                 value = validator().processIdString(theKey, value, true);
                 break;
-            case "variant":
-            case "outcome":
+            case ASConstants.FIELD_VARIANT:
+            case ASConstants.FIELD_OUTCOME:
                 value = validator().processString(theKey, value, false);
                 break;
-            case "metric":
-            case "amount":
+            case ASConstants.FIELD_METRIC:
+            case ASConstants.FIELD_AMOUNT:
                 value = validator().processDouble(theKey, value, false, null, null);
                 break;
             case ASConstants.FIELD_PROPERTIES:
@@ -144,7 +152,10 @@ public class ABTestingAspect extends AbstractMapAspect implements AspectInterfac
 
     @Override
     public void verify() {
-
+        if (!containsKey(ASConstants.FIELD_ID)) {
+            addProblem(new MissingPropertyError("No AB test ID was provides."));
+        }
+        super.verify();
     }
 
     public static ABTestingAspect abTest() {

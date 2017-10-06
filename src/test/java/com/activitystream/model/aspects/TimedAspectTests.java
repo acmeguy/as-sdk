@@ -37,6 +37,14 @@ public class TimedAspectTests {
         );
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"timed\":{\"construction\":{\"begins\":\"1867-01-01T00:00:00.000Z\",\"ends\":\"1871-01-01T00:00:00.000Z\",\"duration\":126230400000},\"inaugurated\":{\"begins\":\"1871-03-29T00:00:00.000Z\"},\"renovated\":{\"begins\":\"1996-01-01T00:00:00.000Z\",\"ends\":\"2004-01-01T00:00:00.000Z\",\"duration\":252460800000}}}}"),true);
+
+        ASEntity parsedVenue = ASEntity.fromJSON(venue.toJSON());
+        //Round-trip test
+        Assert.assertEquals(venue.toJSON().equals(parsedVenue.toJSON()),true);
+        Assert.assertEquals(venue.getStreamId().equals(parsedVenue.getStreamId()),true);
+        //Stream IDs are always calculated the same way so they are deterministic.
+        Assert.assertEquals(venue.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+
     }
 
     @Test
@@ -56,6 +64,7 @@ public class TimedAspectTests {
         Assert.assertNotNull(celebrationPeriod);
         Assert.assertEquals(celebrationPeriod.getBegins().toString().equals("2017-10-31T00:00:00.000Z"), true);
         Assert.assertEquals(celebrationPeriod.getEnds().toString().equals("2017-11-01T13:30:32.123Z"), true);
+
     }
 
 

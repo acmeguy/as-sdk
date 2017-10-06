@@ -33,6 +33,14 @@ public class ContentAspectTests {
 
         Assert.assertEquals(entity.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"content\":{\"title\":\"Some Title\",\"subtitle\":\"Some Subtitle\",\"byline\":\"this is the byline for the content\",\"content\":\"<br>Massive content\"}}}"),true);
 
+        ASEntity parsedEntity = ASEntity.fromJSON(entity.toJSON());
+        //Round-trip test
+        Assert.assertEquals(entity.toJSON().equals(parsedEntity.toJSON()),true);
+        Assert.assertEquals(entity.getStreamId().equals(parsedEntity.getStreamId()),true);
+
+        //Stream IDs are always calculated the same way so they are deterministic.
+        Assert.assertEquals(entity.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+
     }
 
 }

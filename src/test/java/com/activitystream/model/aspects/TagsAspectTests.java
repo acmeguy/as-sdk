@@ -27,6 +27,14 @@ public class TagsAspectTests {
         venue.withAspect(tags().withTags("National"));
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"tags\":[\"National\"]}}"),true);
+
+        ASEntity parsedVenue = ASEntity.fromJSON(venue.toJSON());
+        //Round-trip test
+        Assert.assertEquals(venue.toJSON().equals(parsedVenue.toJSON()),true);
+        Assert.assertEquals(venue.getStreamId().equals(parsedVenue.getStreamId()),true);
+        //Stream IDs are always calculated the same way so they are deterministic.
+        Assert.assertEquals(venue.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASEntity;
+import com.activitystream.model.ASEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -38,6 +39,14 @@ public class ClassificationAspectTests {
                 .withCategories("Tragic Comedy","Black Humor")
                 );
         Assert.assertEquals(event.toJSON().equals("{\"entity_ref\":\"Event/SHOW-ABC123\",\"aspects\":{\"classification\":{\"type\":\"Play\",\"variant\":\"Comedy\",\"categories\":[\"Tragic Comedy\",\"Black Humor\"]}}}"),true);
+
+        ASEntity parsedEvent = ASEntity.fromJSON(event.toJSON());
+        //Round-trip test
+        Assert.assertEquals(event.toJSON().equals(parsedEvent.toJSON()),true);
+        Assert.assertEquals(event.getStreamId().equals(parsedEvent.getStreamId()),true);
+
+        //Stream IDs are always calculated the same way so they are deterministic.
+        Assert.assertEquals(event.getStreamId().toString().equals("d16bde84-2417-3d4d-9af3-9c10b601c228"),true);
 
     }
 

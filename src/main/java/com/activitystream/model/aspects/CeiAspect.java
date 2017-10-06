@@ -18,6 +18,7 @@ public class CeiAspect extends AbstractMapAspect {
 
     @Override
     public void loadFromValue(Object value) {
+        super.loadFromValue(value);
     }
 
     @Override

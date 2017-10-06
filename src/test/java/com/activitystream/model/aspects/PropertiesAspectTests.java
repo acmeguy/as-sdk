@@ -31,6 +31,15 @@ public class PropertiesAspectTests {
                 .withProperties("one_of_many", true, "two_of_many",true, "four_of_many",false, "item_index",4, "position_name","five");
 
         Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"properties\":{\"some_boolean\":true,\"date\":\"2017-01-01T00:00:00.000Z\",\"a_map\":{\"map_value\":{\"nested\":true}},\"a_sttring\":\"Yes, I'm a String\",\"one_of_many\":true,\"two_of_many\":true,\"four_of_many\":false,\"item_index\":4,\"position_name\":\"five\"}}"),true);
+
+        ASEntity parsedVenue = ASEntity.fromJSON(venue.toJSON());
+        //Round-trip test
+        Assert.assertEquals(venue.toJSON().equals(parsedVenue.toJSON()),true);
+        Assert.assertEquals(venue.getStreamId().equals(parsedVenue.getStreamId()),true);
+
+        //Stream IDs are always calculated the same way so they are deterministic.
+        Assert.assertEquals(venue.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+
     }
 
 }

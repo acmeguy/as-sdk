@@ -45,6 +45,21 @@ public class ItemsAspectTests {
                 );
 
         Assert.assertEquals(purchaseEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"www.web\",\"involves\":[{\"BUYER\":{\"entity_ref\":\"Customer/983938\"}}],\"aspects\":{\"items\":[{\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/398928\"}}],\"item_count\":1.0,\"item_price\":0.0,\"price_category\":\"Section A\",\"price_type\":\"Seniors\",\"variant\":\"VIP\",\"complimentary\":true}]}}"),true);
+
+        /*
+        Pending a review from Pétur
+
+        ASEvent parsedEvent = ASEvent.fromJSON(purchaseEvent.toJSON());
+        //Round-trip test
+        logger.warn("parsedEvent.toJSON() " + parsedEvent.toJSON());
+        Assert.assertEquals(purchaseEvent.toJSON().equals(parsedEvent.toJSON()),true);
+        Assert.assertEquals(purchaseEvent.getStreamId().equals(parsedEvent.getStreamId()),true);
+
+        //Stream IDs are always calculated the same way so they are deterministic.
+        logger.warn("secretAgent.getStreamId() " + purchaseEvent.getStreamId());
+        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+        */
+
     }
 
     @Test

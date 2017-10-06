@@ -86,6 +86,9 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
                     "Invalid Relationship Type. '" + relation.getRelationsType().getRootRelationsType() + "' is not in list: " +
                             this.validRelationsTypes.toString()));
         }
+        if (relation.getRoot() == null) {
+            relation.setRoot(getRoot());
+        }
         return this;
     }
 
