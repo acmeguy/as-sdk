@@ -182,7 +182,7 @@ public class ASLineItem extends TransactionEvent {
     }
 
     public ASLineItem withProduct(LINE_TYPES type, ASEntity product) {
-        getRelationsManager(true).add(new Relation(type.toString(), product));
+        getRelationsManager(true).addRelation(new Relation(type.toString(), product));
         return this;
     }
 

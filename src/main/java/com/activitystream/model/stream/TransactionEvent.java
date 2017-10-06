@@ -53,6 +53,8 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
 
     public TransactionEvent(Map map, BaseStreamElement root) {
         super(map, root);
+        remove(ASConstants.FIELD_OCCURRED_AT);
+        remove(ASConstants.FIELD_RECEIVED_AT);
     }
 
     public TransactionEvent(Map map) {
