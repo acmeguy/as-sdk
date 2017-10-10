@@ -1,4 +1,32 @@
-Use an appropriate settings.xml
+=============================
+GPG installation and configuration
+=============================
+The first step towards being able to release to maven central is to have a functioning GPG installation
+
+Here is a command you can run to check if you are able to sign things:
+
+    echo "asdf" | gpg -s | gpg -v
+
+It may ask you for a passphrase, and in the end it should say something like 
+
+    gpg: Good signature from XXXXXXXXXX
+    gpg: binary signature, digest algorithm SHA256, key algorithm rsa2048
+
+Here are some commands that have been helpful to achieve a working GPG setup:
+
+    sudo apt-get install rng-tools
+    sudo apt-get install gpg-agent
+    sudo rngd -r /dev/urandom
+    gpg --gen-key
+    eval $(gpg-agent --daemon)
+    gpg --keyserver pgp.mit.edu --send-key hhhhhhhhhhhhhhhh
+
+
+
+=============================
+Maven configuration
+=============================
+Use an appropriate settings.xml in your .m2 directory
 
 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -23,11 +51,12 @@ Use an appropriate settings.xml
 
 
 
-Change the version tag in pom.xml to a new non-snapshot version.
-
-
+=============================
+Performing a release
+=============================
 deployment to OSSRH and an automated release to the Central Repository:
 
+    Change the version tag in pom.xml to a new non-snapshot version.
     export GPG_TTY=$(tty)
     export OSSRH_PASSWORD="the_password_here"
     Update the version field in pom.xml to the desired version name, not with -SNAPSHOT
