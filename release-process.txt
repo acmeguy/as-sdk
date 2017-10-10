@@ -5,7 +5,7 @@ The first step towards being able to release to maven central is to have a funct
 
 Here is a command you can run to check if you are able to sign things:
 
-    echo "asdf" | gpg -s | gpg -v
+    echo "Hello world" | gpg -s | gpg -v
 
 It may ask you for a passphrase, and in the end it should say something like 
 
@@ -18,8 +18,8 @@ Here are some commands that have been helpful to achieve a working GPG setup:
     sudo apt-get install gpg-agent
     sudo rngd -r /dev/urandom
     gpg --gen-key
-    eval $(gpg-agent --daemon)
     gpg --keyserver pgp.mit.edu --send-key hhhhhhhhhhhhhhhh
+    eval $(gpg-agent --daemon)
 
 
 
