@@ -1,7 +1,7 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASEntity;
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class PropertiesAspectTests {
     @Test
     public void simplePropertiesAspectTest() throws Exception {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEntity venue = new ASEntity("Venue", "983983")
                 .withProperties("some_boolean",true)

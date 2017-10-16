@@ -247,7 +247,7 @@ public class ASEntity extends BusinessEntity {
     }
 
     @Override
-    public ASEntity withMetric(String metric, double value) {
+    public ASEntity withMetric(String metric, Number value) {
         super.withMetric(metric, value);
         return this;
     }
@@ -271,6 +271,9 @@ public class ASEntity extends BusinessEntity {
 
     public static ASEntity fromJSON(String json) throws IOException {
         return JacksonMapper.getMapper().readValue(json, ASEntity.class);
+    }
+
+    public static void send() throws IOException {
     }
 
 }

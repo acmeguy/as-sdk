@@ -2,6 +2,7 @@ package com.activitystream.model;
 
 import com.activitystream.model.aspects.AspectManager;
 import com.activitystream.model.aspects.ItemsManager;
+import com.activitystream.model.config.ASService;
 import com.activitystream.model.config.JacksonMapper;
 import com.activitystream.model.core.AbstractMapElement;
 import com.activitystream.model.entities.EntityReference;
@@ -15,7 +16,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import java.util.concurrent.TimeoutException;
 
 public class ASEvent extends CustomerEvent {
 
@@ -181,13 +186,13 @@ public class ASEvent extends CustomerEvent {
         return this;
     }
 
-    public ASEvent withMetrics(String metric, double value) {
+    public ASEvent withMetrics(String metric, Number value) {
         super.withMetric(metric, value, this);
         return this;
     }
 
     @Override
-    public ASEvent withMetric(String metric, double value, AbstractMapElement root) {
+    public ASEvent withMetric(String metric, Number value, AbstractMapElement root) {
         super.withMetric(metric, value, root);
         return this;
     }
@@ -271,6 +276,10 @@ public class ASEvent extends CustomerEvent {
 
     public static ASEvent fromJSON(String json) throws IOException {
         return JacksonMapper.getMapper().readValue(json, ASEvent.class);
+    }
+
+    public void send() throws Exception {
+       ASService.send(this);
     }
 
 

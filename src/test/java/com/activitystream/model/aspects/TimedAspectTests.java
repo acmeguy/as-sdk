@@ -2,7 +2,7 @@ package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
 import com.activitystream.model.ASEntity;
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -27,7 +27,7 @@ public class TimedAspectTests {
     @Test
     public void simpleTimedAspectTest() throws Exception {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEntity venue = new ASEntity("Venue", "983983");
         venue.withAspect(timed()

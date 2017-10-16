@@ -2,7 +2,6 @@ package com.activitystream.model.stream;
 
 import com.activitystream.model.ASConstants;
 import com.activitystream.model.aspects.*;
-import com.activitystream.model.config.ASConfig;
 import com.activitystream.model.entities.BusinessEntity;
 import com.activitystream.model.entities.EntityReference;
 import com.activitystream.model.interfaces.*;

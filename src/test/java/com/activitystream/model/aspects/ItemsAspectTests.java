@@ -4,7 +4,7 @@ import com.activitystream.model.ASConstants;
 import com.activitystream.model.ASEntity;
 import com.activitystream.model.ASEvent;
 import com.activitystream.model.ASLineItem;
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import com.activitystream.model.stream.ImportanceLevel;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class ItemsAspectTests {
     @Test
     public void simplePurchaseMessage() throws Exception {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEvent purchaseEvent = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
         purchaseEvent.withOccurredAt("2017-01-01T12:00:00")
@@ -60,7 +60,7 @@ public class ItemsAspectTests {
     @Test
     public void testSimpleItemsMessage() throws IOException {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEvent event = new ASEvent(
                 "2017-09-01T10:10:10.010-0000",
@@ -85,7 +85,7 @@ public class ItemsAspectTests {
     @Test
     public void testSimpleItemsReturnedMessage() throws IOException {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEvent event = new ASEvent(
                 "2017-09-01T10:10:10.010-0000",

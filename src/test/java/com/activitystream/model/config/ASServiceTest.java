@@ -13,11 +13,11 @@ import java.util.TimeZone;
 /**
  * @author ivan
  */
-public class ASConfigTest {
+public class ASServiceTest {
 
     @Test
     public void setDefaultTimeZone() throws JsonProcessingException {
-        ASConfig.setDefaults(null, null, TimeZone.getTimeZone("GMT+6:00"));
+        ASService.setDefaults(null, null, TimeZone.getTimeZone("GMT+6:00"));
 
         ASEvent event = new ASEvent();
         event.withOccurredAt("2017-08-29T05:46:53+03:00");
@@ -26,7 +26,7 @@ public class ASConfigTest {
 
     @Test
     public void setDefaultTimeZoneWithoutZone() throws JsonProcessingException {
-        ASConfig.setDefaults(null, null, TimeZone.getTimeZone("GMT+6:00"));
+        ASService.setDefaults(null, null, TimeZone.getTimeZone("GMT+6:00"));
 
         ASEvent event = new ASEvent();
         event.withOccurredAt("2017-08-29T05:46:53");
@@ -35,7 +35,7 @@ public class ASConfigTest {
 
     @Test
     public void setDefaultCurrency() throws JsonProcessingException {
-        ASConfig.setDefaults(null, "USD", null);
+        ASService.setDefaults(null, "USD", null);
 
         ASEvent event = new ASEvent();
         ItemsManager itemsManager = new ItemsManager();
@@ -51,7 +51,7 @@ public class ASConfigTest {
 
     @Test
     public void setCurrencyExplicitly() throws JsonProcessingException {
-        ASConfig.setDefaults(null, "USD", null);
+        ASService.setDefaults(null, "USD", null);
 
         ASEvent event = new ASEvent();
         ItemsManager itemsManager = new ItemsManager();

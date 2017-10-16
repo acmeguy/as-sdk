@@ -214,20 +214,23 @@ public abstract class AbstractMapElement extends LinkedHashMap implements BaseSt
 
     protected Object withMetrics(AbstractMapElement root, Object... metrics) {
         for (int i = 0; i < metrics.length; i = i + 2) {
+            if (metrics[i + 1] == null) continue;
             withMetric((String) metrics[i], ((Number) metrics[i + 1]).doubleValue(), root);
         }
         return this;
     }
 
-    protected Object withMetric(String metric, double value, AbstractMapElement root) {
+    protected Object withMetric(String metric, Number value, AbstractMapElement root) {
+        if (value == null) return this;
+
         MetricsAspect metricAspect = getAspectManager(true, root).getMetrics();
         if (metricAspect == null) {
             metricAspect = new MetricsAspect() {{
-                put(metric, value);
+                put(metric, value.doubleValue());
             }};
             getAspectManager().put(ASConstants.ASPECTS_METRICS, metricAspect);
         } else {
-            metricAspect.put(metric, value);
+            metricAspect.put(metric, value.doubleValue());
         }
         return this;
     }

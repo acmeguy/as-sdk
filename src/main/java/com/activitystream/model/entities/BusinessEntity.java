@@ -553,7 +553,7 @@ public class BusinessEntity extends AbstractMapElement
         return this;
     }
 
-    public BusinessEntity withMetric(String metric, double value) {
+    public BusinessEntity withMetric(String metric, Number value) {
         super.withMetric(metric, value, this);
         return this;
     }

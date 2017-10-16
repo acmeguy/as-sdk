@@ -1,7 +1,7 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASEntity;
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class TagsAspectTests {
     @Test
     public void simpleTagsAspectTest() throws Exception {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         ASEntity venue = new ASEntity("Venue", "983983");
         venue.withAspect(tags().withTags("National"));

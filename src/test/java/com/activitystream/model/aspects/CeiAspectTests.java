@@ -1,8 +1,7 @@
 package com.activitystream.model.aspects;
 
-import com.activitystream.model.ASEntity;
 import com.activitystream.model.ASEvent;
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import com.activitystream.model.relations.ASEventRelationTypes;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ public class CeiAspectTests {
     @Test
     public void simpleTagsAspectTest() throws Exception {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
 
         //Minimum valid Message
         ASEvent asEvent = new ASEvent()

@@ -1,6 +1,6 @@
 package com.activitystream.model;
 
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import com.activitystream.model.entities.EntityReference;
 import com.activitystream.model.interfaces.BaseStreamElement;
 import com.activitystream.model.relations.Relation;
@@ -444,7 +444,7 @@ public class ASLineItem extends TransactionEvent {
     //Relations and aspects
 
     public ASLineItem withDefaults() {
-        setCurrency((String) this.getOrDefault(ASConstants.FIELD_CURRENCY, ASConfig.getDefaultCurrency()));
+        setCurrency((String) this.getOrDefault(ASConstants.FIELD_CURRENCY, ASService.getDefaultCurrency()));
         return this;
     }
 

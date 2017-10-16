@@ -1,7 +1,6 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASConstants;
-import com.activitystream.model.config.ASConfig;
 import com.activitystream.model.interfaces.*;
 import com.activitystream.model.entities.BusinessEntity;
 import com.activitystream.model.entities.EntityChangeMap;

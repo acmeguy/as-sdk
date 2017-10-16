@@ -1,7 +1,7 @@
 package com.activitystream.model.aspects;
 
 import com.activitystream.model.ASEntity;
-import com.activitystream.model.config.ASConfig;
+import com.activitystream.model.config.ASService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class MetricsAspectTest {
     @Test
     public void testMetricsTrackedTest() throws Exception {
 
-        ASConfig.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
+        ASService.setDefaults("US", "USD", TimeZone.getTimeZone("GMT+0:00"));
         ASEntity venue = new ASEntity("Venue", "983983")
                 .withMetrics("built",1941, "capacity", 5272)
                 .withOccurredAt("2017-10-31T12:00:00-01:00");
