@@ -40,38 +40,6 @@ public class ASLineItem extends TransactionEvent {
      */
     public static enum LINE_TYPES {
         /**
-         * Items in the line were purchased
-         */
-        PURCHASED,
-        /**
-         * Items in the line were rented for a short period
-         */
-        RENTED,
-        /**
-         * Items in the line were gotten without a financial transaction taking place.
-         */
-        GOT,
-        /**
-         * Items in the line were leased for a short long period
-         */
-        LEASED,
-        /**
-         * Items in the line were won in some way
-         */
-        WON,
-        /**
-         * Items in the line were returned (applies to PURCHASED, RENTED, GOT, LEASED and WON)
-         */
-        RETURNED,
-        /**
-         * Items in the line were ordered
-         */
-        ORDERED,
-        /**
-         * A order for the items in the line were cancelled (applies to ORDERED only)
-         */
-        CANCELLED,
-        /**
          * Items in the line were put in a cart (as a pre-purchase step)
          */
         CARTED,
@@ -87,6 +55,38 @@ public class ASLineItem extends TransactionEvent {
          * Items in the line were un-reserved with the intent of cancelling a future purchase
          */
         UNRESERVED,
+        /**
+         * Items in the line were purchased
+         */
+        PURCHASED,
+        /**
+         * Items in the line were returned (applies to PURCHASED, RENTED, GOT, LEASED and WON)
+         */
+        RETURNED,
+        /**
+             * Items in the line were rented for a short period
+         */
+        RENTED,
+        /**
+         * Items in the line were gotten without a financial transaction taking place.
+         */
+        GOT,
+        /**
+         * Items in the line were leased for a short long period
+         */
+        LEASED,
+        /**
+         * Items in the line were won in some way
+         */
+        WON,
+        /**
+         * Items in the line were ordered
+         */
+        ORDERED,
+        /**
+         * A order for the items in the line were cancelled (applies to ORDERED only)
+         */
+        CANCELLED,
         /**
          * Items in the line were not available when the customer showd interest in them
          */

@@ -127,6 +127,16 @@ public class Relation extends AbstractMapElement implements EmbeddedStreamElemen
         return (String) get("$direction");
     }
 
+    public Relation reverse() {
+        String currentDirection = (String) get("$direction");
+        if (currentDirection == null || currentDirection.equals(Direction.OUT.toString())) {
+            directPut("$direction", Direction.IN.toString());
+        } else {
+            remove("$direction");
+        }
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Relation) {

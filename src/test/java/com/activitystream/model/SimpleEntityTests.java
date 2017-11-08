@@ -2,6 +2,7 @@ package com.activitystream.model;
 
 import com.activitystream.model.entities.EntityReference;
 import com.activitystream.model.relations.ASEntityRelationTypes;
+import com.activitystream.model.relations.Relation;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,6 +149,13 @@ public class SimpleEntityTests {
                                 .addTerm("some")));
 
         Assert.assertEquals(customer.toJSON(),"{\"entity_ref\":\"Customer/0071\",\"aspects\":{\"traffic_sources\":[{\"campaign\":\"Some really kewl campaign\",\"medium\":\"Web\",\"referrer\":\"Faceboook\",\"source\":\"Faceboook\",\"term\":\"some\"}]}}");
+    }
+
+    @Test
+    public void createEntitiesWithReverseRelation() throws IOException {
+        ASEntity show = new ASEntity("Show","38743","Abba - Back on tour");
+        show.withReverseRelationIfValid("STARS_IN", "Performer","38783783");
+        Assert.assertEquals(show.toJSON(),"{\"entity_ref\":\"Show/38743\",\"aspects\":{\"presentation\":{\"label\":\"Abba - Back on tour\"}},\"relations\":[{\"STARS_IN\":{\"entity_ref\":\"Performer/38783783\"},\"$direction\":\"IN\"}]}");
     }
 
 }

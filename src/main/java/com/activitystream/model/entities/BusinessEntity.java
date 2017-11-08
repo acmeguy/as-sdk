@@ -213,17 +213,40 @@ public class BusinessEntity extends AbstractMapElement
     }
 
     public BusinessEntity withRelation(String type, Object value) {
-        this.getRelationsManager(true).addRelation(new Relation(type, value));
+        return withRelation(type, value, false);
+    }
+
+    public BusinessEntity withReverseRelation(String type, Object value) {
+        return withRelation(type, value, true);
+    }
+
+    private BusinessEntity withRelation(String type, Object value, boolean reverse) {
+        Relation relation = new Relation(type, value);
+        if (reverse) relation.reverse();
+        this.getRelationsManager(true).addRelation(relation);
         return this;
     }
 
     public BusinessEntity withRelationIfValid(String type, String entityType, String entityId) {
-        return withRelationIfValid(type, entityType, entityId, null);
+        return withRelationIfValid(type, entityType, entityId, null, false);
+    }
+
+    public BusinessEntity withReverseRelationIfValid(String type, String entityType, String entityId) {
+        return withRelationIfValid(type, entityType, entityId, null, true);
     }
 
     public BusinessEntity withRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
+        return withRelationIfValid(type, entityType, entityId, relationsProperties, false);
+    }
+
+    public BusinessEntity withReverseRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties) {
+        return withRelationIfValid(type, entityType, entityId, relationsProperties, true);
+    }
+
+    private BusinessEntity withRelationIfValid(String type, String entityType, String entityId, Map<String,Object> relationsProperties, Boolean reverse) {
         if (!entityType.isEmpty() && entityId != null && !entityId.isEmpty()) {
             Relation newRelation = new Relation(type, new EntityReference(entityType, entityId, this), this);
+            if (reverse) newRelation.reverse();
             if (relationsProperties != null) {
                 newRelation.directPut("properties", relationsProperties);
             }
@@ -233,8 +256,18 @@ public class BusinessEntity extends AbstractMapElement
     }
 
     public BusinessEntity withRelationIfValid(String type, EntityReference entityRef) {
+        return withRelationIfValid(type, entityRef, false);
+    }
+
+    public BusinessEntity withReverseRelationIfValid(String type, EntityReference entityRef) {
+        return withRelationIfValid(type, entityRef, true);
+    }
+
+    private BusinessEntity withRelationIfValid(String type, EntityReference entityRef, boolean reverse) {
         if (entityRef != null) {
-            this.getRelationsManager(true).addRelation(new Relation(type, entityRef));
+            Relation rel = new Relation(type, entityRef);
+            if (reverse) rel.reverse();
+            this.getRelationsManager(true).addRelation(rel);
         }
         return this;
     }
