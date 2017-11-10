@@ -5,6 +5,7 @@ import com.activitystream.model.ASEntity;
 import com.activitystream.model.ASEvent;
 import com.activitystream.model.ASLineItem;
 import com.activitystream.model.config.ASService;
+import com.activitystream.model.relations.Relation;
 import com.activitystream.model.stream.ImportanceLevel;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class ItemsAspectTests {
 
         ASEvent purchaseEvent = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "www.web");
         purchaseEvent.withOccurredAt("2017-01-01T12:00:00")
-                .withRelationIfValid(ASConstants.REL_BUYER,"Customer/983938");
+                .withRelationIfValid(ASConstants.REL_BUYER, "Customer/983938");
         purchaseEvent
                 .withAspect(items(purchaseEvent)
                         .addLine(lineItem()
@@ -45,15 +46,15 @@ public class ItemsAspectTests {
                         )
                 );
 
-        Assert.assertEquals(purchaseEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"www.web\",\"involves\":[{\"BUYER\":{\"entity_ref\":\"Customer/983938\"}}],\"aspects\":{\"items\":[{\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/398928\"}}],\"item_count\":1.0,\"item_price\":0.0,\"price_category\":\"Section A\",\"price_type\":\"Seniors\",\"variant\":\"VIP\",\"complimentary\":true}]}}"),true);
+        Assert.assertEquals(purchaseEvent.toJSON().equals("{\"occurred_at\":\"2017-01-01T12:00:00.000Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"www.web\",\"involves\":[{\"BUYER\":{\"entity_ref\":\"Customer/983938\"}}],\"aspects\":{\"items\":[{\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/398928\"}}],\"item_count\":1.0,\"item_price\":0.0,\"price_category\":\"Section A\",\"price_type\":\"Seniors\",\"variant\":\"VIP\",\"complimentary\":true}]}}"), true);
         ASEvent parsedEvent = ASEvent.fromJSON(purchaseEvent.toJSON());
 
         //Round-trip test
-        Assert.assertEquals(purchaseEvent.toJSON().equals(parsedEvent.toJSON()),true);
-        Assert.assertEquals(purchaseEvent.getStreamId().equals(parsedEvent.getStreamId()),true);
+        Assert.assertEquals(purchaseEvent.toJSON().equals(parsedEvent.toJSON()), true);
+        Assert.assertEquals(purchaseEvent.getStreamId().equals(parsedEvent.getStreamId()), true);
 
         //Stream IDs are always calculated the same way so they are deterministic.
-        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("6dedc893-fc58-3b22-92ab-4f843d4b5c0e"),true);
+        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("6dedc893-fc58-3b22-92ab-4f843d4b5c0e"), true);
 
     }
 
@@ -70,16 +71,16 @@ public class ItemsAspectTests {
                 ImportanceLevel.IMPORTANT,
                 "Customer/3"
         );
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3}"), true);
 
-        ASLineItem itemLine = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED,new ASEntity("Event","3873"),1,30.2);
+        ASLineItem itemLine = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, new ASEntity("Event", "3873"), 1, 30.2);
 
         event.addLineItem(itemLine);
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"item_count\":1.0,\"item_price\":30.2,\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/3873\"}}]}]}}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"item_count\":1.0,\"item_price\":30.2,\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/3873\"}}]}]}}"), true);
 
         //add it again to see item count go up
         event.mergeLineItem(itemLine);
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"item_count\":2.0,\"item_price\":30.2,\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/3873\"}}]}]}}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"item_count\":2.0,\"item_price\":30.2,\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Event/3873\"}}]}]}}"), true);
     }
 
     @Test
@@ -95,25 +96,42 @@ public class ItemsAspectTests {
                 ImportanceLevel.IMPORTANT,
                 "Customer/3"
         );
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3}"), true);
 
         event.addLineItem(
                 lineItem()
-                        .withProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
+                        .withProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event", "3873"))
                         .withItemCount(1)
                         .withItemPrice(30.2)
         );
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":1.0,\"item_price\":30.2}]}}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":1.0,\"item_price\":30.2}]}}"), true);
 
         //add the same product again item count go up
         event.mergeLineItem(
                 lineItem()
-                        .withProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event","3873"))
+                        .withProduct(ASLineItem.LINE_TYPES.RETURNED, new ASEntity("Event", "3873"))
                         .withItemCount(1)
                         .withItemPrice(30.2)
         );
 
-        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":2.0,\"item_price\":30.2}]}}"),true);
+        org.junit.Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-09-01T10:10:10.010Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"test\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Customer/3\"}}],\"importance\":3,\"aspects\":{\"items\":[{\"involves\":[{\"RETURNED\":{\"entity_ref\":\"Event/3873\"}}],\"item_count\":2.0,\"item_price\":30.2}]}}"), true);
+    }
+
+    @Test
+    public void testItemsMultipleLinedIds() {
+        ASEntity show = new ASEntity("Show", "1");
+
+        ASLineItem lineItem1 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withLineId("1");
+        ASLineItem lineItem2 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withLineId("2");
+        ASLineItem lineItem3 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "550").withLineId("3");
+
+        ItemsManager items = new ItemsManager();
+        items.mergeItemLine(lineItem1);
+        items.mergeItemLine(lineItem2);
+        items.mergeItemLine(lineItem3);
+        
+        String expected = "[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=2.0, item_price=50.0, line_ids=[1,2]}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=1.0, item_price=550.0, line_ids=[3]}]";
+        System.out.println(items.toString());
     }
 
 
