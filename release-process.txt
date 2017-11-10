@@ -18,7 +18,17 @@ Here are some commands that have been helpful to achieve a working GPG setup:
     sudo apt-get install gpg-agent
     sudo rngd -r /dev/urandom
     gpg --gen-key
-    gpg --keyserver pgp.mit.edu --send-key hhhhhhhhhhhhhhhh
+
+        when prompted with:
+        Please select what kind of key you want:
+           (1) RSA and RSA (default)
+           (2) DSA and Elgamal
+           (3) DSA (sign only)
+           (4) RSA (sign only)
+
+        choose nr 1.
+    # In this example hhhhhhhh is the lowercase hex id of your new key pair
+    gpg --keyserver pgp.mit.edu --send-key hhhhhhhh
     eval $(gpg-agent --daemon)
 
 
