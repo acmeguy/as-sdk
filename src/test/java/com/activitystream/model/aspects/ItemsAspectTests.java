@@ -5,8 +5,8 @@ import com.activitystream.model.ASEntity;
 import com.activitystream.model.ASEvent;
 import com.activitystream.model.ASLineItem;
 import com.activitystream.model.config.ASService;
-import com.activitystream.model.relations.Relation;
 import com.activitystream.model.stream.ImportanceLevel;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,8 +118,12 @@ public class ItemsAspectTests {
     }
 
     @Test
-    public void testItemsMultipleLinedIds() {
+    public void testItemsMultipleLinedIds() throws JsonProcessingException {
+        ASService.setDefaults("SE", "SEK", TimeZone.getTimeZone("CET"));
+
         ASEntity show = new ASEntity("Show", "1");
+        ASEvent transactionCompleted = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "some_origin");
+        transactionCompleted.withOccurredAt("2017-11-13T09:04:42.291");
 
         ASLineItem lineItem1 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withLineId("1");
         ASLineItem lineItem2 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withLineId("2");
@@ -129,10 +133,12 @@ public class ItemsAspectTests {
         items.mergeItemLine(lineItem1);
         items.mergeItemLine(lineItem2);
         items.mergeItemLine(lineItem3);
-        
-        String expected = "[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=2.0, item_price=50.0, line_ids=[1,2]}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=1.0, item_price=550.0, line_ids=[3]}]";
-        System.out.println(items.toString());
+
+        transactionCompleted.withAspect(items);
+
+        String expected = "{\"occurred_at\":\"2017-11-13T09:04:42.291+01:00\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"some_origin\",\"involves\":[],\"aspects\":{\"items\":[{\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Show/1\"}}],\"item_count\":2.0,\"item_price\":50.0,\"line_ids\":[\"1\",\"2\"]},{\"involves\":[{\"PURCHASED\":{\"entity_ref\":\"Show/1\"}}],\"item_count\":1.0,\"item_price\":550.0,\"line_ids\":[\"3\"]}]}}\n";
+        String actual = transactionCompleted.toJSON();
+
+        org.junit.Assert.assertEquals(expected, actual);
     }
-
-
 }
