@@ -1,8 +1,8 @@
 package com.activitystream.sdk.utilities;
 
-import com.activitystream.model.ASEntity;
-import com.activitystream.model.interfaces.BaseStreamItem;
-import com.activitystream.model.ASEvent;
+import com.activitystream.sdk.ASEntity;
+import com.activitystream.core.model.interfaces.BaseStreamItem;
+import com.activitystream.sdk.ASEvent;
 
 import java.io.BufferedWriter;
 import java.io.Closeable;
