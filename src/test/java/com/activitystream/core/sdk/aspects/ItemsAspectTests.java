@@ -1,5 +1,6 @@
-package com.activitystream.core.model.aspects;
+package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.ItemsManager;
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEntity;
 import com.activitystream.sdk.ASEvent;

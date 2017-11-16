@@ -18,6 +18,7 @@ public class JacksonMapper {
 
     private static ObjectMapper mapper;
 
+
     static {
         mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         JodaModule module = new JodaModule();

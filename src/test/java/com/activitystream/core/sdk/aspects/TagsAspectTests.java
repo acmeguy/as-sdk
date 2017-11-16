@@ -1,4 +1,4 @@
-package com.activitystream.core.model.aspects;
+package com.activitystream.core.sdk.aspects;
 
 import com.activitystream.sdk.ASEntity;
 import com.activitystream.sdk.ASService;

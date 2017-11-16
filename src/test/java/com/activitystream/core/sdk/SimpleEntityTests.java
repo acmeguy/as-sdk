@@ -1,4 +1,4 @@
-package com.activitystream.core.model;
+package com.activitystream.core.sdk;
 
 import com.activitystream.core.model.entities.EntityReference;
 import com.activitystream.core.model.relations.ASEntityRelationTypes;
@@ -142,11 +142,11 @@ public class SimpleEntityTests {
                 .withAspect(
                         trafficSources().addTrafficSource(
                         trafficSource()
-                                .addCampaign("Some really kewl campaign")
-                                .addMedium("Web")
-                                .addReferrer("Faceboook")
-                                .addSource("Faceboook")
-                                .addTerm("some")));
+                                .withCampaign("Some really kewl campaign")
+                                .withMedium("Web")
+                                .withReferrer("Faceboook")
+                                .withSource("Faceboook")
+                                .withTerm("some")));
 
         Assert.assertEquals(customer.toJSON(),"{\"entity_ref\":\"Customer/0071\",\"aspects\":{\"traffic_sources\":[{\"campaign\":\"Some really kewl campaign\",\"medium\":\"Web\",\"referrer\":\"Faceboook\",\"source\":\"Faceboook\",\"term\":\"some\"}]}}");
     }

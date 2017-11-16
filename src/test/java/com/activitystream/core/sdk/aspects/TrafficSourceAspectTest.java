@@ -1,5 +1,7 @@
-package com.activitystream.core.model.aspects;
+package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.TrafficSource;
+import com.activitystream.core.model.aspects.TrafficSourceAspect;
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEntity;
 import com.activitystream.core.model.entities.EntityReference;

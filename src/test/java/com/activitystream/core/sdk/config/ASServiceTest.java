@@ -1,4 +1,4 @@
-package com.activitystream.core.model.config;
+package com.activitystream.core.sdk.config;
 
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEvent;

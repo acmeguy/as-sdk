@@ -56,7 +56,7 @@ public class ResolvableAspect extends AbstractMapAspect {
     }
 
     public void setBatchId(String batchId) {
-        if (batchId != null && !batchId.isEmpty()) put(ASConstants.FIELD_EXTERNAL_ID, batchId);
+        if (batchId != null && !batchId.isEmpty()) put(ASConstants.FIELD_BATCH_ID, batchId);
         else remove(ASConstants.FIELD_BATCH_ID);
     }
 

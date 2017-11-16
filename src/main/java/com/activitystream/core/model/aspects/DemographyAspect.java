@@ -326,6 +326,16 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
         return (Integer) get(ASConstants.FIELD_FAMILY_SIZE);
     }
 
+    public void setFamilySize(String familySize) {
+        if (familySize != null) put(ASConstants.FIELD_FAMILY_SIZE, familySize);
+        else remove(ASConstants.FIELD_FAMILY_SIZE);
+    }
+
+    public DemographyAspect withFamilySize(String familySize) {
+        setFamilySize(familySize);
+        return this;
+    }
+
     //todo - create Esper friendly property getters
 
     /************ Assignment & Validation ************/

@@ -100,7 +100,7 @@ public class TrafficSource extends InternalEntity {
      * Sets the traffic source type
      * @param type The type of source "campaign", "social", "organic" etc...
      */
-    public TrafficSource addType(String type) {
+    public TrafficSource withType(String type) {
         setType(type);
         return this;
     }
@@ -122,7 +122,7 @@ public class TrafficSource extends InternalEntity {
      * Sets the campaign for the traffic source (If campaign)
      * @param campaign The campaign responsible for the the traffic (if present)
      */
-    public TrafficSource addCampaign(String campaign) {
+    public TrafficSource withCampaign(String campaign) {
         setCampaign(campaign);
         return this;
     }
@@ -153,7 +153,7 @@ public class TrafficSource extends InternalEntity {
      * Sets the traffic source site
      * @param source The source it self (exact site the traffic came from)
      */
-    public TrafficSource addSource(String source) {
+    public TrafficSource withSource(String source) {
         setSource(source);
         return this;
     }
@@ -188,7 +188,7 @@ public class TrafficSource extends InternalEntity {
      * Sets the medium type of the source
      * @param medium The medium used mail, web etc.
      */
-    public TrafficSource addMedium(String medium) {
+    public TrafficSource withMedium(String medium) {
         setMedium(medium);
         return this;
     }
@@ -215,7 +215,7 @@ public class TrafficSource extends InternalEntity {
         else remove(ASConstants.FIELD_REFERRER);
     }
 
-    public TrafficSource addReferrer(String referrer) {
+    public TrafficSource withReferrer(String referrer) {
         setReferrer(referrer);
         return this;
     }
@@ -238,7 +238,7 @@ public class TrafficSource extends InternalEntity {
         else remove(ASConstants.FIELD_TERM);
     }
 
-    public TrafficSource addTerm(String term) {
+    public TrafficSource withTerm(String term) {
         setTerm(term);
         return this;
     }

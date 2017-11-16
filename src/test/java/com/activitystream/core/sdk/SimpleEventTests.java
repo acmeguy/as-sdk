@@ -1,4 +1,4 @@
-package com.activitystream.core.model;
+package com.activitystream.core.sdk;
 
 import com.activitystream.core.model.relations.ASEntityRelationTypes;
 import com.activitystream.core.model.relations.ASEventRelationTypes;
@@ -84,7 +84,7 @@ public class SimpleEventTests {
         asEvent = new ASEvent("as.commerce. invalid purchase.complete", "as.sdk.test", null, ImportanceLevel.NOT_IMPORTANT, "Customer/314");
         Assert.assertEquals(asEvent.isValid(), false);
         Assert.assertEquals(asEvent.validator().hasErrors(), 1);
-        //logger.debug("Error: " + asEvent.validator().getErrors());
+        logger.debug("Error: " + asEvent.validator().getErrors());
 
         //Invalid Origin
         asEvent = new ASEvent("as.commerce.purchase.complete", "as.sdk invalid .test", null, ImportanceLevel.NOT_IMPORTANT, "Customer/314");

@@ -1,4 +1,4 @@
-package com.activitystream.core.model;
+package com.activitystream.core.sdk;
 
 import com.activitystream.sdk.ASService;
 import com.activitystream.core.model.relations.ASEventRelationTypes;

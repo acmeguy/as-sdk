@@ -1,5 +1,7 @@
-package com.activitystream.core.model.aspects;
+package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.TimeComponent;
+import com.activitystream.core.model.aspects.TimedAspect;
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEntity;
 import com.activitystream.sdk.ASService;

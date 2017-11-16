@@ -424,7 +424,7 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
     }
 
     public void setItemPrice(String itemPrice) {
-        put(ASConstants.FIELD_ITEM_PRICE, Double.parseDouble(itemPrice));
+        setItemPrice(Double.parseDouble(itemPrice));
     }
 
     public void setItemPrice(Number price) {
@@ -576,7 +576,6 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
         if (transactionType != null && !transactionType.isEmpty()) put(ASConstants.FIELD_TRANSACTION_TYPE, transactionType);
         else remove(ASConstants.FIELD_TRANSACTION_TYPE);
     }
-
 
     @Override
     public Object put(Object key, Object value) {

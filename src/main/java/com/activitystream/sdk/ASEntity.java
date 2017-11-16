@@ -116,7 +116,6 @@ public class ASEntity extends BusinessEntity {
        withAspect(inventory);
     }
 
-
     public ASEntity withRelation(Relation relation) {
         return withRelation(relation, (BaseStreamItem) root);
     }
