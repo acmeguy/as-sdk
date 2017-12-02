@@ -1,5 +1,6 @@
 package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.PresentationAspect;
 import com.activitystream.sdk.ASEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,16 @@ public class PresentationAspectTest {
 
         //Stream IDs are always calculated the same way so they are deterministic.
         Assert.assertEquals(venue.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+
+        PresentationAspect presentation = new PresentationAspect("some");
+        Assert.assertEquals(presentation.getLabel().equals("some"),true);
+
+        presentation = new PresentationAspect("some", "thumbnail","icon","description", "details", null);
+        Assert.assertEquals(presentation.getLabel().equals("some"),true);
+        Assert.assertEquals(presentation.getThumbnail().equals("thumbnail"),true);
+        Assert.assertEquals(presentation.getIcon().equals("icon"),true);
+        Assert.assertEquals(presentation.getDescription().equals("description"),true);
+        Assert.assertEquals(presentation.getDetailsUrl().equals("details"),true);
 
     }
 

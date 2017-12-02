@@ -1,10 +1,13 @@
 package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.ClassificationAspect;
 import com.activitystream.sdk.ASEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 import static com.activitystream.core.model.aspects.ClassificationAspect.classification;
 
@@ -46,6 +49,27 @@ public class ClassificationAspectTests {
 
         //Stream IDs are always calculated the same way so they are deterministic.
         Assert.assertEquals(event.getStreamId().toString().equals("d16bde84-2417-3d4d-9af3-9c10b601c228"),true);
+
+        ClassificationAspect classification = new ClassificationAspect("some");
+        Assert.assertEquals(classification.getType(),"some");
+
+        classification = new ClassificationAspect("some","thing");
+        Assert.assertEquals(classification.getType(),"some");
+        Assert.assertEquals(classification.getVariant(),"thing");
+
+        classification = new ClassificationAspect("some","thing");
+        classification.withCategories("blue", "black","red");
+        Assert.assertEquals(classification.getType(),"some");
+        Assert.assertEquals(classification.getVariant(),"thing");
+        Assert.assertEquals(classification.getCategories().get(0),"blue");
+        Assert.assertEquals(classification.getCategories().get(1),"black");
+        Assert.assertEquals(classification.getCategories().get(2),"red");
+
+        classification.withType("another");
+        Assert.assertEquals(classification.getType(),"another");
+        classification.withTags("one","two");
+        Assert.assertEquals(classification.getTags().toArray()[0],"one");
+        Assert.assertEquals(classification.getTags().toArray()[1],"two");
 
     }
 

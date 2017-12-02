@@ -1,5 +1,6 @@
 package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.AddressAspect;
 import com.activitystream.sdk.ASEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,14 @@ public class AddressAspectTests {
 
         //Stream IDs are always calculated the same way so they are deterministic.
         Assert.assertEquals(venue.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
+
+        AddressAspect address = new AddressAspect("address", "address2", "city", "postcode", "country", "countryCode");
+        Assert.assertEquals(address.getAddress().equals("address"),true);
+        Assert.assertEquals(address.getAddress2().equals("address2"),true);
+        Assert.assertEquals(address.getCity().equals("city"),true);
+        Assert.assertEquals(address.getPostcode().equals("postcode"),true);
+        Assert.assertEquals(address.getCountry().equals("country"),true);
+        Assert.assertEquals(address.getCountryCode().equals("countryCode"),true);
 
     }
 

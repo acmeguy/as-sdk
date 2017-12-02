@@ -1,5 +1,6 @@
 package com.activitystream.core.sdk.aspects;
 
+import com.activitystream.core.model.aspects.DimensionsAspect;
 import com.activitystream.sdk.ASEntity;
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -226,15 +226,14 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
     }
 
     public void setHousing(String housing) {
-        if (housing != null && !housing.isEmpty()) put(ASConstants.FIELD_INCOME, housing);
-        else remove(ASConstants.FIELD_INCOME);
+        if (housing != null && !housing.isEmpty()) put(ASConstants.FIELD_HOUSING, housing);
+        else remove(ASConstants.FIELD_HOUSING);
     }
 
     public DemographyAspect withHousing(String housing) {
         setHousing(housing);
         return this;
     }
-
 
     public String getEducation() {
         return (String) get(ASConstants.FIELD_EDUCATION);

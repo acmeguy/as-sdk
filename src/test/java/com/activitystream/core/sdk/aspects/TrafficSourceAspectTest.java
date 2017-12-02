@@ -44,6 +44,12 @@ public class TrafficSourceAspectTest {
         assertEquals(source.getSource(), "the-source");
         assertEquals(source.getMedium(), "the-medium");
         assertEquals(source.getTerm(), "the-term");
+
+        source = new TrafficSource("the-type","the-campaign", "the-source", "the-medium");
+        assertEquals(source.getType(), "the-type");
+        assertEquals(source.getCampaign(), "the-campaign");
+        assertEquals(source.getSource(), "the-source");
+        assertEquals(source.getMedium(), "the-medium");
     }
 
     @Test

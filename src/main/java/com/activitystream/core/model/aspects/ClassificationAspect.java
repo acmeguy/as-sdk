@@ -64,21 +64,6 @@ public class ClassificationAspect extends AbstractMapAspect {
         this(type, null);
     }
 
-    /**
-     * The Classification Aspects is used to categorise/classify entities
-     * It provides a 3 level structure beneath the Entity Type (EntityType -> Classification.type -> Classification.variant -> Classification.categories)
-     * The classification properties should be filled out in this order: type, variant, categories
-     * Behavioral tags can be added using the tags property
-     * @param type The classification Type (1st level)
-     * @param variant  The classification Variant (2nd level)
-     * @param categories The classification Categories (2nd level)
-     */
-    public ClassificationAspect(String type, String variant, String ... categories) {
-        put(ASConstants.FIELD_TYPE, type);
-        if (variant != null) put(ASConstants.FIELD_VARIANT, variant);
-        if (categories != null) put(ASConstants.FIELD_CATEGORIES, categories);
-    }
-
     /************
      * Utility functions
      ************/
