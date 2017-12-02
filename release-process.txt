@@ -73,7 +73,7 @@ deployment to OSSRH and an automated release to the Central Repository:
     mvn clean deploy
     Update reference to the latest version number in README.md and docs/README.md
     In pom.xml, bump the version number and add -SNAPSHOT in pom.xml
-    TAG=0.1.12
+    TAG=0.1.18
     Commit and push your changes to git.
     git tag $TAG
     git push origin $TAG

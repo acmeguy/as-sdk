@@ -22,7 +22,7 @@ Dive right in or take a while to read:
     <dependency>
         <groupId>com.activitystream</groupId>
         <artifactId>as-sdk</artifactId>
-        <version>0.1.17</version>
+        <version>0.1.18</version>
     </dependency>
 
 ## Initializing the SDK
