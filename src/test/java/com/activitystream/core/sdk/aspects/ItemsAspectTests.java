@@ -1,6 +1,7 @@
 package com.activitystream.core.sdk.aspects;
 
 import com.activitystream.core.model.aspects.ItemsManager;
+import com.activitystream.core.model.relations.ASEventRelationTypes;
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEntity;
 import com.activitystream.sdk.ASEvent;
@@ -132,6 +133,22 @@ public class ItemsAspectTests {
         items.mergeItemLine(lineItem3);
 
         org.junit.Assert.assertEquals(items.toString().equals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=2.0, item_price=50.0, line_ids=[1, 2]}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=1.0, item_price=550.0, line_ids=[3]}]"),true);
+    }
+
+    @Test
+    public void testItemsMultipleTickets() {
+        ASEntity show = new ASEntity("Show", "1");
+
+        ASLineItem lineItem1 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS + ":CREATES", "Ticket", "123");
+        ASLineItem lineItem2 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS + ":CREATES", "Ticket", "456");
+        ASLineItem lineItem3 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "550").withRelationIfValid(ASEventRelationTypes.AFFECTS + ":CREATES", "Ticket", "789");
+
+        ItemsManager items = new ItemsManager();
+        items.mergeItemLine(lineItem1);
+        items.mergeItemLine(lineItem2);
+        items.mergeItemLine(lineItem3);
+
+        org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/123, link=AFFECTS:CREATES}], Relation{entity_ref=Ticket/456, link=AFFECTS:CREATES}], item_count=2.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/789, link=AFFECTS:CREATES}], item_count=1.0, item_price=550.0}]", items.toString());
     }
 
 }
