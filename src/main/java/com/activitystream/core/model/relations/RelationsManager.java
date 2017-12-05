@@ -173,7 +173,7 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
         return null;
     }
 
-    public void removeIdenticalRelations(Relation relation) {
+    public boolean removeIdenticalRelations(Relation relation) {
         int found;
         do {
             found = -1;
@@ -187,6 +187,22 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
             if (found > -1) this.remove(found);
 
         } while (found > -1);
+
+        return found > 0;
+    }
+
+    public boolean hasIdenticalRelation(Relation relation) {
+        for (int i = 0; i < this.size(); i++) {
+            Relation localRelation = this.get(i);
+            if (localRelation.equals(relation)) return true;
+        }
+        return false;
+    }
+
+    public void addMissing(RelationsManager relationsManager) {
+        relationsManager.forEach(relation -> {
+            if (!hasIdenticalRelation(relation)) add(relation);
+        });
     }
 
     /************ Assignment & Validation ************/
@@ -199,4 +215,5 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
     public boolean equals(RelationsManager relations) {
         return super.equals(relations);
     }
+
 }

@@ -148,7 +148,7 @@ public class ItemsAspectTests {
         items.mergeItemLine(lineItem2);
         items.mergeItemLine(lineItem3);
 
-        org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/123, link=AFFECTS:CREATES}], Relation{entity_ref=Ticket/456, link=AFFECTS:CREATES}], item_count=2.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/789, link=AFFECTS:CREATES}], item_count=1.0, item_price=550.0}]", items.toString());
+        org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/123, link=AFFECTS:CREATES}, Relation{entity_ref=Ticket/456, link=AFFECTS:CREATES}], item_count=2.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/789, link=AFFECTS:CREATES}], item_count=1.0, item_price=550.0}]", items.toString());
     }
 
 }

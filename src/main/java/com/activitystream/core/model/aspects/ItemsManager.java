@@ -70,6 +70,7 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
             if (existingLine.equals(newLine)) {
                 existingLine.setItemCount(existingLine.getItemCount() + newLine.getItemCount());
                 if (newLine.hasLineIds()) existingLine.addToLineIds(newLine.getLineIds());
+                if (!newLine.getRelationsManager().isEmpty()) existingLine.getRelationsManager().addMissing(newLine.getRelationsManager());
                 return this;
             }
         }
