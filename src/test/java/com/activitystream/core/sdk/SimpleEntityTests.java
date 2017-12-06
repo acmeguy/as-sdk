@@ -1,7 +1,9 @@
 package com.activitystream.core.sdk;
 
+import com.activitystream.core.model.aspects.AddressAspect;
 import com.activitystream.core.model.entities.EntityReference;
 import com.activitystream.core.model.relations.ASEntityRelationTypes;
+import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEntity;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -156,6 +158,17 @@ public class SimpleEntityTests {
         ASEntity show = new ASEntity("Show","38743","Abba - Back on tour");
         show.withReverseRelationIfValid("STARS_IN", "Performer","38783783");
         Assert.assertEquals(show.toJSON(),"{\"entity_ref\":\"Show/38743\",\"aspects\":{\"presentation\":{\"label\":\"Abba - Back on tour\"}},\"relations\":[{\"STARS_IN\":{\"entity_ref\":\"Performer/38783783\"},\"$direction\":\"IN\"}]}");
+    }
+
+    @Test
+    public void phonePrefixBug() throws IOException {
+        ASEntity customer1 = new ASEntity("Customer", "123").withAspect(AddressAspect.address().withCountryCode("US"))
+                .withRelationIfValid(ASConstants.REL_AKA, "Phone", "9087528387");
+
+        ASEntity customer2 = new ASEntity("Customer", "123").withAspect(AddressAspect.address().withCountryCode("US"))
+                .withRelationIfValid(ASConstants.REL_AKA, new EntityReference("Phone", "9087528387"));
+
+        Assert.assertEquals(customer1.toJSON(), customer2.toJSON());
     }
 
 }
