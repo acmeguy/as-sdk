@@ -420,6 +420,12 @@ public class ASLineItem extends TransactionEvent {
 
     //Special purpose relations
 
+    @Override
+    public ASLineItem withRelation(Relation relation) {
+        super.withRelation(relation);
+        return this;
+    }
+
     /**
      * The business entity responsible for selling the production belonging to this line item
      * @param soldByEntityRef
