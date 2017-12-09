@@ -1,7 +1,6 @@
 package com.activitystream.core.model.entities;
 
 import com.activitystream.sdk.ASConstants;
-import com.activitystream.core.model.aspects.AddressAspect;
 import com.activitystream.core.model.interfaces.BaseStreamItem;
 import com.activitystream.core.model.interfaces.LinkedElement;
 import com.activitystream.core.model.security.SecurityScope;
@@ -9,9 +8,6 @@ import com.activitystream.core.model.utils.Slugify;
 import com.activitystream.core.model.utils.StreamIdUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.i18n.phonenumbers.NumberParseException;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,42 +103,11 @@ public class EntityReference implements Serializable, Comparable, LinkedElement 
             this.valid = false;
         else {
             //todo - create pluggable validation that listens to settings
-            if (getEntityTypeString().contains("Phone")) {
-                this.entityId = reformatPhoneNumber(entityId);
-            } else if (getEntityTypeString().equals("Email")) {
+            if (getEntityTypeString().equals("Email")) {
                 this.valid = StringUtils.isNotBlank(entityId);
             }
             this.valid = StringUtils.isNotBlank(entityId);
         }
-    }
-
-    private String reformatPhoneNumber(String phoneRef) {
-        BusinessEntity ownerEntity = root != null ? root.getRootBusinessEntity() : null;
-        if (ownerEntity != null && ownerEntity.getAspectManager() != null) {
-
-            String countryCode = "US";
-            if (ownerEntity.getAspectManager().getAddress() != null) {
-                AddressAspect address = ownerEntity.getAspectManager().getAddress();
-                countryCode = (address.getCountryCode() != null && !address.getCountryCode().isEmpty()) ? address.getCountryCode() : countryCode;
-            }
-
-            PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-            String number = phoneRef;
-            if (countryCode != null) {
-                int regionCode = phoneUtil.getCountryCodeForRegion(countryCode);
-                if (!number.startsWith("" + regionCode) || !number.startsWith("+" + regionCode)) {
-                    number = "+" + regionCode + phoneRef;
-                }
-            }
-
-            try {
-                Phonenumber.PhoneNumber parsed = phoneUtil.parse(number, countryCode);
-                return phoneUtil.format(parsed, PhoneNumberUtil.PhoneNumberFormat.E164);
-            } catch (NumberParseException e) {
-                //e.printStackTrace();
-            }
-        }
-        return phoneRef;
     }
 
     // Utility functions
