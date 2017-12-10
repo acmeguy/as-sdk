@@ -495,6 +495,13 @@ public class ASLineItem extends TransactionEvent {
         return this;
     }
 
+    public ASLineItem withRelationIfValid(String type, String entityRef) {
+        if (entityRef != null) {
+            this.getRelationsManager(true).addRelation(new Relation(type, entityRef));
+        }
+        return this;
+    }
+
     public static ASLineItem lineItem() {
         return new ASLineItem();
     }

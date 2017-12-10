@@ -116,6 +116,7 @@ public class ASEntity extends BusinessEntity {
        withAspect(inventory);
     }
 
+    @Override
     public ASEntity withRelation(Relation relation) {
         return withRelation(relation, (BaseStreamItem) root);
     }
