@@ -77,6 +77,13 @@ public class ASEntityRelationTypes {
     public static final String POWERED_BY = "POWERED_BY";
 
     /**
+     * non-exclusive 1:n relations (Supplier->Consumer relationship)
+     * This Entity provides the target with electricity, gas, water or other measurable units of power/fuel
+     * Abstract/Base Type: CLOSE
+     */
+    public static final String SUPPLIED_BY = "SUPPLIED_BY";
+
+    /**
      * non-exclusive 1:n relations (describes ownership/possession)
      * Describes a ownership relationship between entities
      * Abstract/Base Type: CLOSE
