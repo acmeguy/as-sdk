@@ -28,7 +28,7 @@ Use these maven coordinates for Java*:
     <dependency>
         <groupId>com.activitystream</groupId>
         <artifactId>as-sdk</artifactId>
-        <version>0.1.19</version>
+        <version>0.1.20</version>
     </dependency>
 
 *AS SDK will be available for other languages soon*
