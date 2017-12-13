@@ -56,6 +56,12 @@ public class ASEntityRelationTypes {
     public static final String PAIRED_WITH = "PAIRED_WITH";
 
     /**
+     * non-exclusive 1:n relations (Physical Joins, Strong Pairing)
+     * Abstract/Base Type: CLOSE
+     */
+    public static final String USED_BY = "USED_BY";
+
+    /**
      * non-exclusive 1:n relations (This Entity prvides measurements for the target entity
      * Any changes to the Metrics or Dimensions of this Entity are directly reflected on the target entity
      * Abstract/Base Type: CLOSE
