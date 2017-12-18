@@ -151,4 +151,22 @@ public class ItemsAspectTests {
         org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/123, link=AFFECTS:CREATES}, Relation{entity_ref=Ticket/456, link=AFFECTS:CREATES}], item_count=2.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/789, link=AFFECTS:CREATES}], item_count=1.0, item_price=550.0}]", items.toString());
     }
 
+    @Test
+    public void testItemsDuplicateRelation() {
+        ASEntity show = new ASEntity("Show", "1");
+
+        ASLineItem lineItem1 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "123");
+        ASLineItem lineItem2 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "123");
+        ASLineItem lineItem3 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "456");
+        ASLineItem lineItem4 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "550").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "789");
+
+        ItemsManager items = new ItemsManager();
+        items.mergeItemLine(lineItem1);
+        items.mergeItemLine(lineItem2);
+        items.mergeItemLine(lineItem3);
+        items.mergeItemLine(lineItem4);
+
+        org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Barcode/123, link=AFFECTS}, Relation{entity_ref=Barcode/456, link=AFFECTS}], item_count=3.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Barcode/789, link=AFFECTS}], item_count=1.0, item_price=550.0}]", items.toString());
+    }
+
 }

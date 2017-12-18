@@ -912,22 +912,50 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
 
     }
 
-    public boolean equals(TransactionEvent transactionLine) {
-        return
-                isSame(transactionLine.getTransactionType(),this.getTransactionType()) &&
-                isSame(transactionLine.getProduct(),this.getProduct()) &&
-                isSame(transactionLine.getVariant(),this.getVariant()) &&
-                isSame(transactionLine.getPriceType(),this.getPriceType()) &&
-                isSame(transactionLine.getPriceCategory(),this.getPriceCategory()) &&
-                isSame(transactionLine.getItemPrice(),this.getItemPrice()) &&
-                isSame(transactionLine.getComplimentary(),this.getComplimentary()) &&
-                isSame(transactionLine.getCommissionFixed(),this.getCommissionFixed()) &&
-                isSame(transactionLine.getCommissionPercentage(),this.getCommissionPercentage()) &&
-                isSame(transactionLine.getDescription(),this.getDescription()) &&
-                isSame(transactionLine.getTaxPercentage(),this.getTaxPercentage()) &&
-                isSame(transactionLine.getValidFrom(),this.getValidFrom()) &&
-                isSame(transactionLine.getValidUntil(),this.getValidUntil()) &&
-                isSame(transactionLine.getDimensions(),this.getDimensions());
+    @Override
+    public boolean equals(Object object) {
+        //if you update equals() method, make sure you updated hashCode as well()
+        if (object instanceof TransactionEvent) {
+            TransactionEvent transactionLine = (TransactionEvent) object;
+            return
+                    isSame(transactionLine.getTransactionType(),this.getTransactionType()) &&
+                            isSame(transactionLine.getProduct(),this.getProduct()) &&
+                            isSame(transactionLine.getVariant(),this.getVariant()) &&
+                            isSame(transactionLine.getPriceType(),this.getPriceType()) &&
+                            isSame(transactionLine.getPriceCategory(),this.getPriceCategory()) &&
+                            isSame(transactionLine.getItemPrice(),this.getItemPrice()) &&
+                            isSame(transactionLine.getComplimentary(),this.getComplimentary()) &&
+                            isSame(transactionLine.getCommissionFixed(),this.getCommissionFixed()) &&
+                            isSame(transactionLine.getCommissionPercentage(),this.getCommissionPercentage()) &&
+                            isSame(transactionLine.getDescription(),this.getDescription()) &&
+                            isSame(transactionLine.getTaxPercentage(),this.getTaxPercentage()) &&
+                            isSame(transactionLine.getValidFrom(),this.getValidFrom()) &&
+                            isSame(transactionLine.getValidUntil(),this.getValidUntil()) &&
+                            isSame(transactionLine.getDimensions(),this.getDimensions());
+        }
+        return super.equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        try {
+            return Objects.hash(getTransactionType(), getProduct(),
+                    getVariant(),
+                    getPriceType(),
+                    getPriceCategory(),
+                    getItemPrice(),
+                    getComplimentary(),
+                    getCommissionFixed(),
+                    getCommissionPercentage(),
+                    getDescription(),
+                    getTaxPercentage(),
+                    getValidFrom(),
+                    getValidUntil(),
+                    getDimensions());
+        } catch (Exception e) {
+            //should not get there, but just in case
+            return 0;
+        }
     }
 
     private boolean isSame(Object one, Object other) {

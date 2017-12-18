@@ -147,6 +147,11 @@ public class Relation extends AbstractMapElement implements EmbeddedStreamElemen
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(relationsType, isExpanded);
+    }
+
+    @Override
     public void simplify() {
         BusinessEntity entity = getRelatedBusinessEntity();
         if (entity != null) super.put(this.getRelationsType(), new BusinessEntity(entity.getEntityReference().getEntityReference(), this));
@@ -407,11 +412,6 @@ public class Relation extends AbstractMapElement implements EmbeddedStreamElemen
             return "Relation{" + "stream_id=" + getRelatedItem() + ", role=" + (relationsType != null ? relationsType.getRelationsTypeString() : "missing") +
                     (this.containsKey("properties") ? ", properties=" + this.get("properties") : "") + '}';
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
     }
 
     private static class SaveDirection {

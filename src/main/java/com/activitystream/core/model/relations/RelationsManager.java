@@ -9,7 +9,8 @@ import java.util.*;
 
 public class RelationsManager extends AbstractListElement<Relation> implements EmbeddedStreamElement {
 
-    List<String> validRelationsTypes = null;
+    private List<String> validRelationsTypes = null;
+    private HashMap<Integer, List<Relation>> relationsIndexed = new HashMap<>();
 
     public RelationsManager(List relations, List<String> validRelationsTypes, BaseStreamElement root) {
         this.validRelationsTypes = validRelationsTypes;
@@ -192,9 +193,9 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
     }
 
     public boolean hasIdenticalRelation(Relation relation) {
-        for (int i = 0; i < this.size(); i++) {
-            Relation localRelation = this.get(i);
-            if (localRelation.equals(relation)) return true;
+        List<Relation> relations = relationsIndexed.get(relation.hashCode());
+        if (relations!= null) {
+            return relations.stream().anyMatch(r -> r.equals(relation));
         }
         return false;
     }
@@ -203,6 +204,15 @@ public class RelationsManager extends AbstractListElement<Relation> implements E
         relationsManager.forEach(relation -> {
             if (!hasIdenticalRelation(relation)) add(relation);
         });
+    }
+
+    @Override
+    public boolean add(Relation relation) {
+        if (relation != null) {
+            int hash = relation.hashCode();
+            relationsIndexed.computeIfAbsent(hash, h -> new ArrayList<>()).add(relation);
+        }
+        return super.add(relation);
     }
 
     /************ Assignment & Validation ************/
