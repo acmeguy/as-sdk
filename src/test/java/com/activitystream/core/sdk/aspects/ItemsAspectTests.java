@@ -8,6 +8,7 @@ import com.activitystream.sdk.ASEvent;
 import com.activitystream.sdk.ASLineItem;
 import com.activitystream.sdk.ASService;
 import com.activitystream.core.model.stream.ImportanceLevel;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,4 +152,40 @@ public class ItemsAspectTests {
         org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/123, link=AFFECTS:CREATES}, Relation{entity_ref=Ticket/456, link=AFFECTS:CREATES}], item_count=2.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Ticket/789, link=AFFECTS:CREATES}], item_count=1.0, item_price=550.0}]", items.toString());
     }
 
+    @Test
+    public void testItemsDuplicateRelation() {
+        ASEntity show = new ASEntity("Show", "1");
+
+        ASLineItem lineItem1 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "123");
+        ASLineItem lineItem2 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "123");
+        ASLineItem lineItem3 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "456");
+        ASLineItem lineItem4 = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "550").withRelationIfValid(ASEventRelationTypes.AFFECTS, "Barcode", "789");
+
+        ItemsManager items = new ItemsManager();
+        items.mergeItemLine(lineItem1);
+        items.mergeItemLine(lineItem2);
+        items.mergeItemLine(lineItem3);
+        items.mergeItemLine(lineItem4);
+
+        org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Barcode/123, link=AFFECTS}, Relation{entity_ref=Barcode/456, link=AFFECTS}], item_count=3.0, item_price=50.0}, {involves=[Relation{entity_ref=Show/1, link=PURCHASED}, Relation{entity_ref=Barcode/789, link=AFFECTS}], item_count=1.0, item_price=550.0}]", items.toString());
+    }
+
+    @Test
+    public void testMergeLineItems() {
+
+        ASEntity show = new ASEntity("Show", "1");
+        ItemsManager items = new ItemsManager();
+
+        for (int i = 0; i<10; i++) {
+            ASLineItem lineItem = new ASLineItem(ASLineItem.LINE_TYPES.PURCHASED, show, "1", "50")
+                    .withPriceType("Children").withPriceCategory("General Admission").withComplimentary(true).withFixedCommission("1.0")
+                    .withDescription("Desc").withTax(0.1).withValidFrom(DateTime.parse("2017-06-30T01:20+00:00"))
+                    .withVariant("Var").withDimensions("Section", "Section1")
+                    .withValidUntil(DateTime.parse("2018-06-30T01:20+00:00"));
+
+            items.mergeItemLine(lineItem);
+        }
+
+        org.junit.Assert.assertEquals("[{involves=[Relation{entity_ref=Show/1, link=PURCHASED}], item_count=10.0, item_price=0.0, price_type=Children, price_category=General Admission, complimentary=true, commission_fixed=1.0, description=Desc, tax_percentage=0.1, valid_from=2017-06-30T01:20:00.000Z, variant=Var, aspects={dimensions={section=Section1}}, valid_until=2018-06-30T01:20:00.000Z}]", items.toString());
+    }
 }

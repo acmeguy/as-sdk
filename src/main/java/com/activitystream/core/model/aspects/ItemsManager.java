@@ -5,6 +5,8 @@ import com.activitystream.core.model.interfaces.*;
 import com.activitystream.core.model.stream.AbstractBaseEvent;
 import com.activitystream.core.model.stream.TransactionEvent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,8 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
         }
         */
     };
+
+    private HashMap<Integer, List<TransactionEvent>> transactionEventsIndexed = new HashMap<>();
 
     public ItemsManager() {
     }
@@ -66,16 +70,28 @@ public class ItemsManager extends AbstractListAspect<TransactionEvent> implement
     }
 
     public ItemsManager mergeItemLine(TransactionEvent newLine) {
-        for (TransactionEvent existingLine : this) {
-            if (existingLine.equals(newLine)) {
-                existingLine.setItemCount(existingLine.getItemCount() + newLine.getItemCount());
-                if (newLine.hasLineIds()) existingLine.addToLineIds(newLine.getLineIds());
-                if (!newLine.getRelationsManager().isEmpty()) existingLine.getRelationsManager().addMissing(newLine.getRelationsManager());
-                return this;
+        List<TransactionEvent> relations = transactionEventsIndexed.get(newLine.hashCode());
+        if (relations!= null) {
+            for (TransactionEvent existingLine : relations) {
+                if (existingLine.equals(newLine)) {
+                    existingLine.setItemCount(existingLine.getItemCount() + newLine.getItemCount());
+                    if (newLine.hasLineIds()) existingLine.addToLineIds(newLine.getLineIds());
+                    if (!newLine.getRelationsManager().isEmpty()) existingLine.getRelationsManager().addMissing(newLine.getRelationsManager());
+                    return this;
+                }
             }
         }
         add(newLine);
         return this;
+    }
+
+    @Override
+    public boolean add(TransactionEvent transactionEvent) {
+        if (transactionEvent != null) {
+            int hash = transactionEvent.hashCode();
+            transactionEventsIndexed.computeIfAbsent(hash, h -> new ArrayList<>()).add(transactionEvent);
+        }
+        return super.add(transactionEvent);
     }
 
     @Override
