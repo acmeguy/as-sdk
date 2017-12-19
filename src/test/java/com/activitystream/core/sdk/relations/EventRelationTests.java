@@ -35,7 +35,7 @@ public class EventRelationTests {
     @Test
     public void basicEventRelationTest() throws IOException {
 
-        ASEvent event = new ASEvent(ASEvent.PRE.AS_COMMERCE_TRANSACTION_COMPLETED, "some.com");
+        ASEvent event = new ASEvent(ASEvent.PRE.AS_COMMERCE_PURCHASE_COMPLETED, "some.com");
         event.withOccurredAt("2017-12-10T09:19:06.285Z");
 
         event.withRelation(new Relation("ACTOR","Driver/9833"));
@@ -44,7 +44,7 @@ public class EventRelationTests {
         event.withRelationIfValid("REFERENCES", new EntityReference("Driver", "9836"));
         event.withRelationIfValid("REFERENCES","Driver", "9838", new LinkedHashMap<String,Object>(){{ put("main",false);}});
 
-        Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-12-10T09:19:06.285Z\",\"type\":\"as.commerce.transaction.completed\",\"origin\":\"some.com\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Driver/9833\"}},{\"AFFECTS\":{\"entity_ref\":\"CAR/IS-ST-393\"}},{\"REFERENCES\":{\"entity_ref\":\"Driver/9835\"}},{\"REFERENCES\":{\"entity_ref\":\"Driver/9836\"}},{\"REFERENCES\":{\"entity_ref\":\"Driver/9838\"},\"properties\":{\"main\":false}}]}"),true);
+        Assert.assertEquals(event.toJSON().equals("{\"occurred_at\":\"2017-12-10T09:19:06.285Z\",\"type\":\"as.commerce.purchase.completed\",\"origin\":\"some.com\",\"involves\":[{\"ACTOR\":{\"entity_ref\":\"Driver/9833\"}},{\"AFFECTS\":{\"entity_ref\":\"CAR/IS-ST-393\"}},{\"REFERENCES\":{\"entity_ref\":\"Driver/9835\"}},{\"REFERENCES\":{\"entity_ref\":\"Driver/9836\"}},{\"REFERENCES\":{\"entity_ref\":\"Driver/9838\"},\"properties\":{\"main\":false}}]}"),true);
     }
 
     @Test
