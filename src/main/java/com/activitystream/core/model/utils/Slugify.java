@@ -1,5 +1,7 @@
 package com.activitystream.core.model.utils;
 
+import net.logstash.logback.encoder.org.apache.commons.lang.WordUtils;
+
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.Locale;
@@ -14,6 +16,7 @@ public class Slugify {
     public static String asEntityType(String input) {
         StringBuilder entityType = new StringBuilder();
         for (String part : input.split(":")) {
+            part = WordUtils.capitalizeFully(part);
             String normalized = Normalizer.normalize(WHITESPACE.matcher(part).replaceAll(""), Form.NFD);
             if (entityType.length() > 0) entityType.append(":");
             entityType.append(NON_WORD_CHARACTER.matcher(normalized).replaceAll(""));
@@ -28,6 +31,9 @@ public class Slugify {
         }
         String normalized = Normalizer.normalize(nowhitespace, Form.NFD);
         String slug = NONLATIN.matcher(normalized).replaceAll("");
+        while (slug.contains("--")) {
+            slug = slug.replaceAll("--","-");
+        }
         return slug.toLowerCase(Locale.ENGLISH);
     }
 }
