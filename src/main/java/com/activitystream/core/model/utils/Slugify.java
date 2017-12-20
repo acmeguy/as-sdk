@@ -16,7 +16,7 @@ public class Slugify {
     public static String asEntityType(String input) {
         StringBuilder entityType = new StringBuilder();
         for (String part : input.split(":")) {
-            part = WordUtils.capitalizeFully(part);
+            part = WordUtils.capitalize(part);
             String normalized = Normalizer.normalize(WHITESPACE.matcher(part).replaceAll(""), Form.NFD);
             if (entityType.length() > 0) entityType.append(":");
             entityType.append(NON_WORD_CHARACTER.matcher(normalized).replaceAll(""));

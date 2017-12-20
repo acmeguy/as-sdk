@@ -33,4 +33,12 @@ public class SlugifyTest {
         Assert.assertEquals("fee-internal-fee", entityType);
     }
 
+
+    @Test
+    public void asEntityType_valid() {
+        String entityType = Slugify.asEntityType("SeatingArrangement");
+
+        Assert.assertEquals("SeatingArrangement", entityType);
+    }
+
 }
