@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 public class Slugify {
 
     private static final Pattern NONLATIN = Pattern.compile("[^\\w-]");
+    private static final Pattern NON_WORD_CHARACTER = Pattern.compile("[\\W]");
     private static final Pattern WHITESPACE = Pattern.compile("[\\s]");
 
     public static String asEntityType(String input) {
@@ -15,7 +16,7 @@ public class Slugify {
         for (String part : input.split(":")) {
             String normalized = Normalizer.normalize(WHITESPACE.matcher(part).replaceAll(""), Form.NFD);
             if (entityType.length() > 0) entityType.append(":");
-            entityType.append(NONLATIN.matcher(normalized).replaceAll(""));
+            entityType.append(NON_WORD_CHARACTER.matcher(normalized).replaceAll(""));
         }
         return entityType.toString();
     }
