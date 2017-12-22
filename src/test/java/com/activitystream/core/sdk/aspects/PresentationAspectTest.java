@@ -47,4 +47,25 @@ public class PresentationAspectTest {
 
     }
 
+    @Test
+    public void testPresentationDataBeforeBinding() throws Exception {
+        String myLabel = "ABC";
+
+        ASEntity entity = new ASEntity("MyEntity", "123");
+        Assert.assertNull(entity.getAspectManager().getPresentation());
+
+        PresentationAspect presentationAspect = new PresentationAspect();
+        entity.withAspect(presentationAspect);
+        Assert.assertNotNull(entity.getAspectManager().getPresentation());
+
+        presentationAspect.withLabel(myLabel);
+        Assert.assertTrue(getPresentationAspectiWithLabel(myLabel).getLabel().equals(entity.getAspectManager().getPresentation().getLabel()));
+    }
+
+    private PresentationAspect getPresentationAspectiWithLabel(String label){
+        PresentationAspect presentation = new PresentationAspect();
+        presentation.setLabel(label);
+        return presentation;
+    }
+
 }
