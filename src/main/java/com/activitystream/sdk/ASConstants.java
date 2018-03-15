@@ -253,6 +253,7 @@ public class ASConstants {
 
     public static final String FIELD_ZIP_CODE = "zip_code";
     public static final String FIELD_CITY = "city";
+    public static final String FIELD_MUNICIPALITY = "municipality";
     public static final String FIELD_COUNTRY = "country";
     public static final String FIELD_ADDRESS = "address";
     public static final String FIELD_ADDRESS_2 = "address2";

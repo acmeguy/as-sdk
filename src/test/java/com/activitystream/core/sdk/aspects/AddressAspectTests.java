@@ -25,7 +25,8 @@ public class AddressAspectTests {
                         .withLabel("The Royal Albert Hall"))
                 .withAspect(address()
                         .withAddress("Kensington Gore")
-                        .withCity("Kensington")
+                        .withCity("London")
+                        .withMunicipality("South Kensington")
                         .withState("Greater London")
                         .withPostCode("SW7 2AP")
                         .withCountryCode("UK")
@@ -36,7 +37,7 @@ public class AddressAspectTests {
 
         //logger.warn("smu " + venue.toJSON());
 
-        Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"presentation\":{\"label\":\"The Royal Albert Hall\"},\"address\":{\"address\":\"Kensington Gore\",\"city\":\"Kensington\",\"state\":\"Greater London\",\"zip_code\":\"SW7 2AP\",\"country_code\":\"UK\",\"country\":\"United Kingdom\"},\"geo_location\":{\"latitude\":51.50090789794922,\"longitude\":-0.1773660033941269}}}"),true);
+        Assert.assertEquals(venue.toJSON().equals("{\"entity_ref\":\"Venue/983983\",\"aspects\":{\"presentation\":{\"label\":\"The Royal Albert Hall\"},\"address\":{\"address\":\"Kensington Gore\",\"city\":\"London\",\"municipality\":\"South Kensington\",\"state\":\"Greater London\",\"zip_code\":\"SW7 2AP\",\"country_code\":\"UK\",\"country\":\"United Kingdom\"},\"geo_location\":{\"latitude\":51.50090789794922,\"longitude\":-0.1773660033941269}}}"),true);
 
         ASEntity parsedVenue = ASEntity.fromJSON(venue.toJSON());
         Assert.assertEquals(venue.toJSON().equals(parsedVenue.toJSON()),true); //Round-trip test
@@ -45,9 +46,11 @@ public class AddressAspectTests {
         Assert.assertEquals(venue.getStreamId().toString().equals("e769e03d-0393-37ce-a40f-7d70b2036906"),true);
 
         AddressAspect address = new AddressAspect("address", "address2", "city", "postcode", "country", "countryCode");
+        address.withMunicipality("municipality");
         Assert.assertEquals(address.getAddress().equals("address"),true);
         Assert.assertEquals(address.getAddress2().equals("address2"),true);
         Assert.assertEquals(address.getCity().equals("city"),true);
+        Assert.assertEquals(address.getMunicipality().equals("municipality"), true);
         Assert.assertEquals(address.getPostcode().equals("postcode"),true);
         Assert.assertEquals(address.getCountry().equals("country"),true);
         Assert.assertEquals(address.getCountryCode().equals("countryCode"),true);
