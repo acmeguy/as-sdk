@@ -1,12 +1,13 @@
 package com.activitystream.core.model.aspects;
 
-import com.activitystream.sdk.ASConstants;
-import com.activitystream.core.model.interfaces.*;
 import com.activitystream.core.model.entities.BusinessEntity;
 import com.activitystream.core.model.entities.EntityChangeMap;
 import com.activitystream.core.model.entities.EntityReference;
+import com.activitystream.core.model.interfaces.EnrichableElement;
+import com.activitystream.core.model.interfaces.LinkedElement;
 import com.activitystream.core.model.validation.AdjustedPropertyWarning;
 import com.activitystream.core.model.validation.IgnoredPropertyError;
+import com.activitystream.sdk.ASConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -131,6 +132,15 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     public AddressAspect withCity(String city) {
         if (city != null && !city.isEmpty()) put(ASConstants.FIELD_CITY, city);
         else remove(ASConstants.FIELD_CITY);
+        return this;
+    }
+
+    public String getMunicipality() { return (String) get(ASConstants.FIELD_MUNICIPALITY); }
+
+    public AddressAspect withMunicipality(String municipality) {
+        if (municipality != null && !municipality.isEmpty()) {
+            put(ASConstants.FIELD_MUNICIPALITY, municipality);
+        }
         return this;
     }
 
@@ -340,6 +350,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
                 theKey = ASConstants.FIELD_ZIP_CODE;
             case ASConstants.FIELD_ZIP_CODE:
             case ASConstants.FIELD_CITY:
+            case ASConstants.FIELD_MUNICIPALITY:
             case ASConstants.FIELD_COUNTRY_CODE:
             case ASConstants.FIELD_COUNTRY:
                 if (value.toString().equalsIgnoreCase("unknown")) return null;
