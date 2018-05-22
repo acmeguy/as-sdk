@@ -40,7 +40,6 @@ public enum Archetype {
     SUPPLIER_GROUP ("SupplierGroup"),
     TRANSACTION ("Transaction");
 
-
     private final String name;
     private final String variant;
 
