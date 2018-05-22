@@ -1,13 +1,13 @@
 package com.activitystream.sdk;
 
 import com.activitystream.core.model.aspects.*;
-import com.activitystream.sdk.utilities.JacksonMapper;
 import com.activitystream.core.model.entities.BusinessEntity;
 import com.activitystream.core.model.entities.EntityReference;
 import com.activitystream.core.model.interfaces.AspectInterface;
 import com.activitystream.core.model.interfaces.BaseStreamElement;
 import com.activitystream.core.model.interfaces.BaseStreamItem;
 import com.activitystream.core.model.relations.Relation;
+import com.activitystream.sdk.utilities.JacksonMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.joda.time.DateTime;
 
@@ -20,6 +20,17 @@ public class ASEntity extends BusinessEntity {
     public ASEntity() {
     }
 
+    public ASEntity(Archetype archetype, String id) {
+        put(ASConstants.FIELD_ARCHETYPE, archetype.getName());
+
+        if (archetype.getVariant() != null) {
+            put(ASConstants.FIELD_ARCHETYPE_VARIANT, archetype.getVariant());
+            put(ASConstants.FIELD_ENTITY_REF, new EntityReference(archetype.getVariant(), id));
+        } else {
+            put(ASConstants.FIELD_ENTITY_REF, new EntityReference(archetype.getName(), id));
+        }
+    }
+
     public ASEntity(String type, String id, String label, String description) {
         this(new EntityReference(type, id), label, description);
     }
@@ -30,8 +41,9 @@ public class ASEntity extends BusinessEntity {
 
     /**
      * Creates a new business entity like Customer, Order, Phone, Email, Vehicle etc.
+     *
      * @param type the type of the business entity (Camel Cased)
-     * @param id the unique ID of the entity (Unique withing the Entity Type)
+     * @param id   the unique ID of the entity (Unique withing the Entity Type)
      */
     public ASEntity(String type, String id) {
         this(new EntityReference(type, id), null, null);
@@ -39,8 +51,9 @@ public class ASEntity extends BusinessEntity {
 
     /**
      * Creates a new business entity like Customer, Order, Phone, Email, Vehicle etc.
+     *
      * @param enttiyReference the Entity Reference for the Entity
-     * @param label the human readable label used to represent the entity
+     * @param label           the human readable label used to represent the entity
      */
     public ASEntity(EntityReference enttiyReference, String label) {
         put(ASConstants.FIELD_ENTITY_REF, enttiyReference);
@@ -49,9 +62,10 @@ public class ASEntity extends BusinessEntity {
 
     /**
      * Creates a new business entity like Customer, Order, Phone, Email, Vehicle etc.
+     *
      * @param enttiyReference the Entity Reference for the Entity
-     * @param label the human readable label used to represent the entity
-     * @param description a short description for the entity
+     * @param label           the human readable label used to represent the entity
+     * @param description     a short description for the entity
      */
     public ASEntity(EntityReference enttiyReference, String label, String description) {
         put(ASConstants.FIELD_ENTITY_REF, enttiyReference);
@@ -97,7 +111,7 @@ public class ASEntity extends BusinessEntity {
     }
 
     public void setGeoLocation(GeoLocationAspect geoLocation) {
-       withAspect(geoLocation);
+        withAspect(geoLocation);
     }
 
     public void setMetrics(MetricsAspect metrics) {
@@ -109,11 +123,11 @@ public class ASEntity extends BusinessEntity {
     }
 
     public void setTimed(TimedAspect timed) {
-       withAspect(timed);
+        withAspect(timed);
     }
 
     public void setInventory(InventoryAspect inventory) {
-       withAspect(inventory);
+        withAspect(inventory);
     }
 
     @Override
@@ -173,8 +187,8 @@ public class ASEntity extends BusinessEntity {
         return this;
     }
 
-    public ASEntity withRelationIfValid(String type, String entityType, String entityId, Object ... properties) {
-        Map<String,Object> propertiesMap = new LinkedHashMap<>();
+    public ASEntity withRelationIfValid(String type, String entityType, String entityId, Object... properties) {
+        Map<String, Object> propertiesMap = new LinkedHashMap<>();
         for (int i = 0; i < properties.length; i += 2) {
             propertiesMap.put(properties[i].toString(), properties[i + 1]);
         }
@@ -190,6 +204,7 @@ public class ASEntity extends BusinessEntity {
     /**
      * Add an aspect to the entity.
      * Aspects are standard schema peaces that can be added to entities
+     *
      * @param aspect the Entity Aspect to add
      * @return this ASEntity for chaining purposes
      */
@@ -233,6 +248,7 @@ public class ASEntity extends BusinessEntity {
      * Email, Phone Number etc. are good examples of entities which should be stored in the "_common" partition
      * Entities inherit the partition from the Event that creates them if no partition is specified.
      * Entities can only be stored in one partition
+     *
      * @param partition the partition that the entity should be stored in
      * @return this ASEntity for chaining purposes
      */
