@@ -257,6 +257,15 @@ public class ASEntity extends BusinessEntity {
         return this;
     }
 
+    public ASEntity withArchetype(Archetype archetype) {
+        put(ASConstants.FIELD_ARCHETYPE, archetype.getName());
+
+        if (archetype.getVariant() != null) {
+            put(ASConstants.FIELD_ARCHETYPE_VARIANT, archetype.getVariant());
+        }
+        return this;
+    }
+
     public ASEntity withDimension(String dimension, String value) {
         super.addDimension(dimension, value, this);
         return this;
