@@ -151,5 +151,4 @@ public class SimpleEventTests {
 
         Assert.assertEquals(dummyMailing.toJSON(), "{\"archetype\":\"Campaign\",\"entity_ref\":\"Mailing/123\"}");
     }
-
 }

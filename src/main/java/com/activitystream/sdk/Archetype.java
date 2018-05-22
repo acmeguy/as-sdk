@@ -15,7 +15,7 @@ public enum Archetype {
     MANUFACTURER_DEVICE("Measurement Device"),
     ORDER("Order"),
     PHONE("Phone"),
-    PRODUCT("Product", "null"),
+    PRODUCT("Product"),
     PRODUCT_EVENT("Product", "Event"),
     PRODUCT_TICKET("Product"),
     PRODUCT_GROUP("ProductGroup"),
