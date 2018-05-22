@@ -260,9 +260,14 @@ public class ASEntity extends BusinessEntity {
     public ASEntity withArchetype(Archetype archetype) {
         put(ASConstants.FIELD_ARCHETYPE, archetype.getName());
 
-        if (archetype.getVariant() != null) {
+        if (archetype.getVariant() == null) {
+            if(this.containsKey(ASConstants.FIELD_ARCHETYPE_VARIANT)) {
+                remove(ASConstants.FIELD_ARCHETYPE_VARIANT, this.get(ASConstants.FIELD_ARCHETYPE_VARIANT));
+            }
+        } else {
             put(ASConstants.FIELD_ARCHETYPE_VARIANT, archetype.getVariant());
         }
+
         return this;
     }
 
