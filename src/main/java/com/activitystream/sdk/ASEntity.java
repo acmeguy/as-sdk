@@ -9,6 +9,7 @@ import com.activitystream.core.model.interfaces.BaseStreamItem;
 import com.activitystream.core.model.relations.Relation;
 import com.activitystream.sdk.utilities.JacksonMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -145,6 +146,15 @@ public class ASEntity extends BusinessEntity {
         return this;
     }
 
+    public ASEntity withType(String type) {
+        if (StringUtils.isNotBlank(type)) {
+            String id = this.getEntityReference().getEntityId();
+            put(ASConstants.FIELD_ENTITY_REF, new EntityReference(type, id));
+        }
+
+        return this;
+    }
+
     @Override
     public ASEntity withRelation(Relation relation, BaseStreamItem root) {
         super.withRelation(relation, root);
@@ -261,7 +271,7 @@ public class ASEntity extends BusinessEntity {
         put(ASConstants.FIELD_ARCHETYPE, archetype.getName());
 
         if (archetype.getVariant() == null) {
-            if(this.containsKey(ASConstants.FIELD_ARCHETYPE_VARIANT)) {
+            if (this.containsKey(ASConstants.FIELD_ARCHETYPE_VARIANT)) {
                 remove(ASConstants.FIELD_ARCHETYPE_VARIANT, this.get(ASConstants.FIELD_ARCHETYPE_VARIANT));
             }
         } else {
@@ -306,5 +316,4 @@ public class ASEntity extends BusinessEntity {
     public void send() throws Exception {
         ASService.send(this);
     }
-
 }

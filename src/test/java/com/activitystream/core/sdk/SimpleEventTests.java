@@ -134,21 +134,4 @@ public class SimpleEventTests {
         asNewEvent.setType("as.commerce.purchase.completed");
         Assert.assertEquals(asNewEvent.isValid(true), true);
     }
-
-    @Test
-    public void entityWithArchetype() throws JsonProcessingException {
-        ASEntity mailing = new ASEntity(Archetype.CAMPAIGN_MAILING, "123");
-        ASEntity campaign = new ASEntity(Archetype.CAMPAIGN, "345");
-
-        Assert.assertEquals(mailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"Mailing/123\"}");
-        Assert.assertEquals(campaign.toJSON(), "{\"archetype\":\"Campaign\",\"entity_ref\":\"Campaign/345\"}");
-
-        ASEntity dummyMailing = new ASEntity(Archetype.CAMPAIGN_MAILING, "123");
-
-        Assert.assertEquals(dummyMailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"Mailing/123\"}");
-
-        dummyMailing.withArchetype(Archetype.CAMPAIGN);
-
-        Assert.assertEquals(dummyMailing.toJSON(), "{\"archetype\":\"Campaign\",\"entity_ref\":\"Mailing/123\"}");
-    }
 }
