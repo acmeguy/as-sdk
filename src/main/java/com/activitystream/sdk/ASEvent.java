@@ -12,6 +12,7 @@ import com.activitystream.core.model.relations.RelationsManager;
 import com.activitystream.core.model.stream.CustomerEvent;
 import com.activitystream.core.model.stream.ImportanceLevel;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -101,6 +102,14 @@ public class ASEvent extends CustomerEvent {
 
     public ASEvent withType(String type) {
         put(ASConstants.FIELD_TYPE, type);
+        return this;
+    }
+
+    public ASEvent withSubtenant(String subtenant) {
+        if (StringUtils.isNotBlank(subtenant)) {
+            put(ASConstants.FIELD_SUBTENANT, subtenant);
+        }
+
         return this;
     }
 

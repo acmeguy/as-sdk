@@ -151,6 +151,9 @@ public class CustomerEvent extends AbstractBaseEvent {
             case ASConstants.FIELD_DESCRIPTION:
                 value = validator().processString(theKey, value, false);
                 break;
+            case ASConstants.FIELD_SUBTENANT:
+                value = validator().processLowerCaseString(theKey, value, false);
+                break;
             case ASConstants.FIELD_RELATIONS:
                 theKey = ASConstants.FIELD_INVOLVES;
             case ASConstants.FIELD_INVOLVES:

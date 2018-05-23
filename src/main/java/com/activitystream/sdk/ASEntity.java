@@ -32,6 +32,15 @@ public class ASEntity extends BusinessEntity {
         }
     }
 
+    // Do we need this constructor?
+    public ASEntity(Archetype archetype, String id, String type) {
+        this(archetype, id);
+
+        if (StringUtils.isNotBlank(type)) {
+            this.withType(type);
+        }
+    }
+
     public ASEntity(String type, String id, String label, String description) {
         this(new EntityReference(type, id), label, description);
     }
@@ -276,6 +285,14 @@ public class ASEntity extends BusinessEntity {
             }
         } else {
             put(ASConstants.FIELD_ARCHETYPE_VARIANT, archetype.getVariant());
+        }
+
+        return this;
+    }
+
+    public ASEntity withSubtenant(String subtenant) {
+        if (StringUtils.isNotBlank(subtenant)) {
+            put(ASConstants.FIELD_SUBTENANT, subtenant);
         }
 
         return this;

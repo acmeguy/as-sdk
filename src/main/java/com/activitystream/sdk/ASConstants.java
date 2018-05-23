@@ -48,6 +48,7 @@ public class ASConstants {
     public static final String FIELD_ACTIVE_VALIDATIONS = "active_validations";
     public static final String FIELD_ARCHETYPE = "archetype";
     public static final String FIELD_ARCHETYPE_VARIANT = "archetype_variant";
+    public static final String FIELD_SUBTENANT = "subtenant";
     public static final String FIELD_COMMON = "common";
     public static final String FIELD_SUBJECT = "subject";
     public static final String FIELD_PROPERTIES = "properties";

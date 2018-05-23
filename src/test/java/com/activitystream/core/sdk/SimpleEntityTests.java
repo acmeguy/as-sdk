@@ -194,24 +194,32 @@ public class SimpleEntityTests {
 
     @Test
     public void testEntityWithType() throws JsonProcessingException {
-        ASEntity mailing = new ASEntity(Archetype.CAMPAIGN_MAILING, "567");
+        ASEntity mailing1 = new ASEntity(Archetype.CAMPAIGN_MAILING, "567");
 
-        Assert.assertEquals(mailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"Mailing/567\"}");
+        Assert.assertEquals(mailing1.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"Mailing/567\"}");
 
-        mailing.withType("JohnsMailingCampaign");
+        mailing1.withType("JohnsMailingCampaign");
 
-        Assert.assertEquals(mailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"JohnsMailingCampaign/567\"}");
+        Assert.assertEquals(mailing1.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"JohnsMailingCampaign/567\"}");
 
-        mailing.withType(null);
+        mailing1.withType(null);
 
-        Assert.assertEquals(mailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"JohnsMailingCampaign/567\"}");
+        Assert.assertEquals(mailing1.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"JohnsMailingCampaign/567\"}");
 
-        mailing.withType("              ");
+        mailing1.withType("              ");
 
-        Assert.assertEquals(mailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"JohnsMailingCampaign/567\"}");
+        Assert.assertEquals(mailing1.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"JohnsMailingCampaign/567\"}");
 
-        mailing.withType("MikesMailingCampaign");
+        mailing1.withType("MikesMailingCampaign");
 
-        Assert.assertEquals(mailing.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"MikesMailingCampaign/567\"}");
+        Assert.assertEquals(mailing1.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"MikesMailingCampaign/567\"}");
+
+        ASEntity mailing2 = new ASEntity(Archetype.CAMPAIGN_MAILING, "741", "DavesMailingCampaign");
+        Assert.assertEquals(mailing2.toJSON(), "{\"archetype\":\"Campaign\",\"archetype_variant\":\"Mailing\",\"entity_ref\":\"DavesMailingCampaign/741\"}");
+
+        mailing2.withType("MikesCampaign")
+                .withArchetype(Archetype.CAMPAIGN);
+
+        Assert.assertEquals(mailing2.toJSON(), "{\"archetype\":\"Campaign\",\"entity_ref\":\"MikesCampaign/741\"}");
     }
 }

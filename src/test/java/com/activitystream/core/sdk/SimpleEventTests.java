@@ -7,7 +7,6 @@ import com.activitystream.core.model.stream.ImportanceLevel;
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.sdk.ASEntity;
 import com.activitystream.sdk.ASEvent;
-import com.activitystream.sdk.Archetype;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -133,5 +132,18 @@ public class SimpleEventTests {
         Assert.assertEquals(asNewEvent.isValid(), false);
         asNewEvent.setType("as.commerce.purchase.completed");
         Assert.assertEquals(asNewEvent.isValid(true), true);
+    }
+
+    @Test
+    public void testASEventSubtenant() throws JsonProcessingException {
+        ASEvent asEvent = new ASEvent()
+                .withOccurredAt("2018-05-23T12:18:33.632+02:00")
+                .withSubtenant("some_subtenant");
+
+        Assert.assertEquals(asEvent.toJSON(), "{\"occurred_at\":\"2018-05-23T12:18:33.632+02:00\",\"subtenant\":\"some_subtenant\",\"origin\":\"unspecified\"}");
+
+        asEvent.withSubtenant(null);
+
+        Assert.assertEquals(asEvent.toJSON(), "{\"occurred_at\":\"2018-05-23T12:18:33.632+02:00\",\"subtenant\":\"some_subtenant\",\"origin\":\"unspecified\"}");
     }
 }
