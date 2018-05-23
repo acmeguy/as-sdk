@@ -58,12 +58,12 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
 
     public AddressAspect(String address, String address2, String city, String postcode, String country, String countryCode) {
         this();
-        if (address != null && !address.isEmpty()) put(ASConstants.FIELD_ADDRESS,address);
+        if (address != null && !address.isEmpty()) put(ASConstants.FIELD_ADDRESS, address);
         if (address2 != null && !address2.isEmpty()) put(ASConstants.FIELD_ADDRESS_2, address2);
-        if (city != null && !city.isEmpty()) put(ASConstants.FIELD_CITY,city);
-        if (postcode != null && !postcode.isEmpty()) put(ASConstants.FIELD_ZIP_CODE,postcode);
-        if (country != null && !country.isEmpty()) put(ASConstants.FIELD_COUNTRY,country);
-        if (countryCode != null && !countryCode.isEmpty()) put(ASConstants.FIELD_COUNTRY_CODE,countryCode);
+        if (city != null && !city.isEmpty()) put(ASConstants.FIELD_CITY, city);
+        if (postcode != null && !postcode.isEmpty()) put(ASConstants.FIELD_ZIP_CODE, postcode);
+        if (country != null && !country.isEmpty()) put(ASConstants.FIELD_COUNTRY, country);
+        if (countryCode != null && !countryCode.isEmpty()) put(ASConstants.FIELD_COUNTRY_CODE, countryCode);
     }
 
     @Override
@@ -135,7 +135,9 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return this;
     }
 
-    public String getMunicipality() { return (String) get(ASConstants.FIELD_MUNICIPALITY); }
+    public String getMunicipality() {
+        return (String) get(ASConstants.FIELD_MUNICIPALITY);
+    }
 
     public AddressAspect withMunicipality(String municipality) {
         if (municipality != null && !municipality.isEmpty()) {
@@ -174,7 +176,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
             for (Locale aLocale : localesList) {
                 if (aLocale.getCountry().equals(countryOrCountryCode) || aLocale.getDisplayName().equalsIgnoreCase(countryOrCountryCode)) {
                     isLocale = aLocale;
-                    KNOWN_COUNTRY_NAMES.put(countryOrCountryCode,aLocale);
+                    KNOWN_COUNTRY_NAMES.put(countryOrCountryCode, aLocale);
                     break;
                 }
             }
@@ -206,12 +208,14 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     /**
      * Adds country code and state code as HASC code
      * This only happens if the country code exists and the hasc code is incomplete
+     *
      * @param stateCode
      * @return
      */
     public AddressAspect withStateCode(String stateCode) {
-        if (getCountryCode() !=null && stateCode != null && stateCode.trim().length() == 2 && getCountryCode().length()==2) {
-            if (getHascCode() == null || getHascCode().length() < 5) put(ASConstants.FIELD_HASC_CODE, (getCountryCode() + "." + stateCode).toUpperCase() );
+        if (getCountryCode() != null && stateCode != null && stateCode.trim().length() == 2 && getCountryCode().length() == 2) {
+            if (getHascCode() == null || getHascCode().length() < 5)
+                put(ASConstants.FIELD_HASC_CODE, (getCountryCode() + "." + stateCode).toUpperCase());
         }
         return this;
     }
@@ -226,7 +230,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     }
 
     public AddressAspect withRegion(String region) {
-        setRegion (region);
+        setRegion(region);
         return this;
     }
 
@@ -292,8 +296,10 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
                 geoLocationAspect.setHascCode(getCountryCode());
             }
             if (getHascCode() != null) geoLocationAspect.setHascCode(getHascCode());
-            if (geoLocationAspect.getFipsCode().isEmpty() && getFipsCode() != null) geoLocationAspect.setFipsCode(getFipsCode());
-            if (geoLocationAspect.getNgaCode().isEmpty() && getNgaCode() != null) geoLocationAspect.setNgaCode(getNgaCode());
+            if (geoLocationAspect.getFipsCode().isEmpty() && getFipsCode() != null)
+                geoLocationAspect.setFipsCode(getFipsCode());
+            if (geoLocationAspect.getNgaCode().isEmpty() && getNgaCode() != null)
+                geoLocationAspect.setNgaCode(getNgaCode());
         }
 
         return geoLocationAspect;
@@ -301,14 +307,21 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
 
     public String getCountryCode() {
         String countryCode = (String) get(ASConstants.FIELD_COUNTRY_CODE);
-        if (countryCode != null) countryCode = KNOWN_WRONG_COUNTRY_CODES.getOrDefault(countryCode.toUpperCase(), countryCode);
+        if (countryCode != null)
+            countryCode = KNOWN_WRONG_COUNTRY_CODES.getOrDefault(countryCode.toUpperCase(), countryCode);
         return countryCode;
     }
 
     public AddressAspect withCountryCode(String countryCode) {
         //todo - validate country code (against ISO 2 and 3)
-        if (countryCode != null && !countryCode.isEmpty()) put(ASConstants.FIELD_COUNTRY_CODE, countryCode.toUpperCase());
+        if (countryCode != null && !countryCode.isEmpty())
+            put(ASConstants.FIELD_COUNTRY_CODE, countryCode.toUpperCase());
         else remove(ASConstants.FIELD_COUNTRY_CODE);
+        return this;
+    }
+
+    public AddressAspect withAddressAnonymized() {
+        put(ASConstants.FIELD_IS_ANONYMIZED, true);
         return this;
     }
 
@@ -322,7 +335,8 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
 
     public String getZipCodeId() {
         String countryCode = this.getCountryCode();
-        if (countryCode == null && this.getCountry() != null && this.getCountry().length() == 2) countryCode = this.getCountry(); //EinarN workaround
+        if (countryCode == null && this.getCountry() != null && this.getCountry().length() == 2)
+            countryCode = this.getCountry(); //EinarN workaround
         String zipCode = this.getZipCode();
         //if (zipCode != null && zipCode.startsWith("0")) zipCode = zipCode.substring(1);
         return (countryCode != null && zipCode != null) ? (countryCode + zipCode).replaceAll(" ", "") : null;
@@ -344,7 +358,8 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
             theKey = theLCKey;
         }
 
-        if (value == null || value.toString().trim().isEmpty() || value.toString().equalsIgnoreCase("null")) return null;
+        if (value == null || value.toString().trim().isEmpty() || value.toString().equalsIgnoreCase("null"))
+            return null;
         switch (theKey) {
             case ASConstants.FIELD_POSTAL_CODE:
                 theKey = ASConstants.FIELD_ZIP_CODE;
@@ -378,6 +393,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
             case ASConstants.FIELD_SUB_REGION:
                 value = validator().processString(theKey, value, false);
                 break;
+            case ASConstants.FIELD_IS_ANONYMIZED:
             case ASConstants.FIELD_VERIFIED:
                 value = validator().processBoolean(theKey, value, false);
                 break;
@@ -404,6 +420,7 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
     /**
      * Creates a new Address Aspect instance
      * Utility function for cleaner chaining
+     *
      * @return a new Address Aspect
      */
     public static AddressAspect address() {

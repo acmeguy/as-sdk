@@ -183,6 +183,7 @@ public class ASConstants {
     public static final String ASPECTS_ITEMS = "items";
     public static final String ASPECTS_RESOLVABLE = "resolvable";
     public static final String ASPECTS_LINK = "link";
+    public static final String ASPECTS_CUSTOMER_PERMISSION = "customer_permission";
 
     /**
      * ASPECT FIELDS
@@ -266,6 +267,7 @@ public class ASConstants {
     public static final String FIELD_HASC = "hasc";
     public static final String FIELD_SUB_REGION = "sub_region";
     public static final String FIELD_ALTERED = "altered";
+    public static final String FIELD_IS_ANONYMIZED = "is_anonymized";
 
     public static final String FIELD_ETHNICITY = "ethnicity";
     public static final String FIELD_MARITAL_STATUS = "marital_status";
