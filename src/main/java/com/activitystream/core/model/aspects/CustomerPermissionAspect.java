@@ -20,6 +20,11 @@ public class CustomerPermissionAspect extends AbstractMapAspect {
     }
 
     @Override
+    public void loadFromValue(Object value) {
+        super.loadFromValue(value);
+    }
+
+    @Override
     public AspectType getAspectType() {
         return ASPECT_TYPE;
     }
