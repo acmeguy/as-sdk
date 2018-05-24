@@ -15,7 +15,7 @@ public class CustomerPermissionAspectTest {
         Assert.assertTrue(customer.getAspectManager().getCustomerPermission().getMarketingPermission());
         Assert.assertFalse(customer.getAspectManager().getCustomerPermission().getInformationPermission());
 
-        customer.getAspectManager().getCustomerPermission().withMarketingPermission(false);
-        Assert.assertFalse(customer.getAspectManager().getCustomerPermission().getMarketingPermission());
+        customer.getAspectManager().getCustomerPermission().withProcessingPermission(true);
+        Assert.assertTrue(customer.getAspectManager().getCustomerPermission().getProcessingPermission());
     }
 }
