@@ -418,7 +418,7 @@ public class BusinessEntity extends AbstractStreamItem
                 value = validator().processString(theKey, value, true);
                 break;
             case ASConstants.FIELD_ARCHETYPE_VARIANT:
-                value = validator().processString(theKey, value, true);
+                value = validator().processString(theKey, value, false);
                 break;
             case ASConstants.FIELD_SUBTENANT:
                 value = validator().processLowerCaseString(theKey, value, false);

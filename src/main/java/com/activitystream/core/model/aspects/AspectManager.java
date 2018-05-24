@@ -38,6 +38,7 @@ public class AspectManager extends AbstractMapElement
     public AspectManager() {
 
     }
+
     public AspectManager(Map map, AbstractMapElement root) {
         this(map, root, null);
     }
@@ -51,6 +52,14 @@ public class AspectManager extends AbstractMapElement
     /************
      * CEP Utility Functions and Getters
      ************/
+
+    public CustomerPermissionAspect getCustomerPermission() {
+        return (CustomerPermissionAspect) get(ASConstants.ASPECTS_CUSTOMER_PERMISSION);
+    }
+
+    public void setCustomerPermission(CustomerPermissionAspect customerPermissionAspect) {
+        put(ASConstants.ASPECTS_CUSTOMER_PERMISSION, customerPermissionAspect);
+    }
 
     public PresentationAspect getPresentation() {
         return (PresentationAspect) get(ASConstants.ASPECTS_PRESENTATION);

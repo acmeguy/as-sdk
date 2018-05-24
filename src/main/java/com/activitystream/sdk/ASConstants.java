@@ -298,12 +298,14 @@ public class ASConstants {
     public static final String ARCHETYPE_PRODUCT = "Product";
     public static final String ARCHETYPE_PRODUCTGROUP = "Product Group";
 
+    public static final String FIELD_MARKETING_PERMISSION = "marketing_permission";
+    public static final String FIELD_INFORMATION_PERMISSION = "information_permission";
+    public static final String FIELD_PROCESSING_PERMISSION = "processing_permission";
+
     public static final List<String> ALL_ASPECT_FIELDS =
             Arrays.asList(ASPECTS_CLASSIFICATION, ASPECTS_DIMENSIONS, ASPECTS_AB_TEST, ASPECTS_ADDRESS, ASPECTS_ATTACHMENTS, ASPECTS_CEI, ASPECTS_CLIENT_DEVICE,
                     ASPECTS_CLIENT_IP, ASPECTS_RESOLVABLE, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
-                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS);
-
-
+                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION);
 
     //Event Base
     public static final String AS_EVENT = "ASEvent";
