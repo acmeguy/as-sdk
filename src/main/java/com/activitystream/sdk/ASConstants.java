@@ -274,7 +274,7 @@ public class ASConstants {
     public static final String FIELD_EMPLOYMENT = "employment";
     public static final String FIELD_INCOME = "income";
     public static final String FIELD_HOUSING = "housing";
-    public static final String FIELD_MOSAIC_GROUP = "mosaic_group";
+    public static final String FIELD_CUSTOM_SEGMENT = "custom_segment";
     public static final String FIELD_EDUCATION = "education";
 
     public static final String FIELD_USER_AGENT = "user_agent";

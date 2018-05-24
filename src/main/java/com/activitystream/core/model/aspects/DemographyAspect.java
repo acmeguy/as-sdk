@@ -1,10 +1,12 @@
 package com.activitystream.core.model.aspects;
 
-import com.activitystream.sdk.ASConstants;
-import com.activitystream.core.model.interfaces.*;
 import com.activitystream.core.model.entities.EntityChangeMap;
+import com.activitystream.core.model.interfaces.BaseStreamElement;
+import com.activitystream.core.model.interfaces.EnrichableElement;
+import com.activitystream.core.model.interfaces.HasAspects;
 import com.activitystream.core.model.validation.AdjustedPropertyWarning;
 import com.activitystream.core.model.validation.IgnoredPropertyError;
+import com.activitystream.sdk.ASConstants;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.slf4j.Logger;
@@ -14,22 +16,22 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * The Demography aspect is used to store demogrphic information for "people entities"
+ * The Demography aspect is used to store demographic information for "people entities"
  */
 public class DemographyAspect extends AbstractMapAspect implements EnrichableElement {
 
     public static final AspectType ASPECT_TYPE =
             new AspectType(ASConstants.ASPECTS_DEMOGRAPHY, DemographyAspect::new, AspectType.MergeStrategy.MERGE) {
-        @Override
-        public boolean shouldCreateForEnrichment(BaseStreamElement root) {
-            if (root instanceof HasAspects) {
-                AspectManager aspectManager = ((HasAspects) root).getAspectManager();
-                return (aspectManager != null && aspectManager.getPresentation() != null && aspectManager.getPresentation().getLabel() != null);
-            }
-            return false;
-        }
+                @Override
+                public boolean shouldCreateForEnrichment(BaseStreamElement root) {
+                    if (root instanceof HasAspects) {
+                        AspectManager aspectManager = ((HasAspects) root).getAspectManager();
+                        return (aspectManager != null && aspectManager.getPresentation() != null && aspectManager.getPresentation().getLabel() != null);
+                    }
+                    return false;
+                }
 
-    };
+            };
 
     protected static final Logger logger = LoggerFactory.getLogger(DemographyAspect.class);
 
@@ -43,7 +45,8 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
     /**
      * Creates a new Demography Aspect
      * Demography Aspect is used to categorize entities that represent people (Users, Customer etc.).
-     * @param gender the gender of the person
+     *
+     * @param gender    the gender of the person
      * @param birthDate the birthday of the person (full or partial)
      */
     public DemographyAspect(String gender, String birthDate) {
@@ -53,9 +56,10 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
     /**
      * Creates a new Demography Aspect
      * Demography Aspect is used to categorize entities that represent people (Users, Customer etc.).
-     * @param gender the gender of the person
+     *
+     * @param gender    the gender of the person
      * @param birthDate the birthday of the person (full or partial)
-     * @param root parent entity
+     * @param root      parent entity
      */
     public DemographyAspect(String gender, String birthDate, BaseStreamElement root) {
         setRoot(root);
@@ -250,12 +254,12 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
     }
 
     public String getMosaicGroup() {
-        return (String) get(ASConstants.FIELD_MOSAIC_GROUP);
+        return (String) get(ASConstants.FIELD_CUSTOM_SEGMENT);
     }
 
     public void setMosaicGroup(String mosaicGroup) {
-        if (mosaicGroup != null && ! mosaicGroup.isEmpty()) put(ASConstants.FIELD_MOSAIC_GROUP, mosaicGroup);
-        else remove(ASConstants.FIELD_MOSAIC_GROUP);
+        if (mosaicGroup != null && !mosaicGroup.isEmpty()) put(ASConstants.FIELD_CUSTOM_SEGMENT, mosaicGroup);
+        else remove(ASConstants.FIELD_CUSTOM_SEGMENT);
     }
 
     public DemographyAspect withMosaicGroup(String mosaicGroup) {
@@ -354,7 +358,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
             case ASConstants.FIELD_MARITAL_STATUS:
             case ASConstants.FIELD_EMPLOYMENT:
             case ASConstants.FIELD_INCOME:
-            case ASConstants.FIELD_MOSAIC_GROUP:
+            case ASConstants.FIELD_CUSTOM_SEGMENT:
             case ASConstants.FIELD_HOUSING:
             case ASConstants.FIELD_EDUCATION:
                 value = validator().processString(theKey, value, false);
@@ -418,6 +422,7 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
     /**
      * Creates a new Demography Aspect instance
      * Utility function for cleaner chaining
+     *
      * @return a new Demography Aspect
      */
     public static DemographyAspect demography() {
