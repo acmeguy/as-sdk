@@ -185,6 +185,7 @@ public class ASConstants {
     public static final String ASPECTS_LINK = "link";
     public static final String ASPECTS_CUSTOMER_PERMISSION = "customer_permission";
     public static final String ASPECTS_EMAIL = "email";
+    public static final String ASPECTS_PHONE = "phone";
 
     /**
      * ASPECT FIELDS
@@ -306,7 +307,7 @@ public class ASConstants {
     public static final List<String> ALL_ASPECT_FIELDS =
             Arrays.asList(ASPECTS_CLASSIFICATION, ASPECTS_DIMENSIONS, ASPECTS_AB_TEST, ASPECTS_ADDRESS, ASPECTS_ATTACHMENTS, ASPECTS_CEI, ASPECTS_CLIENT_DEVICE,
                     ASPECTS_CLIENT_IP, ASPECTS_RESOLVABLE, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
-                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION);
+                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE);
 
     //Event Base
     public static final String AS_EVENT = "ASEvent";

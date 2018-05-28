@@ -35,7 +35,7 @@ public class AspectType {
     private final Supplier<AspectInterface> aspectSupplier;
     private final MergeStrategy mergeStrategy;
 
-    protected AspectType(String aspectSignature, Supplier<AspectInterface> aspectSupplier) {
+    public AspectType(String aspectSignature, Supplier<AspectInterface> aspectSupplier) {
         this(aspectSignature, aspectSupplier, null);
     }
 

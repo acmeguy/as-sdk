@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class CustomerPermissionAspectTest {
     @Test
-    public void createCustomerPermissionAspect() throws JsonProcessingException {
+    public void testCreateCustomerPermissionAspect() throws JsonProcessingException {
         ASEntity customer = new ASEntity().withAspect(new CustomerPermissionAspect(true, false, false));
 
         Assert.assertEquals("{\"aspects\":{\"customer_permission\":{\"marketing_permission\":true,\"information_permission\":false,\"processing_permission\":false}}}", customer.toJSON());

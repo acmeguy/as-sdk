@@ -27,7 +27,7 @@ public class AspectManager extends AbstractMapElement
                 ObservationEventsManager.ASPECT_TYPE, TimedAspect.ASPECT_TYPE,
                 ContentAspect.ASPECT_TYPE, TagsAspect.ASPECT_TYPE, SettingsAspect.ASPECT_TYPE, ProductViewAspect.ASPECT_TYPE, InventoryAspect.ASPECT_TYPE,
                 MessagingAspect.ASPECT_TYPE,
-                AttachmentManager.ASPECT_TYPE, MetricsAspect.ASPECT_TYPE, StatusAspect.ASPECT_TYPE, CustomerPermissionAspect.ASPECT_TYPE};
+                AttachmentManager.ASPECT_TYPE, MetricsAspect.ASPECT_TYPE, StatusAspect.ASPECT_TYPE, CustomerPermissionAspect.ASPECT_TYPE, PhoneAspect.ASPECT_TYPE};
         for (AspectType type : aspectTypes) {
             ALL_ASPECTS.put(type.getAspectSignature(), type);
         }
@@ -211,6 +211,14 @@ public class AspectManager extends AbstractMapElement
 
     public void setTrafficSources(TrafficSourceAspect trafficSourceAspect) {
         put(ASConstants.ASPECTS_TRAFFIC_SOURCES, trafficSourceAspect);
+    }
+
+    public PhoneAspect getPhone() {
+        return (PhoneAspect) get(ASConstants.ASPECTS_PHONE);
+    }
+
+    public void setPhone(PhoneAspect phoneAspect) {
+        put(ASConstants.ASPECTS_PHONE, phoneAspect);
     }
 
     public InventoryAspect getInventory() {
