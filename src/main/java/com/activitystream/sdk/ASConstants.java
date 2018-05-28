@@ -184,6 +184,7 @@ public class ASConstants {
     public static final String ASPECTS_RESOLVABLE = "resolvable";
     public static final String ASPECTS_LINK = "link";
     public static final String ASPECTS_CUSTOMER_PERMISSION = "customer_permission";
+    public static final String ASPECTS_EMAIL = "email";
 
     /**
      * ASPECT FIELDS
