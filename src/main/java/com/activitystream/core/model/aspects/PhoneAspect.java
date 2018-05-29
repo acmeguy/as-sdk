@@ -110,8 +110,10 @@ public class PhoneAspect extends AbstractMapAspect {
             case ASConstants.FIELD_NUMBER:
             case ASConstants.FIELD_NUMBER_TYPE:
                 value = validator().processString(theKey, value, false);
+                break;
             case ASConstants.FIELD_IS_ANONYMIZED:
                 value = validator().processBoolean(theKey, value, true);
+                break;
         }
 
         return super.put(theKey, value);
