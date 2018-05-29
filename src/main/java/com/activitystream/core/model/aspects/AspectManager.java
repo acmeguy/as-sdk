@@ -27,7 +27,8 @@ public class AspectManager extends AbstractMapElement
                 ObservationEventsManager.ASPECT_TYPE, TimedAspect.ASPECT_TYPE,
                 ContentAspect.ASPECT_TYPE, TagsAspect.ASPECT_TYPE, SettingsAspect.ASPECT_TYPE, ProductViewAspect.ASPECT_TYPE, InventoryAspect.ASPECT_TYPE,
                 MessagingAspect.ASPECT_TYPE,
-                AttachmentManager.ASPECT_TYPE, MetricsAspect.ASPECT_TYPE, StatusAspect.ASPECT_TYPE, CustomerPermissionAspect.ASPECT_TYPE, PhoneAspect.ASPECT_TYPE};
+                AttachmentManager.ASPECT_TYPE, MetricsAspect.ASPECT_TYPE, StatusAspect.ASPECT_TYPE, CustomerPermissionAspect.ASPECT_TYPE,
+                PhoneAspect.ASPECT_TYPE, EmailAspect.ASPECT_TYPE, HolidayAspect.ASPECT_TYPE};
         for (AspectType type : aspectTypes) {
             ALL_ASPECTS.put(type.getAspectSignature(), type);
         }
@@ -213,6 +214,14 @@ public class AspectManager extends AbstractMapElement
         put(ASConstants.ASPECTS_TRAFFIC_SOURCES, trafficSourceAspect);
     }
 
+    public EmailAspect getEmail() {
+        return (EmailAspect) get(ASConstants.ASPECTS_EMAIL);
+    }
+
+    public void setEmail(EmailAspect emailAspect) {
+        put(ASConstants.ASPECTS_EMAIL, emailAspect);
+    }
+
     public PhoneAspect getPhone() {
         return (PhoneAspect) get(ASConstants.ASPECTS_PHONE);
     }
@@ -239,6 +248,14 @@ public class AspectManager extends AbstractMapElement
 
     public InventoryAspect getOrCreateInventoryAspect() {
         return (InventoryAspect) getOrCreateAspect(ASConstants.ASPECTS_INVENTORY);
+    }
+
+    public HolidayAspect getHolidayAspect() {
+        return (HolidayAspect) get(ASConstants.ASPECTS_HOLIDAY);
+    }
+
+    public void setHoliday(HolidayAspect holidayAspect) {
+        put(ASConstants.ASPECTS_HOLIDAY, holidayAspect);
     }
 
     public MetricsAspect getMetrics() {

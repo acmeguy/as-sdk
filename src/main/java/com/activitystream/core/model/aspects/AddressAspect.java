@@ -333,6 +333,18 @@ public class AddressAspect extends AbstractMapAspect implements LinkedElement, E
         return null;
     }
 
+    public boolean isAnonymized() {
+        boolean isAnonymized = false;
+
+        try {
+            isAnonymized = (boolean) get(ASConstants.FIELD_IS_ANONYMIZED);
+        } catch (NullPointerException e) {
+            logger.info("Email address isn't anonymized.");
+        }
+
+        return isAnonymized;
+    }
+
     public String getZipCodeId() {
         String countryCode = this.getCountryCode();
         if (countryCode == null && this.getCountry() != null && this.getCountry().length() == 2)

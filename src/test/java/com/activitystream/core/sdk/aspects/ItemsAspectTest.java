@@ -21,9 +21,9 @@ import java.util.TimeZone;
 import static com.activitystream.sdk.ASLineItem.lineItem;
 import static com.activitystream.core.model.aspects.ItemsManager.items;
 
-public class ItemsAspectTests {
+public class ItemsAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ItemsAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(ItemsAspectTest.class);
 
     @BeforeMethod(alwaysRun = true)
 

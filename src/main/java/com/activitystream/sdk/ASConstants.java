@@ -146,6 +146,10 @@ public class ASConstants {
     public static final String FIELD_VALID_FROM = "valid_from";
     public static final String FIELD_VALID_UNTIL = "valid_until";
     public static final String FIELD_DEFAULTS = "defaults";
+    public static final String FIELD_NAME = "name";
+    public static final String FIELD_DATE = "date";
+    public static final String FIELD_IS_PUBLIC = "is_public";
+    public static final String FIELD_OFFSET_DAYS = "offset_days";
 
     public static final String FIELD_DELETE = "$delete";
 
@@ -186,6 +190,7 @@ public class ASConstants {
     public static final String ASPECTS_CUSTOMER_PERMISSION = "customer_permission";
     public static final String ASPECTS_EMAIL = "email";
     public static final String ASPECTS_PHONE = "phone";
+    public static final String ASPECTS_HOLIDAY = "holiday";
 
     /**
      * ASPECT FIELDS
@@ -304,10 +309,14 @@ public class ASConstants {
     public static final String FIELD_INFORMATION_PERMISSION = "information_permission";
     public static final String FIELD_PROCESSING_PERMISSION = "processing_permission";
 
+    public static final String FIELD_AREA_CODE = "area_code";
+    public static final String FIELD_NUMBER = "number";
+    public static final String FIELD_NUMBER_TYPE = "number_type";
+
     public static final List<String> ALL_ASPECT_FIELDS =
             Arrays.asList(ASPECTS_CLASSIFICATION, ASPECTS_DIMENSIONS, ASPECTS_AB_TEST, ASPECTS_ADDRESS, ASPECTS_ATTACHMENTS, ASPECTS_CEI, ASPECTS_CLIENT_DEVICE,
                     ASPECTS_CLIENT_IP, ASPECTS_RESOLVABLE, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
-                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE);
+                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE, ASPECTS_HOLIDAY);
 
     //Event Base
     public static final String AS_EVENT = "ASEvent";
@@ -486,7 +495,7 @@ public class ASConstants {
     public static final String REL_SENT_TO_CC = "SENT_TO_CC";
     public static final String REL_SENT_TO_BCC = "SENT_TO_BCC";
     public final static List<String> CORRESPONDENCE_TYPES =
-            Arrays.asList(REL_CORRESPONDENCE, REL_NOTIFICATION, REL_MESSAGE, REL_SENT_BY, REL_SENT_TO,REL_SENT_TO_CC, REL_SENT_TO_BCC);
+            Arrays.asList(REL_CORRESPONDENCE, REL_NOTIFICATION, REL_MESSAGE, REL_SENT_BY, REL_SENT_TO, REL_SENT_TO_CC, REL_SENT_TO_BCC);
 
     /* Aspect Entities
      * Aspect entities are used to store Activity Stream Modelled Classes with schema/model

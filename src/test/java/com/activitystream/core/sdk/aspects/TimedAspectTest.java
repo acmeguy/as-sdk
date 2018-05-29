@@ -20,9 +20,9 @@ import static com.activitystream.core.model.aspects.TimedAspect.timed;
 import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
 
-public class TimedAspectTests {
+public class TimedAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(TimedAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(TimedAspectTest.class);
 
     @BeforeMethod(alwaysRun = true)
 

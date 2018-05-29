@@ -12,9 +12,9 @@ import java.util.TimeZone;
 
 import static com.activitystream.core.model.aspects.ContentAspect.content;
 
-public class ContentAspectTests {
+public class ContentAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ContentAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(ContentAspectTest.class);
 
     @BeforeMethod(alwaysRun = true)
 

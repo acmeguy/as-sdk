@@ -13,9 +13,9 @@ import java.util.TimeZone;
 import static com.activitystream.core.model.aspects.ABTestingAspect.abTest;
 
 
-public class ABAspectTests {
+public class ABAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ABAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(ABAspectTest.class);
 
     @Test
     public void testSimpleABTest() throws Exception {

@@ -13,9 +13,9 @@ import java.util.TimeZone;
 
 import static com.activitystream.core.model.aspects.ResolvableAspect.resolvable;
 
-public class ResolvableAspectTests {
+public class ResolvableAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResolvableAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResolvableAspectTest.class);
 
     @BeforeMethod(alwaysRun = true)
 

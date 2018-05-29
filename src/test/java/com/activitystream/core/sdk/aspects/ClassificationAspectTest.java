@@ -7,13 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static com.activitystream.core.model.aspects.ClassificationAspect.classification;
 
-public class ClassificationAspectTests {
+public class ClassificationAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ClassificationAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClassificationAspectTest.class);
 
     @Test
     public void testSimpleClassificationTest() throws Exception {

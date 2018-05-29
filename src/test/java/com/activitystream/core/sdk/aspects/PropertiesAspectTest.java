@@ -12,9 +12,9 @@ import org.testng.annotations.BeforeMethod;
 import java.util.Collections;
 import java.util.TimeZone;
 
-public class PropertiesAspectTests {
+public class PropertiesAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(PropertiesAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(PropertiesAspectTest.class);
 
     @BeforeMethod(alwaysRun = true)
 

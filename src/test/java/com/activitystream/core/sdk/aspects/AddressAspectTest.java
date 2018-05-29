@@ -13,9 +13,9 @@ import static com.activitystream.core.model.aspects.GeoLocationAspect.geoLocatio
 import static com.activitystream.core.model.aspects.PresentationAspect.presentation;
 
 
-public class AddressAspectTests {
+public class AddressAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(AddressAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddressAspectTest.class);
 
     @Test
     public void testSimpleAddressTest() throws Exception {

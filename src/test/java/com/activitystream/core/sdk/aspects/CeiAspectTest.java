@@ -13,9 +13,9 @@ import java.util.TimeZone;
 
 import static com.activitystream.core.model.aspects.CeiAspect.cei;
 
-public class CeiAspectTests {
+public class CeiAspectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(CeiAspectTests.class);
+    private static final Logger logger = LoggerFactory.getLogger(CeiAspectTest.class);
 
     @BeforeMethod(alwaysRun = true)
 
