@@ -3,6 +3,8 @@ package com.activitystream.core.model.aspects;
 import com.activitystream.core.model.validation.AdjustedPropertyWarning;
 import com.activitystream.sdk.ASConstants;
 import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /****
  *
@@ -12,6 +14,8 @@ import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
 
 public class HolidayAspect extends AbstractMapAspect {
     public static final AspectType ASPECT_TYPE = new AspectType(ASConstants.ASPECTS_HOLIDAY, HolidayAspect::new);
+
+    protected static final Logger logger = LoggerFactory.getLogger(HolidayAspect.class);
 
     public HolidayAspect() {
     }
@@ -75,7 +79,7 @@ public class HolidayAspect extends AbstractMapAspect {
         }
 
         return null;
-     }
+    }
 
     @Override
     public void loadFromValue(Object value) {
