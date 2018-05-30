@@ -3,9 +3,12 @@ package com.activitystream.core.model.aspects;
 import com.activitystream.sdk.ASConstants;
 import com.activitystream.core.model.validation.AdjustedPropertyWarning;
 import com.activitystream.core.model.validation.UnsupportedAspectError;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import jdk.net.SocketFlow;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 public class StatusAspect extends AbstractMapAspect {
@@ -33,6 +36,48 @@ public class StatusAspect extends AbstractMapAspect {
     /************
      * CEP Utility Functions and Getters
      ************/
+
+    /*** RECHECK IS NEEDED ***/
+    public StatusAspect withRegisteredAt(DateTime dt) {
+        put(ASConstants.FIELD_REGISTERED_AT, dt);
+        return this;
+    }
+
+    public StatusAspect withVersion(Integer version) {
+        put(ASConstants.FIELD_VERSION, version);
+        return this;
+    }
+
+
+    public StatusAspect withUpdateOccurredAt(DateTime dt) {
+        if (dt != null) {
+            put(ASConstants.FIELD_UPDATE_OCCURRED_AT, dt);
+        }
+
+        return this;
+    }
+
+    public StatusAspect withDeleted() {
+        put(ASConstants.FIELD_IS_DELETED, true);
+        return this;
+    }
+
+    public StatusAspect withLooksInvalid(Boolean looksInvalid) {
+        if (looksInvalid != null) {
+            put(ASConstants.FIELD_LOOKS_INVALID, looksInvalid);
+        }
+
+        return this;
+    }
+
+
+    public StatusAspect withCancelled(Boolean cancelled) {
+        if (cancelled != null) {
+            put(ASConstants.FIELD_CANCELLED, cancelled);
+        }
+
+        return this;
+    }
 
     public String getStatus() {
         return null;
@@ -108,9 +153,10 @@ public class StatusAspect extends AbstractMapAspect {
             case ASConstants.FIELD_UPDATE_OCCURRED_AT:
                 value = validator().processIsoDateTime(theKey, value, false);
                 break;
-            case "is_deleted":
+            case ASConstants.FIELD_IS_DELETED:
             case ASConstants.FIELD_LOOKS_INVALID:
-            case "index_edges":
+            case ASConstants.FIELD_INDEX_EDGES:
+            case ASConstants.FIELD_CANCELLED:
                 value = validator().processBoolean(theKey, value, false);
                 break;
             default:

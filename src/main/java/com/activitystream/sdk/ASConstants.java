@@ -289,6 +289,9 @@ public class ASConstants {
     public static final String FIELD_VERSION = "version";
     public static final String FIELD_LOOKS_INVALID = "looks_invalid";
     public static final String FIELD_UPDATE_OCCURRED_AT = "update_occurred_at";
+    public static final String FIELD_IS_DELETED = "is_deleted";
+    public static final String FIELD_CANCELLED = "cancelled";
+    public static final String FIELD_INDEX_EDGES = "index_edges";
 
     public static final String FIELD_INHERITED_VIA = "_inherited_via";
     public static final String FIELD_MERGED_FIELDS = "_merged_fields";
@@ -316,7 +319,7 @@ public class ASConstants {
     public static final List<String> ALL_ASPECT_FIELDS =
             Arrays.asList(ASPECTS_CLASSIFICATION, ASPECTS_DIMENSIONS, ASPECTS_AB_TEST, ASPECTS_ADDRESS, ASPECTS_ATTACHMENTS, ASPECTS_CEI, ASPECTS_CLIENT_DEVICE,
                     ASPECTS_CLIENT_IP, ASPECTS_RESOLVABLE, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
-                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE, ASPECTS_HOLIDAY);
+                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE, ASPECTS_HOLIDAY, ASPECTS_EMAIL);
 
     //Event Base
     public static final String AS_EVENT = "ASEvent";
