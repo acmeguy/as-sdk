@@ -61,9 +61,9 @@ public class ASEntity extends BusinessEntity {
 
     /**
      * Creates a new business entity like Customer, Order, Phone, Email, Vehicle etc.
-     *
-     * @param enttiyReference the Entity Reference for the Entity
-     * @param label           the human readable label used to represent the entity
+     * <p>
+     * * @param enttiyReference the Entity Reference for the Entity
+     * * @param label           the human readable label used to represent the entity
      */
     public ASEntity(EntityReference enttiyReference, String label) {
         put(ASConstants.FIELD_ENTITY_REF, enttiyReference);

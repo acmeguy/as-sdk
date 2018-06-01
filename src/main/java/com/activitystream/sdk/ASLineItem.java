@@ -357,6 +357,22 @@ public class ASLineItem extends TransactionEvent {
     }
 
     /**
+     * Discount amount of the price.
+     * **/
+    public ASLineItem withDiscountAmount(Double discountAmount) {
+        super.setDiscountAmount(discountAmount);
+        return this;
+    }
+
+    /**
+     * Percentage discount on price.
+     * **/
+    public ASLineItem withDiscountPercentage(Double discountPercentage) {
+        super.setDiscountPercentage(discountPercentage);
+        return this;
+    }
+
+    /**
      * If the product has a start date/time then this is it.
      * Please specify this for any shows or events (if known)
      * @param validFrom

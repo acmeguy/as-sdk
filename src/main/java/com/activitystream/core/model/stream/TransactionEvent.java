@@ -31,7 +31,7 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
             ASConstants.FIELD_ITEM_COUNT, ASConstants.FIELD_ITEM_PRICE, ASConstants.FIELD_PRICE_CATEGORY, ASConstants.FIELD_PRICE_TYPE,
             ASConstants.FIELD_ACCOUNTING_KEY, ASConstants.FIELD_DESCRIPTION, ASConstants.FIELD_CURRENCY, ASConstants.FIELD_VARIANT,
             ASConstants.FIELD_PAYMENT_METHOD, ASConstants.FIELD_PAYMENT_METHOD, ASConstants.FIELD_VALID_FROM, ASConstants.FIELD_VALID_UNTIL,
-            ASConstants.FIELD_DISCOUNT_PERCENTAGE, ASConstants.FIELD_COMMISSION_FIXED,
+            ASConstants.FIELD_DISCOUNT_PERCENTAGE, ASConstants.FIELD_DISCOUNT_AMOUNT, ASConstants.FIELD_COMMISSION_FIXED,
             ASConstants.FIELD_COMMISSION_PERCENTAGE, ASConstants.FIELD_TAX_PERCENTAGE, ASConstants.FIELD_PROPERTIES, ASConstants.FIELD_RECEIVED_AT,
             ASConstants.FIELD_REGISTERED_AT
     );
@@ -494,6 +494,24 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
         return (double) getOrDefault(ASConstants.FIELD_DISCOUNT_PERCENTAGE, 0d);
     }
 
+    public void setDiscountPercentage(Double discountPercentage) {
+        if (discountPercentage != null) {
+            put(ASConstants.FIELD_DISCOUNT_PERCENTAGE, discountPercentage);
+        } else {
+            remove(ASConstants.FIELD_DISCOUNT_PERCENTAGE);
+        }
+    }
+
+    double getDiscountAmount() { return (double) getOrDefault(ASConstants.FIELD_DISCOUNT_AMOUNT, 0d); }
+
+    public void setDiscountAmount(Double discountAmount) {
+        if (discountAmount != null) {
+            put(ASConstants.FIELD_DISCOUNT_AMOUNT, discountAmount);
+        } else {
+            remove(ASConstants.FIELD_DISCOUNT_AMOUNT);
+        }
+    }
+
     double getTaxPercentage() {
         return (double) getOrDefault(ASConstants.FIELD_TAX_PERCENTAGE, 0d);
     }
@@ -642,6 +660,7 @@ public class TransactionEvent extends AbstractBaseEvent implements BaseSubEvent,
             case ASConstants.FIELD_COMMISSION_FIXED:
             case ASConstants.FIELD_COMMISSION_PERCENTAGE:
             case ASConstants.FIELD_DISCOUNT_PERCENTAGE:
+            case ASConstants.FIELD_DISCOUNT_AMOUNT:
             case ASConstants.FIELD_TAX_PERCENTAGE:
             case ASConstants.FIELD_TOTAL_IN_STOCK:
             case ASConstants.FIELD_TOTAL_FOR_SALE:

@@ -138,6 +138,7 @@ public class ASConstants {
     public static final String FIELD_COMMISSION_FIXED = "commission_fixed";
     public static final String FIELD_COMMISSION_PERCENTAGE = "commission_percentage";
     public static final String FIELD_DISCOUNT_PERCENTAGE = "discount_percentage";
+    public static final String FIELD_DISCOUNT_AMOUNT = "discount_amount";
     public static final String FIELD_TAX_PERCENTAGE = "tax_percentage";
     public static final String FIELD_TAGS = "tags";
     public static final String FIELD_TOTAL_IN_STOCK = "total_in_stock";
@@ -191,6 +192,7 @@ public class ASConstants {
     public static final String ASPECTS_EMAIL = "email";
     public static final String ASPECTS_PHONE = "phone";
     public static final String ASPECTS_HOLIDAY = "holiday";
+    public static final String ASPECTS_SUBSCRIPTION = "subscription";
 
     /**
      * ASPECT FIELDS
@@ -315,11 +317,13 @@ public class ASConstants {
     public static final String FIELD_AREA_CODE = "area_code";
     public static final String FIELD_NUMBER = "number";
     public static final String FIELD_NUMBER_TYPE = "number_type";
+    public static final String FIELD_SERVING_COUNT = "serving_count";
+    public static final String FIELD_REMAINING_SERVINGS = "remaining_servings";
 
     public static final List<String> ALL_ASPECT_FIELDS =
             Arrays.asList(ASPECTS_CLASSIFICATION, ASPECTS_DIMENSIONS, ASPECTS_AB_TEST, ASPECTS_ADDRESS, ASPECTS_ATTACHMENTS, ASPECTS_CEI, ASPECTS_CLIENT_DEVICE,
                     ASPECTS_CLIENT_IP, ASPECTS_RESOLVABLE, ASPECTS_CONTENT, ASPECTS_DEMOGRAPHY, ASPECTS_GEO_LOCATION, ASPECTS_ITEMS, ASPECTS_LINK, ASPECTS_LOCALE,
-                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE, ASPECTS_HOLIDAY, ASPECTS_EMAIL);
+                    ASPECTS_GEO_LOCATION, ASPECTS_METRICS, ASPECTS_CUSTOMER_PERMISSION, ASPECTS_PHONE, ASPECTS_HOLIDAY, ASPECTS_EMAIL, ASPECTS_SUBSCRIPTION);
 
     //Event Base
     public static final String AS_EVENT = "ASEvent";
