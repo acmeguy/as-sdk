@@ -30,37 +30,36 @@ public class DemographyAspectTest {
                 .withEducation("Like to have a degree")
                 .withIncome("400k$ - 800k$"));
 
-        Assert.assertEquals(secretAgent.toJSON().equals("{\"entity_ref\":\"Agent/007\",\"aspects\":{\"demography\":{\"gender\":\"male\",\"gender_guessed\":false,\"birth_day\":13,\"birth_year\":1968,\"birth_month\":4,\"employment\":\"Governmental Employee\",\"ethnicity\":\"Caucasian\",\"marital_status\":\"Very Single\",\"housing\":\"Lives alone\",\"mosaic_group\":\"Wealthy World Traveller\",\"education\":\"Like to have a degree\",\"income\":\"400k$ - 800k$\"}}}"),true);
+        Assert.assertEquals(secretAgent.toJSON().equals("{\"entity_ref\":\"Agent/007\",\"aspects\":{\"demography\":{\"gender\":\"male\",\"gender_guessed\":false,\"birth_day\":13,\"birth_year\":1968,\"birth_month\":4,\"birth_date\":\"1968-04-13\",\"employment\":\"Governmental Employee\",\"ethnicity\":\"Caucasian\",\"marital_status\":\"Very Single\",\"housing\":\"Lives alone\",\"custom_segment\":\"Wealthy World Traveller\",\"education\":\"Like to have a degree\",\"income\":\"400k$ - 800k$\"}}}"), true);
 
         ASEntity parsedEntity = ASEntity.fromJSON(secretAgent.toJSON());
         //Round-trip test
-        Assert.assertEquals(secretAgent.toJSON().equals(parsedEntity.toJSON()),true);
-        Assert.assertEquals(secretAgent.getStreamId().equals(parsedEntity.getStreamId()),true);
+        Assert.assertEquals(secretAgent.toJSON().equals(parsedEntity.toJSON()), true);
+        Assert.assertEquals(secretAgent.getStreamId().equals(parsedEntity.getStreamId()), true);
 
         //Stream IDs are always calculated the same way so they are deterministic.
-        Assert.assertEquals(secretAgent.getStreamId().toString().equals("e6e3a763-b49e-3115-b997-fc364de9e70f"),true);
+        Assert.assertEquals(secretAgent.getStreamId().toString().equals("e6e3a763-b49e-3115-b997-fc364de9e70f"), true);
 
-        DemographyAspect demography = new DemographyAspect("male","1968-10-31");
-        Assert.assertEquals(demography.getGender().equals("male"),true);
-        Assert.assertEquals(demography.getGenderGuessed().equals(false),true);
-        Assert.assertEquals(demography.getBirthDate().equals(new DateTime("1968-10-31")),true);
-        Assert.assertEquals(demography.getBirthMonth().equals(10),true);
-        Assert.assertEquals(demography.getBirthYear().equals(1968),true);
-        Assert.assertEquals(demography.getBirthDay().equals(31),true);
+        DemographyAspect demography = new DemographyAspect("male", "1968-10-31");
+        Assert.assertEquals(demography.getGender().equals("male"), true);
+        Assert.assertEquals(demography.getGenderGuessed().equals(false), true);
+        Assert.assertEquals(demography.getBirthDate().equals(new DateTime("1968-10-31")), true);
+        Assert.assertEquals(demography.getBirthMonth().equals(10), true);
+        Assert.assertEquals(demography.getBirthYear().equals(1968), true);
+        Assert.assertEquals(demography.getBirthDay().equals(31), true);
 
         demography.setFamilySize("298");
-        Assert.assertEquals(demography.getFamilySize().equals(298),true);
+        Assert.assertEquals(demography.getFamilySize().equals(298), true);
         demography.setEducation("some");
-        Assert.assertEquals(demography.getEducation().equals("some"),true);
+        Assert.assertEquals(demography.getEducation().equals("some"), true);
         demography.setIncome("not much");
-        Assert.assertEquals(demography.getIncome().equals("not much"),true);
+        Assert.assertEquals(demography.getIncome().equals("not much"), true);
         demography.setMaritalStatus("yes");
-        Assert.assertEquals(demography.getMaritalStatus().equals("yes"),true);
+        Assert.assertEquals(demography.getMaritalStatus().equals("yes"), true);
         demography.setEthnicity("Caucasian");
-        Assert.assertEquals(demography.getEthnicity().equals("Caucasian"),true);
+        Assert.assertEquals(demography.getEthnicity().equals("Caucasian"), true);
         demography.setHousing("mouse");
-        Assert.assertEquals(demography.getHousing().equals("mouse"),true);
+        Assert.assertEquals(demography.getHousing().equals("mouse"), true);
 
     }
-
 }

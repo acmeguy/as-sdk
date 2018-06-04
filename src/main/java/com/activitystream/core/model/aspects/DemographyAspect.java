@@ -9,6 +9,8 @@ import com.activitystream.core.model.validation.IgnoredPropertyError;
 import com.activitystream.sdk.ASConstants;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +86,10 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
                 put(ASConstants.FIELD_BIRTH_DAY, bDate.getDayOfMonth());
                 put(ASConstants.FIELD_BIRTH_YEAR, bDate.getYear());
                 put(ASConstants.FIELD_BIRTH_MONTH, bDate.getMonthOfYear());
+
+                DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+                put(ASConstants.FIELD_BIRTH_DATE, birthDate);
+                put(ASConstants.FIELD_BIRTH_DATE, dtf.print(bDate));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -370,7 +376,8 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
                 value = validator().processBoolean(theKey, value, false);
                 break;
             case ASConstants.FIELD_BIRTH_DATE:
-                value = validator().processIsoDate(theKey, value, false);
+                //  value = validator().processIsoDate(theKey, value, false); Discussion is needed
+                value = validator().processString(theKey, value, false);
                 break;
             case ASConstants.FIELD_BIRTH_YEAR:
             case ASConstants.FIELD_BIRTH_MONTH:
@@ -428,5 +435,6 @@ public class DemographyAspect extends AbstractMapAspect implements EnrichableEle
     public static DemographyAspect demography() {
         return new DemographyAspect();
     }
+
 
 }
