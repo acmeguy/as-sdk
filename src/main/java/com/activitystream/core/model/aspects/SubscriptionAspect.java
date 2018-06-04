@@ -49,9 +49,27 @@ public class SubscriptionAspect extends AbstractMapAspect {
         return this;
     }
 
+    public SubscriptionAspect withValidFrom(String validFrom) {
+        if (StringUtils.isNotBlank(validFrom)) {
+            DateTime dt = DateTime.parse(validFrom);
+            withValidFrom(dt);
+        }
+
+        return this;
+    }
+
     public SubscriptionAspect withValidUntil(DateTime validUntil) {
         if (validUntil != null) {
             put(ASConstants.FIELD_VALID_UNTIL, validUntil);
+        }
+
+        return this;
+    }
+
+    public SubscriptionAspect withValidUntil(String validUntil) {
+        if (StringUtils.isNotBlank(validUntil)) {
+            DateTime dt = DateTime.parse(validUntil);
+            withValidUntil(dt);
         }
 
         return this;
@@ -67,7 +85,7 @@ public class SubscriptionAspect extends AbstractMapAspect {
 
     public SubscriptionAspect withRemainingServings(Integer remainingServings) {
         if (remainingServings != null) {
-            put(ASConstants.FIELD_REMAINING_SERVINGS, remainingServings);
+            put(ASConstants.FIELD_REMAINING_SERVINGS, remainingServings.toString());
         }
 
         return this;

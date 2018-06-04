@@ -28,7 +28,8 @@ public class AspectManager extends AbstractMapElement
                 ContentAspect.ASPECT_TYPE, TagsAspect.ASPECT_TYPE, SettingsAspect.ASPECT_TYPE, ProductViewAspect.ASPECT_TYPE, InventoryAspect.ASPECT_TYPE,
                 MessagingAspect.ASPECT_TYPE,
                 AttachmentManager.ASPECT_TYPE, MetricsAspect.ASPECT_TYPE, StatusAspect.ASPECT_TYPE, CustomerPermissionAspect.ASPECT_TYPE,
-                PhoneAspect.ASPECT_TYPE, EmailAspect.ASPECT_TYPE, HolidayAspect.ASPECT_TYPE};
+                AttachmentManager.ASPECT_TYPE, MetricsAspect.ASPECT_TYPE, StatusAspect.ASPECT_TYPE, CustomerPermissionAspect.ASPECT_TYPE,
+                PhoneAspect.ASPECT_TYPE, EmailAspect.ASPECT_TYPE, HolidayAspect.ASPECT_TYPE, SubscriptionAspect.ASPECT_TYPE};
         for (AspectType type : aspectTypes) {
             ALL_ASPECTS.put(type.getAspectSignature(), type);
         }
@@ -196,6 +197,12 @@ public class AspectManager extends AbstractMapElement
 
     public void setStatus(StatusAspect statusAspect) {
         put(ASConstants.ASPECTS_STATUS, statusAspect);
+    }
+
+    public SubscriptionAspect getSubscription() {return (SubscriptionAspect) get(ASConstants.ASPECTS_SUBSCRIPTION); }
+
+    public void setSubscription(SubscriptionAspect subscriptionAspect) {
+        put(ASConstants.ASPECTS_SUBSCRIPTION, subscriptionAspect);
     }
 
     public ProductViewAspect getProductView() {

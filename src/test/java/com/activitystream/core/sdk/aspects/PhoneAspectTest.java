@@ -21,11 +21,12 @@ public class PhoneAspectTest {
         /***
          * PhoneAspect should be only used if entity archetype is 'Phone'
          * ***/
+
         if ("Phone".equals(customer.get("archetype"))) { // Do we need to implement getArchetype method?!?
             customer.withAspect(phoneAspect);
         }
 
-        String expected1 = "{\"archetype\":\"Phone\",\"entity_ref\":\"Phone/some_hashed_id\",\"aspects\":{\"phone\":{\"area_code\":false,\"country_code\":false,\"number\":false,\"number_type\":false}}}";
+        String expected1 = "{\"archetype\":\"Phone\",\"entity_ref\":\"Phone/some_hashed_id\",\"aspects\":{\"phone\":{\"area_code\":\"1\",\"country_code\":\"212\",\"number\":\"963-2121\",\"number_type\":\"Home\"}}}";
         Assert.assertEquals(customer.toJSON(), expected1);
 
         Assert.assertFalse(customer.getAspectManager().getPhone().isAnonymized());
@@ -34,7 +35,7 @@ public class PhoneAspectTest {
 
         Assert.assertTrue(customer.getAspectManager().getPhone().isAnonymized());
 
-        String expected2 = "{\"archetype\":\"Phone\",\"entity_ref\":\"Phone/some_hashed_id\",\"aspects\":{\"phone\":{\"area_code\":false,\"country_code\":false,\"number\":false,\"number_type\":false,\"is_anonymized\":true}}}";
+        String expected2 = "{\"archetype\":\"Phone\",\"entity_ref\":\"Phone/some_hashed_id\",\"aspects\":{\"phone\":{\"area_code\":\"1\",\"country_code\":\"212\",\"number\":\"963-2121\",\"number_type\":\"Home\",\"is_anonymized\":true}}}";
 
         Assert.assertEquals(customer.toJSON(), expected2);
     }

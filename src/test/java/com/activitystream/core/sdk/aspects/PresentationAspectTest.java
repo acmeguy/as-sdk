@@ -2,6 +2,7 @@ package com.activitystream.core.sdk.aspects;
 
 import com.activitystream.core.model.aspects.PresentationAspect;
 import com.activitystream.sdk.ASEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -55,17 +56,18 @@ public class PresentationAspectTest {
         Assert.assertNull(entity.getAspectManager().getPresentation());
 
         PresentationAspect presentationAspect = new PresentationAspect();
+
         entity.withAspect(presentationAspect);
-        Assert.assertNotNull(entity.getAspectManager().getPresentation());
+        Assert.assertNull(entity.getAspectManager().getPresentation());
 
         presentationAspect.withLabel(myLabel);
-        Assert.assertTrue(getPresentationAspectiWithLabel(myLabel).getLabel().equals(entity.getAspectManager().getPresentation().getLabel()));
+        entity.withAspect(presentationAspect);
+        Assert.assertTrue(getPresentationAspectWithLabel(myLabel).getLabel().equals(entity.getAspectManager().getPresentation().getLabel()));
     }
 
-    private PresentationAspect getPresentationAspectiWithLabel(String label){
+    private PresentationAspect getPresentationAspectWithLabel(String label){
         PresentationAspect presentation = new PresentationAspect();
         presentation.setLabel(label);
         return presentation;
     }
-
 }

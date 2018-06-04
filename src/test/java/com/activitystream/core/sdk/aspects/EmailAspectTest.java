@@ -1,6 +1,7 @@
 package com.activitystream.core.sdk.aspects;
 
 import com.activitystream.core.model.aspects.EmailAspect;
+import com.activitystream.core.model.aspects.SubscriptionAspect;
 import org.junit.Test;
 import org.testng.Assert;
 
@@ -21,5 +22,13 @@ public class EmailAspectTest {
 
         Assert.assertEquals(emailAspect2.getEmail(), "peter.parker@email.com");
         Assert.assertFalse(emailAspect2.isAnonymized());
+    }
+
+    @Test
+    public void test() {
+        SubscriptionAspect subscriptionAspect = new SubscriptionAspect();
+        subscriptionAspect.withValidFrom("");
+
+        System.out.println(subscriptionAspect.toString());
     }
 }

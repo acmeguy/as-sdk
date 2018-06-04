@@ -53,7 +53,7 @@ public class ItemsAspectTest {
         Assert.assertEquals(purchaseEvent.getStreamId().equals(parsedEvent.getStreamId()), true);
 
         //Stream IDs are always calculated the same way so they are deterministic.
-        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("6dedc893-fc58-3b22-92ab-4f843d4b5c0e"), true);
+        Assert.assertEquals(purchaseEvent.getStreamId().toString().equals("9297d978-2f7e-38ea-9732-ea13d162cbaa"), true);
 
     }
 
