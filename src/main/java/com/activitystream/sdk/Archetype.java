@@ -12,7 +12,7 @@ public enum Archetype {
     MANUFACTURER("Manufacturer"),
     MANUFACTURER_PERFORMER("Manufacturer", "Performer"),
     MANUFACTURER_GROUP("ManufacturerGroup"),
-    MANUFACTURER_DEVICE("MeasurementDevice"),
+    MEASUREMENT_DEVICE("MeasurementDevice"),
     ORDER("Order"),
     PHONE("Phone"),
     PRODUCT("Product"),
